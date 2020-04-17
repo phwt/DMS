@@ -8,8 +8,12 @@ def index(request):
 
 
 def internal_doc(request):
-    internal = InternalDoc.objects.all()
+    search = request.GET.get('search', '')
+    internal = InternalDoc.objects.filter(
+        name__icontains=search
+    )
     context = {
+        'sh': search,
         'internal': internal,
         'type': 'internal'
     }
@@ -17,8 +21,12 @@ def internal_doc(request):
 
 
 def external_doc(request):
-    external = ExternalDoc.objects.all()
+    search = request.GET.get('search', '')
+    external = ExternalDoc.objects.filter(
+        name__icontains=search
+    )
     context = {
+        'sh': search,
         'external': external,
         'type': 'external'
     }

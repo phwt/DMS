@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
+    <form class="form-inline" method="GET" action="{% if type == 'internal' %}
+        {% url 'internal_doc' %}{% endif %}{% if type == 'external' %}{% url 'external_doc' %}{% endif %}">
+        <div class="form-group">
+            <label for="search">Search :</label>
+            <input type="text" class="form-control ml-3" name="search" placeholder="Search" value="{{sh}}">
+        </div>
+        <button type="submit" class="btn btn-primary ml-3">Submit</button>
+    </form>
 <div class="container">
     <br /><br />
     <table class="table">
@@ -60,7 +68,7 @@
                 <td>{{ exter.modify_date }}</td>
                 <td>
                     <a href="{% url 'external_detail' id=exter.id %}">
-                        <div class="btn btn-primary">Detail</div>
+                        <div class="btn btn-info">Detail</div>
                     </a>
                 </td>
             </tr>

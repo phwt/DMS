@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-10">
+                <h1>{{ doc.name }}</h1>
+                <p class="text-muted"><small>by {{ doc.create_date }}</small>
+
+                <p>{{ doc.version }}</p>
+                <p>{{ doc.running_no }}</p>
+                <p>{{ doc.release_date }}</p>
+                <p>{{ doc.type }}</p>
+                <p>{{ doc.status }}</p>
+                <p>{{ doc.state }}</p>
+                <p>{{ doc.parent_doc }}</p>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+{% endblock content %}

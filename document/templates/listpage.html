@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block content %}
+    <form class="form-inline" method="GET" action="{% if type == 'internal' %}
+        {% url 'internal_doc' %}{% endif %}{% if type == 'external' %}{% url 'external_doc' %}{% endif %}">
+        <div class="form-group">
+            <label for="search">Search :</label>
+            <input type="text" class="form-control ml-3" name="search" placeholder="Search" value="{{sh}}">
+        </div>
+        <button type="submit" class="btn btn-primary ml-3">Submit</button>
+    </form>
+<div class="container">
+    <br /><br />
+    <table class="table">
+        <thead>
+        {% if type == 'internal' %}
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Version</th>
+                <th scope="col">Running No</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">State</th>
+                <th scope="col">Next Review</th>
+                <th scope="col">Parent Doc</th>
+            </tr>
+        {% endif %}
+
+        {% if type == 'external' %}
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Source</th>
+                <th scope="col">Detail</th>
+                <th scope="col">Modify date</th>
+                <th scope="col">Detail</th>
+            </tr>
+        {% endif %}
+        </thead>
+        {% if type == 'internal' %}
+        {% for inter in internal %}
+            <tr>
+                <td>{{ inter.name }}</td>
+                <td>{{ inter.version }}</td>
+                <td>{{ inter.running_no }}</td>
+                <td>{{ inter.release_date }}</td>
+                <td>{{ inter.type }}</td>
+                <td>{{ inter.status }}</td>
+                <td>'***'</td>
+                <td>'***'</td>
+                {% if inter.parent_doc.id == null %}
+                <td>'------'</td>
+                {% else %}
+                <td>
+                    <a href="{% url 'internal_detail' id=inter.id %}">
+                    {{ inter.parent_doc.name }}
+                    </a>
+                </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    {% endif %}
+        {% if type == 'external' %}
+        {% for exter in external %}
+            <tr>
+                <td>{{ exter.name }}</td>
+                <td>{{ exter.source }}</td>
+                <td>{{ exter.detail }}</td>
+                <td>{{ exter.modify_date }}</td>
+                <td>
+                    <a href="{% url 'external_detail' id=exter.id %}">
+                        <div class="btn btn-info">Detail</div>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+    </table>
+</div>
+{% endblock %}
+

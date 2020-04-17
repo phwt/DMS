@@ -1,18 +1,20 @@
 from django.db import models
 
+
 class Document(models.Model):
     name = models.CharField(max_length=50, null=False)
     # file_location = models.FileField()
     create_date = models.DateTimeField(auto_now_add=True)
 
-class Internal_Doc(models.Model):
-    document_id = models.OneToOneField(Document, primary_key=True)
+
+class InternalDoc(models.Model):
+    document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     version = models.IntegerField(null=False)
     running_no = models.IntegerField(null=False)
     release_date = models.DateTimeField(null=True)
     TYPE_CHOICE = [
         ('M', 'Manual'),
-        ('P',  'Procedure'),
+        ('P', 'Procedure'),
         ('W', 'Work Instruction'),
         ('F', 'Record Form'),
     ]
@@ -31,12 +33,11 @@ class Internal_Doc(models.Model):
         choices=STAUS_CHOICE,
         null=False,
     )
-    parent_doc = models.ForeignKey("self")
+    parent_doc = models.ForeignKey('self', on_delete=models.CASCADE)
 
-class External_Doc(models.Model):
-    document_id = models.OneToOneField(Document, primary_key=True)
+
+class ExternalDoc(models.Model):
+    document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     source = models.TextField(null=False)
     detail = models.TextField(null=False)
     modify_date = models.DateTimeField(null=True)
-
-

@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.index),
     path('internal/', views.internal_doc),
     path('external/', views.external_doc),
-    path('detail/<int:id>/', views.detail),
+    path('internal/detail/<int:id>/', views.internal_detail),
+    path('external/detail/<int:id>/', views.external_detail),
     # path('external/add', views.external_add),
 ]

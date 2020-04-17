@@ -1,7 +1,6 @@
 from django.http import HttpResponse
-from document.models import Document, InternalDoc, ExternalDoc
+from document.models import Document, InternalDoc, ExternalDoc, ExternalDocForm
 from django.shortcuts import redirect, render
-
 
 def index(request):
     return render(request, 'index.html')
@@ -49,4 +48,6 @@ def external_detail(request, id):
 
 
 def external_add(request):
-    return None
+    if request.method == 'POST':
+        ExternalDocForm(request.POST).save()
+    return render(request, 'external_add.html', {'form': ExternalDocForm()})

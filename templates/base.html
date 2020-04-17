@@ -1,6 +1,16 @@
 {% load static %}
 <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
-
+<style>
+    body {
+        background-image: url("{% static '/img/nav_bg.jpg' %}");
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center top;
+    .navbar {
+        background:transparent;
+}
+}
+</style>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -15,7 +25,8 @@
         LOGO
     </a>
     <span class="navbar-text">
-        <a href="#">username@example.com</a>
+        <a href="#">Create</a>
+        <a href="#">View</a>
     </span>
 </nav>
 <div class="container">

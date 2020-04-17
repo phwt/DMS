@@ -23,14 +23,14 @@ class InternalDoc(Document):
         choices=TYPE_CHOICE,
         null=False,
     )
-    STAUS_CHOICE = [
+    STATUS_CHOICE = [
         ('I', 'In-Progress'),
         ('R', 'Released'),
         ('O', 'Obsolete'),
     ]
     status = models.CharField(
         max_length=1,
-        choices=STAUS_CHOICE,
+        choices=STATUS_CHOICE,
         null=False,
     )
     parent_doc = models.ForeignKey('self', on_delete=models.CASCADE, null=True)

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <br /><br />
+    <table class="table">
+        <thead>
+        {% if type == 'internal' %}
+            <tr>
+                <th scope="col">Version</th>
+                <th scope="col">Running No</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">State</th>
+                <th scope="col">Next Review</th>
+                <th scope="col">Parent Doc</th>
+            </tr>
+        {% endif %}
+        {% if type == 'external' %}
+            <tr>
+                <th scope="col">Source</th>
+                <th scope="col">Detail</th>
+                <th scope="col">Modify date</th>
+            </tr>
+        {% endif %}
+        </thead>
+
+    </table>
+</div>
+{% endblock %}
+

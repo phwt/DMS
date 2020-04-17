@@ -4,7 +4,7 @@ from django.forms import ModelForm
 
 class Document(models.Model):
     name = models.CharField(max_length=50, null=False)
-    # file_location = models.FileField()
+    file_location = models.FileField(upload_to='', null=True)
     create_date = models.DateTimeField(auto_now_add=True)
 
 
@@ -47,4 +47,4 @@ class ExternalDoc(Document):
 class ExternalDocForm(ModelForm):
     class Meta:
         model = ExternalDoc
-        fields = ['name', 'source', 'detail']
+        fields = ['name', 'source', 'detail', 'file_location']

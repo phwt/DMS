@@ -41,5 +41,7 @@ def external_detail(request, id):
 
 def external_add(request):
     if request.method == 'POST':
-        ExternalDocForm(request.POST).save()
+        form = ExternalDocForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
     return render(request, 'external_add.html', {'form': ExternalDocForm()})

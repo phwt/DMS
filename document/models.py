@@ -7,8 +7,8 @@ class Document(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
 
 
-class InternalDoc(models.Model):
-    document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
+class InternalDoc(Document):
+    # document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     version = models.IntegerField(null=False)
     running_no = models.IntegerField(null=False)
     release_date = models.DateTimeField(null=True)
@@ -36,8 +36,8 @@ class InternalDoc(models.Model):
     parent_doc = models.ForeignKey('self', on_delete=models.CASCADE)
 
 
-class ExternalDoc(models.Model):
-    document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
+class ExternalDoc(Document):
+    # document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     source = models.TextField(null=False)
     detail = models.TextField(null=False)
     modify_date = models.DateTimeField(null=True)

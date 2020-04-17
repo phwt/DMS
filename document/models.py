@@ -24,16 +24,16 @@ class InternalDoc(Document):
         null=False,
     )
     STAUS_CHOICE = [
-        ('i', 'In-Progress'),
-        ('r', 'Released'),
-        ('o', 'Obsolete'),
+        ('I', 'In-Progress'),
+        ('R', 'Released'),
+        ('O', 'Obsolete'),
     ]
     status = models.CharField(
         max_length=1,
         choices=STAUS_CHOICE,
         null=False,
     )
-    parent_doc = models.ForeignKey('self', on_delete=models.CASCADE)
+    parent_doc = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
 
 
 class ExternalDoc(Document):

@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms import ModelForm
 
 
 class Document(models.Model):
@@ -41,3 +42,9 @@ class ExternalDoc(Document):
     source = models.TextField(null=False)
     detail = models.TextField(null=False)
     modify_date = models.DateTimeField(null=True)
+
+
+class ExternalDocForm(ModelForm):
+    class Meta:
+        model = ExternalDoc
+        fields = ['name', 'source', 'detail']

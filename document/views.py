@@ -7,13 +7,13 @@ def index(request):
 
 
 def internal_detail(request, id):
-    doc = InternalDoc.objects.get(pk=id)
+    doc = InternalDoc.objects.get(document_ptr_id=id)
     return render(request, template_name='internal_detail.html', context={
         'doc': doc
     })
 
 def external_detail(request, id):
-    doc = ExternalDoc.objects.get(pk=id)
+    doc = ExternalDoc.objects.get(document_ptr_id=id)
     return render(request, template_name='external_detail.html', context={
         'doc': doc
     })

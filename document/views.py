@@ -2,33 +2,26 @@ from django.http import HttpResponse
 from document.models import Document, InternalDoc, ExternalDoc, ExternalDocForm
 from django.shortcuts import redirect, render
 
+
 def index(request):
     return render(request, 'index.html')
     # return HttpResponse("work")
 
 
-def internal_doc(request):
+def document_list(request, doc_type):
     search = request.GET.get('search', '')
-    internal = InternalDoc.objects.filter(
-        name__icontains=search
-    )
+    if doc_type == 'internal':
+        documents = InternalDoc.objects.filter(
+            name__icontains=search
+        )
+    elif doc_type == 'external':
+        documents = ExternalDoc.objects.filter(
+            name__icontains=search
+        )
     context = {
         'sh': search,
-        'internal': internal,
-        'type': 'internal'
-    }
-    return render(request, 'document_list.html', context=context)
-
-
-def external_doc(request):
-    search = request.GET.get('search', '')
-    external = ExternalDoc.objects.filter(
-        name__icontains=search
-    )
-    context = {
-        'sh': search,
-        'external': external,
-        'type': 'external'
+        'documents': documents,
+        'doc_type': doc_type
     }
     return render(request, 'document_list.html', context=context)
 

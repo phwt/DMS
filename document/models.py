@@ -1,5 +1,4 @@
 from django.db import models
-from django.forms import ModelForm
 
 
 class Document(models.Model):
@@ -9,7 +8,6 @@ class Document(models.Model):
 
 
 class InternalDoc(Document):
-    # document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     version = models.IntegerField(null=False)
     running_no = models.IntegerField(null=False)
     release_date = models.DateTimeField(null=True)
@@ -38,13 +36,7 @@ class InternalDoc(Document):
 
 
 class ExternalDoc(Document):
-    # document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     source = models.TextField(null=False)
     detail = models.TextField(null=False)
     modify_date = models.DateTimeField(null=True)
 
-
-class ExternalDocForm(ModelForm):
-    class Meta:
-        model = ExternalDoc
-        fields = ['name', 'source', 'detail', 'file_location']

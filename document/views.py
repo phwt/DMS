@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from document.models import Document, InternalDoc, ExternalDoc, ExternalDocForm
+from .models import Document, InternalDoc, ExternalDoc
+from .forms import ExternalDocForm, ExternalDocFilterForm
 from django.shortcuts import redirect, render
 
 
@@ -11,17 +11,15 @@ def index(request):
 def document_list(request, doc_type):
     search = request.GET.get('search', '')
     if doc_type == 'internal':
-        documents = InternalDoc.objects.filter(
-            name__icontains=search
-        )
+        documents = InternalDoc.objects.filter(name__icontains=search)
     elif doc_type == 'external':
-        documents = ExternalDoc.objects.filter(
-            name__icontains=search
-        )
+        documents = ExternalDoc.objects.filter(name__icontains=search)
+        filter_forms = ExternalDocFilterForm()
     context = {
         'sh': search,
         'documents': documents,
-        'doc_type': doc_type
+        'doc_type': doc_type,
+        'filter_forms': filter_forms
     }
     return render(request, 'document_list.html', context=context)
 

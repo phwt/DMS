@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, DateTimeField, CharField
+from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select
 
 from document.models import ExternalDoc, InternalDoc
 
@@ -14,8 +14,9 @@ class ExternalDocFilterForm(ModelForm):
         model = ExternalDoc
         fields = ['name', 'source', 'detail']
         widgets = {
-            'source': TextInput(),
-            'detail': TextInput(),
+            'name': TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'source': TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'detail': TextInput(attrs={'class': 'form-control form-control-sm'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -30,9 +31,22 @@ class InternalDocFilterForm(ModelForm):
     released_end = DateTimeField()
     parent_doc_name = CharField()
 
+    created_start.widget.attrs.update({'class': 'form-control form-control-sm'})
+    created_end.widget.attrs.update({'class': 'form-control form-control-sm'})
+    released_start.widget.attrs.update({'class': 'form-control form-control-sm'})
+    released_end.widget.attrs.update({'class': 'form-control form-control-sm'})
+    parent_doc_name.widget.attrs.update({'class': 'form-control form-control-sm'})
+
     class Meta:
         model = InternalDoc
         exclude = ['file_location', 'release_date', 'create_date', 'parent_doc']
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'version': NumberInput(attrs={'class': 'form-control form-control-sm'}),
+            'running_no': NumberInput(attrs={'class': 'form-control form-control-sm'}),
+            'type': Select(attrs={'class': 'form-control form-control-sm'}),
+            'status': Select(attrs={'class': 'form-control form-control-sm'}),
+        }
 
     def __init__(self, *args, **kwargs):
         super(InternalDocFilterForm, self).__init__(*args, **kwargs)

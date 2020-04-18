@@ -20,8 +20,7 @@ class ExternalDocFilterForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ExternalDocFilterForm, self).__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].required = False
+        all_field_required_false(self.fields)
 
 
 class InternalDocFilterForm(ModelForm):
@@ -37,5 +36,9 @@ class InternalDocFilterForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(InternalDocFilterForm, self).__init__(*args, **kwargs)
-        for field in self.fields:
-            self.fields[field].required = False
+        all_field_required_false(self.fields)
+
+
+def all_field_required_false(fields):
+    for field in fields:
+        fields[field].required = False

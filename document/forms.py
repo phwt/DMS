@@ -1,3 +1,5 @@
+from datetime import datetime, date
+
 from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select
 
 from document.models import ExternalDoc, InternalDoc
@@ -25,14 +27,20 @@ class ExternalDocFilterForm(ModelForm):
 
 
 class InternalDocFilterForm(ModelForm):
-    created_start = DateTimeField()
-    created_end = DateTimeField()
-    released_start = DateTimeField()
-    released_end = DateTimeField()
+    # created_start = DateTimeField()
+    # created_end = DateTimeField()
+    released_start = DateTimeField(
+        initial='1970-01-01T00:00',
+        input_formats=('%Y-%m-%dT%H:%M',)
+    )
+    released_end = DateTimeField(
+        initial=datetime.now().strftime('%Y-%m-%dT%H:%M'),
+        input_formats=('%Y-%m-%dT%H:%M',)
+    )
     parent_doc_name = CharField()
 
-    created_start.widget.attrs.update({'class': 'form-control form-control-sm'})
-    created_end.widget.attrs.update({'class': 'form-control form-control-sm'})
+    # created_start.widget.attrs.update({'class': 'form-control form-control-sm'})
+    # created_end.widget.attrs.update({'class': 'form-control form-control-sm'})
     released_start.widget.attrs.update({'class': 'form-control form-control-sm'})
     released_end.widget.attrs.update({'class': 'form-control form-control-sm'})
     parent_doc_name.widget.attrs.update({'class': 'form-control form-control-sm'})

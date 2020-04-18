@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from .models import Document, InternalDoc, ExternalDoc
 from .forms import ExternalDocForm, ExternalDocFilterForm, InternalDocFilterForm
 from django.shortcuts import redirect, render
@@ -28,14 +30,21 @@ def document_list(request, doc_type):
                     #     filter_forms.cleaned_data['created_start'],
                     #     filter_forms.cleaned_data['created_end']
                     # ),
-                    # release_date__range=(
-                    #     filter_forms.cleaned_data['released_start'],
-                    #     filter_forms.cleaned_data['released_end']
-                    # ),
-                    type__icontains=filter_forms.cleaned_data['type'],
-                    status__icontains=filter_forms.cleaned_data['status'],
-                    parent_doc__name__icontains=filter_forms.cleaned_data['parent_doc_name'],
+                    release_date__range=(
+                        filter_forms.cleaned_data['released_start'],
+                        filter_forms.cleaned_data['released_end']
+                    ),
                 )
+
+                if filter_forms.cleaned_data['parent_doc_name'] != '':
+                    documents.filter(parent_doc__name__icontains=filter_forms.cleaned_data['parent_doc_name'])
+
+                if filter_forms.cleaned_data['type'] != '':
+                    documents.filter(type__exact=filter_forms.cleaned_data['type'])
+
+                if filter_forms.cleaned_data['status'] != '':
+                    documents.filter(status__exact=filter_forms.cleaned_data['status'])
+
     else:
         if doc_type == 'internal':
             documents = InternalDoc.objects.all()
@@ -71,3 +80,7 @@ def external_add(request):
         if form.is_valid():
             form.save()
     return render(request, 'external_add.html', {'form': ExternalDocForm()})
+
+
+def parse_html_time(time_string):
+    return datetime.strptime(time_string, '%Y-%m-%dT%H:%M')

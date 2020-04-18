@@ -22,28 +22,31 @@ def document_list(request, doc_type):
         elif doc_type == 'internal':
             filter_forms = InternalDocFilterForm(request.POST)
             if filter_forms.is_valid():
+                print(filter_forms.cleaned_data)
                 documents = InternalDoc.objects.filter(
                     name__icontains=filter_forms.cleaned_data['name'],
-                    # version__range=(filter_forms.cleaned_data['version'], filter_forms.cleaned_data['version']),
-                    # running_no__exact=filter_forms.cleaned_data['running_no'],
-                    # create_date__range=(
-                    #     filter_forms.cleaned_data['created_start'],
-                    #     filter_forms.cleaned_data['created_end']
-                    # ),
                     release_date__range=(
                         filter_forms.cleaned_data['released_start'],
                         filter_forms.cleaned_data['released_end']
                     ),
                 )
 
+                if filter_forms.cleaned_data['version'] is not None:
+                    print('fired')
+                    documents = documents.filter(version=filter_forms.cleaned_data['version'])
+
+                if filter_forms.cleaned_data['running_no'] is not None:
+                    print('fired2')
+                    documents = documents.filter(running_no=filter_forms.cleaned_data['running_no'])
+
                 if filter_forms.cleaned_data['parent_doc_name'] != '':
-                    documents.filter(parent_doc__name__icontains=filter_forms.cleaned_data['parent_doc_name'])
+                    documents = documents.filter(parent_doc__name__icontains=filter_forms.cleaned_data['parent_doc_name'])
 
                 if filter_forms.cleaned_data['type'] != '':
-                    documents.filter(type__exact=filter_forms.cleaned_data['type'])
+                    documents = documents.filter(type__exact=filter_forms.cleaned_data['type'])
 
                 if filter_forms.cleaned_data['status'] != '':
-                    documents.filter(status__exact=filter_forms.cleaned_data['status'])
+                    documents = documents.filter(status__exact=filter_forms.cleaned_data['status'])
 
     else:
         if doc_type == 'internal':

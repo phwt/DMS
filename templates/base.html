@@ -2,6 +2,20 @@
 <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<style>
+    body {
+        background-image: url("{% static '/img/nav_bg.jpg' %}");
+        background-repeat: no-repeat;
+        background-position: center top;
+    }
+    .navbar {
+        background: transparent;
+    }
+    .shadow {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+
+</style>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -57,7 +71,7 @@
 </div>
 <div class="container-fluid row m-0 p-0 mt-5">
     <div class="col-2"></div>
-    <div class="col-8 bg-light shadow p-5">
+    <div class="col-8 bg-light shadow pt-5 h-100">
         {% block content %}
         {% endblock %}
     </div>

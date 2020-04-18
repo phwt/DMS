@@ -1,18 +1,14 @@
 from django.db import models
-from django.forms import ModelForm
 
 
 class Document(models.Model):
     name = models.CharField(max_length=50, null=False)
     file_location = models.FileField(upload_to='', null=True)
-    create_date = models.DateTimeField(auto_now_add=True)
 
 
 class InternalDoc(Document):
-    # document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     version = models.IntegerField(null=False)
     running_no = models.IntegerField(null=False)
-    release_date = models.DateTimeField(null=True)
     TYPE_CHOICE = [
         ('M', 'Manual'),
         ('P', 'Procedure'),
@@ -25,12 +21,13 @@ class InternalDoc(Document):
         null=False,
     )
     STATUS_CHOICE = [
-        ('I', 'In-Progress'),
-        ('R', 'Released'),
-        ('O', 'Obsolete'),
+        ('IN', 'In-Progress'),
+        ('RE', 'Released'),
+        ('OB', 'Obsoleted'),
+        ('RC', 'Recalled'),
     ]
     status = models.CharField(
-        max_length=1,
+        max_length=2,
         choices=STATUS_CHOICE,
         null=False,
     )
@@ -38,13 +35,8 @@ class InternalDoc(Document):
 
 
 class ExternalDoc(Document):
-    # document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     source = models.TextField(null=False)
     detail = models.TextField(null=False)
-    modify_date = models.DateTimeField(null=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    # creator = REF USER
 
-
-class ExternalDocForm(ModelForm):
-    class Meta:
-        model = ExternalDoc
-        fields = ['name', 'source', 'detail', 'file_location']

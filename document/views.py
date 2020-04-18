@@ -1,36 +1,66 @@
-from django.http import HttpResponse
-from document.models import Document, InternalDoc, ExternalDoc, ExternalDocForm
+from datetime import datetime
+
+from .models import Document, InternalDoc, ExternalDoc
+from .forms import ExternalDocForm, ExternalDocFilterForm, InternalDocFilterForm
 from django.shortcuts import redirect, render
+
 
 def index(request):
     return render(request, 'index.html')
-    # return HttpResponse("work")
 
 
-def internal_doc(request):
-    search = request.GET.get('search', '')
-    internal = InternalDoc.objects.filter(
-        name__icontains=search
-    )
+def document_list(request, doc_type):
+    if request.method == 'POST':
+        if doc_type == 'external':
+            filter_forms = ExternalDocFilterForm(request.POST)
+            if filter_forms.is_valid():
+                documents = ExternalDoc.objects.filter(
+                    name__icontains=filter_forms.cleaned_data['name'],
+                    source__icontains=filter_forms.cleaned_data['source'],
+                    detail__icontains=filter_forms.cleaned_data['detail'],
+                )
+        elif doc_type == 'internal':
+            filter_forms = InternalDocFilterForm(request.POST)
+            if filter_forms.is_valid():
+                print(filter_forms.cleaned_data)
+                documents = InternalDoc.objects.filter(
+                    name__icontains=filter_forms.cleaned_data['name'],
+                    release_date__range=(
+                        filter_forms.cleaned_data['released_start'],
+                        filter_forms.cleaned_data['released_end']
+                    ),
+                )
+
+                if filter_forms.cleaned_data['version'] is not None:
+                    print('fired')
+                    documents = documents.filter(version=filter_forms.cleaned_data['version'])
+
+                if filter_forms.cleaned_data['running_no'] is not None:
+                    print('fired2')
+                    documents = documents.filter(running_no=filter_forms.cleaned_data['running_no'])
+
+                if filter_forms.cleaned_data['parent_doc_name'] != '':
+                    documents = documents.filter(parent_doc__name__icontains=filter_forms.cleaned_data['parent_doc_name'])
+
+                if filter_forms.cleaned_data['type'] != '':
+                    documents = documents.filter(type__exact=filter_forms.cleaned_data['type'])
+
+                if filter_forms.cleaned_data['status'] != '':
+                    documents = documents.filter(status__exact=filter_forms.cleaned_data['status'])
+
+    else:
+        if doc_type == 'internal':
+            documents = InternalDoc.objects.all()
+            filter_forms = InternalDocFilterForm()
+        elif doc_type == 'external':
+            documents = ExternalDoc.objects.all()
+            filter_forms = ExternalDocFilterForm()
     context = {
-        'sh': search,
-        'internal': internal,
-        'type': 'internal'
+        'documents': documents,
+        'doc_type': doc_type,
+        'filter_forms': filter_forms
     }
-    return render(request, 'listpage.html', context=context)
-
-
-def external_doc(request):
-    search = request.GET.get('search', '')
-    external = ExternalDoc.objects.filter(
-        name__icontains=search
-    )
-    context = {
-        'sh': search,
-        'external': external,
-        'type': 'external'
-    }
-    return render(request, 'listpage.html', context=context)
+    return render(request, 'document_list.html', context=context)
 
 
 def internal_detail(request, id):
@@ -53,3 +83,7 @@ def external_add(request):
         if form.is_valid():
             form.save()
     return render(request, 'external_add.html', {'form': ExternalDocForm()})
+
+
+def parse_html_time(time_string):
+    return datetime.strptime(time_string, '%Y-%m-%dT%H:%M')

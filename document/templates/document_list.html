@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table class="table table-responsive">
+            <thead>
+            {% if doc_type == 'internal' %}
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Version</th>
+                    <th scope="col">Running No</th>
+                    <th scope="col">Release Date</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Status</th>
+                    {#                    <th scope="col">State</th>#}
+                    {#                    <th scope="col">Next Review</th>#}
+                    <th scope="col">Parent Doc</th>
+                    <th></th>
+                </tr>
+            {% endif %}
+
+            {% if doc_type == 'external' %}
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Source</th>
+                    <th scope="col">Detail</th>
+                    <th scope="col">Modify date</th>
+                    <th></th>
+                </tr>
+            {% endif %}
+            </thead>
+
+            {% if doc_type == 'internal' %}
+                <tr>
+                    <td>{{ filter_forms.name }}</td>
+                    <td>{{ filter_forms.version }}</td>
+                    <td>{{ filter_forms.running_no }}</td>
+                    <td class="row no-gutters">
+                        <div class="col-6">
+                            <input
+                                    type="datetime-local"
+                                    class="form-control form-control-sm"
+                                    name="{{ filter_forms.released_start.name }}"
+                                    id="{{ filter_forms.released_start.id_for_label }}"
+                                    value="{{ filter_forms.released_start.value }}"
+                            />
+                        </div>
+                        <div class="col-6">
+                            <input
+                                    type="datetime-local"
+                                    class="form-control form-control-sm"
+                                    name="{{ filter_forms.released_end.name }}"
+                                    id="{{ filter_forms.released_end.id_for_label }}"
+                                    value="{{ filter_forms.released_end.value }}"
+                            />
+                        </div>
+                    </td>
+                    <td>{{ filter_forms.type }}</td>
+                    <td>{{ filter_forms.status }}</td>
+                    {#                    <td></td>#}
+                    {#                    <td></td>#}
+                    <td>{{ filter_forms.parent_doc_name }}</td>
+                    <td>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% for document in documents %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'internal_detail' id=document.id %}">{{ document.name }}</a>
+                        </td>
+                        <td>{{ document.version }}</td>
+                        <td>{{ document.running_no }}</td>
+                        <td>{{ document.release_date }}</td>
+                        <td>{{ document.get_type_display }}</td>
+                        <td>{{ document.get_status_display }}</td>
+                        {#                        <td>'***'</td>#}
+                        {#                        <td>'***'</td>#}
+                        {% if document.parent_doc.id == null %}
+                            <td>-</td>
+                        {% else %}
+                            <td>
+                                <a href="{% url 'internal_detail' id=document.parent_doc.id %}">
+                                    {{ document.parent_doc.name }}
+                                </a>
+                            </td>
+                        {% endif %}
+                        <td>
+                            <a href="{% url 'external_detail' id=document.id %}">
+                                <button type="submit" class="btn btn-secondary btn-block btn-sm">
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            {% if doc_type == 'external' %}
+                <tr>
+                    <td>{{ filter_forms.name }}</td>
+                    <td>{{ filter_forms.source }}</td>
+                    <td>{{ filter_forms.detail }}</td>
+                    <td></td>
+                    <td>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% for document in documents %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'external_detail' id=document.id %}">{{ document.name }}</a>
+                        </td>
+                        <td>{{ document.source }}</td>
+                        <td>{{ document.detail }}</td>
+                        <td>{{ document.modify_date }}</td>
+                        <td>
+                            <a href="{% url 'external_detail' id=document.id %}">
+                                <button type="submit" class="btn btn-secondary btn-block btn-sm">
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </table>
+    </form>
+{% endblock %}

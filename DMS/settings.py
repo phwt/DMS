@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'document',
     'work',
-    'auth',
+    'authen',
 ]
 
 MIDDLEWARE = [

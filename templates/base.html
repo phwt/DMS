@@ -10,6 +10,9 @@
     .navbar {
         background: transparent;
     }
+    .shadow {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
 
     }
 </style>
@@ -65,7 +68,7 @@
 </div>
 <div class="container-fluid row m-0 p-0 mt-5">
     <div class="col-2"></div>
-    <div class="col-8 bg-light">
+    <div class="col-8 bg-light shadow pt-5">
         {% block content %}
         {% endblock %}
     </div>

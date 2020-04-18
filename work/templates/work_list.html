@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+    <form method="POST" action="">
+        {% csrf_token %}
+        <table class="table table">
+            <thead>
+                <tr>
+                    <th scope="col">Document Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Create Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+                {% for work in works %}
+                    <tr>
+                        <td>{{ work.document_id.name }}</td>
+                        <td>{{ work.status }}</td>
+                        <td>{{ work.create_date }}</td>
+                    </tr>
+                {% endfor %}
+        </table>
+    </form>
+{% endblock %}

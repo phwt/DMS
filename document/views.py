@@ -1,22 +1,49 @@
 from .models import Document, InternalDoc, ExternalDoc
-from .forms import ExternalDocForm, ExternalDocFilterForm
+from .forms import ExternalDocForm, ExternalDocFilterForm, InternalDocFilterForm
 from django.shortcuts import redirect, render
 
 
 def index(request):
     return render(request, 'index.html')
-    # return HttpResponse("work")
 
 
 def document_list(request, doc_type):
-    search = request.GET.get('search', '')
-    if doc_type == 'internal':
-        documents = InternalDoc.objects.filter(name__icontains=search)
-    elif doc_type == 'external':
-        documents = ExternalDoc.objects.filter(name__icontains=search)
-        filter_forms = ExternalDocFilterForm()
+    if request.method == 'POST':
+        if doc_type == 'external':
+            filter_forms = ExternalDocFilterForm(request.POST)
+            if filter_forms.is_valid():
+                documents = ExternalDoc.objects.filter(
+                    name__icontains=filter_forms.cleaned_data['name'],
+                    source__icontains=filter_forms.cleaned_data['source'],
+                    detail__icontains=filter_forms.cleaned_data['detail'],
+                )
+        elif doc_type == 'internal':
+            filter_forms = InternalDocFilterForm(request.POST)
+            if filter_forms.is_valid():
+                documents = InternalDoc.objects.filter(
+                    name__icontains=filter_forms.cleaned_data['name'],
+                    # version__range=(filter_forms.cleaned_data['version'], filter_forms.cleaned_data['version']),
+                    # running_no__exact=filter_forms.cleaned_data['running_no'],
+                    # create_date__range=(
+                    #     filter_forms.cleaned_data['created_start'],
+                    #     filter_forms.cleaned_data['created_end']
+                    # ),
+                    # release_date__range=(
+                    #     filter_forms.cleaned_data['released_start'],
+                    #     filter_forms.cleaned_data['released_end']
+                    # ),
+                    type__icontains=filter_forms.cleaned_data['type'],
+                    status__icontains=filter_forms.cleaned_data['status'],
+                    parent_doc__name__icontains=filter_forms.cleaned_data['parent_doc_name'],
+                )
+    else:
+        if doc_type == 'internal':
+            documents = InternalDoc.objects.all()
+            filter_forms = InternalDocFilterForm()
+        elif doc_type == 'external':
+            documents = ExternalDoc.objects.all()
+            filter_forms = ExternalDocFilterForm()
     context = {
-        'sh': search,
         'documents': documents,
         'doc_type': doc_type,
         'filter_forms': filter_forms

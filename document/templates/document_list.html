@@ -1,11 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-    <form class="form-inline" method="GET" action="">
-        <div class="form-group">
-            <label for="search">Search: </label>
-            <input type="text" class="form-control ml-3" name="search" placeholder="Search" value="{{ sh }}">
-        </div>
-        <button type="submit" class="btn btn-primary ml-3">Submit</button>
+    <form class="form-inline" method="POST" action="">
+        {% csrf_token %}
+        {{ filter_forms }}
+        <button type="submit" class="btn btn-primary ml-3">Filter</button>
     </form>
     <table class="table mt-4">
 
@@ -42,8 +40,8 @@
                     <td>{{ document.version }}</td>
                     <td>{{ document.running_no }}</td>
                     <td>{{ document.release_date }}</td>
-                    <td>{{ document.type }}</td>
-                    <td>{{ document.status }}</td>
+                    <td>{{ document.get_type_display }}</td>
+                    <td>{{ document.get_status_display }}</td>
                     <td>'***'</td>
                     <td>'***'</td>
                     {% if document.parent_doc.id == null %}

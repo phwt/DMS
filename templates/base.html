@@ -41,6 +41,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Features</a>
                     </li>
+                    {% if user.is_anonymous %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="#">Pricing</a>
                     </li>

@@ -8,6 +8,7 @@
         <button type="submit" class="btn btn-primary ml-3">Submit</button>
     </form>
     <table class="table mt-4">
+
         <thead>
         {% if doc_type == 'internal' %}
             <tr>
@@ -33,6 +34,7 @@
             </tr>
         {% endif %}
         </thead>
+
         {% if doc_type == 'internal' %}
             {% for document in documents %}
                 <tr>
@@ -56,6 +58,7 @@
                 </tr>
             {% endfor %}
         {% endif %}
+
         {% if doc_type == 'external' %}
             {% for document in documents %}
                 <tr>

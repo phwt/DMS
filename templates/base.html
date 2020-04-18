@@ -4,9 +4,8 @@
     body {
         background-image: url("{% static '/img/nav_bg.jpg' %}");
         background-repeat: no-repeat;
-        background-attachment: fixed;
         background-position: center top;
-
+    }
     .navbar {
         background: transparent;
     }
@@ -68,7 +67,7 @@
 </div>
 <div class="container-fluid row m-0 p-0 mt-5">
     <div class="col-2"></div>
-    <div class="col-8 bg-light shadow pt-5">
+    <div class="col-8 bg-light shadow pt-5 h-100">
         {% block content %}
         {% endblock %}
     </div>

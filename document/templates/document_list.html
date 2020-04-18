@@ -28,7 +28,6 @@
                 <th scope="col">Source</th>
                 <th scope="col">Detail</th>
                 <th scope="col">Modify date</th>
-                <th scope="col">Detail</th>
             </tr>
         {% endif %}
         </thead>
@@ -36,7 +35,9 @@
         {% if doc_type == 'internal' %}
             {% for document in documents %}
                 <tr>
-                    <td>{{ document.name }}</td>
+                    <td>
+                        <a href="{% url 'internal_detail' id=document.id %}">{{ document.name }}</a>
+                    </td>
                     <td>{{ document.version }}</td>
                     <td>{{ document.running_no }}</td>
                     <td>{{ document.release_date }}</td>
@@ -48,7 +49,7 @@
                         <td>'------'</td>
                     {% else %}
                         <td>
-                            <a href="{% url 'internal_detail' id=document.id %}">
+                            <a href="{% url 'internal_detail' id=document.parent_doc.id %}">
                                 {{ document.parent_doc.name }}
                             </a>
                         </td>
@@ -60,15 +61,12 @@
         {% if doc_type == 'external' %}
             {% for document in documents %}
                 <tr>
-                    <td>{{ document.name }}</td>
+                    <td>
+                        <a href="{% url 'external_detail' id=document.id %}">{{ document.name }}</a>
+                    </td>
                     <td>{{ document.source }}</td>
                     <td>{{ document.detail }}</td>
                     <td>{{ document.modify_date }}</td>
-                    <td>
-                        <a href="{% url 'external_detail' id=document.id %}">
-                            <div class="btn btn-info">Detail</div>
-                        </a>
-                    </td>
                 </tr>
             {% endfor %}
         {% endif %}

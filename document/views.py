@@ -17,7 +17,7 @@ def internal_doc(request):
         'internal': internal,
         'type': 'internal'
     }
-    return render(request, 'listpage.html', context=context)
+    return render(request, 'document_list.html', context=context)
 
 
 def external_doc(request):
@@ -30,7 +30,7 @@ def external_doc(request):
         'external': external,
         'type': 'external'
     }
-    return render(request, 'listpage.html', context=context)
+    return render(request, 'document_list.html', context=context)
 
 
 def internal_detail(request, id):

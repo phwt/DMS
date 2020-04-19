@@ -14,7 +14,7 @@
                 {% for work in works %}
                     <tr>
                         <td>{{ work.document.name }}</td>
-                        <td>{{ work.state }}</td>
+                        <td>{{ work.get_state_display }}</td>
                         <td>{{ work.create_date }}</td>
                     </tr>
                 {% endfor %}

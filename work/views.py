@@ -1,9 +1,10 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from work.forms import DocumentCreateForm, DocumentEditCancelForm
 from work.models import Work
 
-
+@login_required(login_url='login')
 def work_list(request):
     work = Work.objects.all()
     context = {
@@ -12,10 +13,7 @@ def work_list(request):
     return render(request, 'work_list.html', context=context)
 
 
-def work_detail(request):
-    return None
-
-
+@login_required(login_url='login')
 def work_create(request):
     if request.method == 'POST':
         create_form = DocumentCreateForm(request.POST)
@@ -25,7 +23,7 @@ def work_create(request):
     create_form = DocumentCreateForm()
     return render(request, 'work_create.html', {'form': create_form})
 
-
+@login_required(login_url='login')
 def work_edit_cancel(request, work_type):
     form = DocumentEditCancelForm()
 
@@ -40,7 +38,7 @@ def work_edit_cancel(request, work_type):
         'work_type': work_type
     })
 
-
+@login_required(login_url='login')
 def work_detail(request, id):
     work = Work.objects.get(pk=id)
     return render(request, template_name='work_detail.html', context={

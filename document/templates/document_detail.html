@@ -15,10 +15,11 @@
                     <p>{{ document.state }}</p>
                     <p>{{ document.parent_doc }}</p>
                 {% elif doc_type == 'external' %}
-                    <iframe src="{{ document.source }}" width="100%" height="500px"></iframe>
                     <p>{{ document.detail }}</p>
                     <p>{{ document.modify_date }}</p>
                 {% endif %}
+
+                <iframe src="/content/{{ document.file_location }}" width="100%" height="500px"></iframe>
 
             </div>
         </div>

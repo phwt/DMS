@@ -1,14 +1,17 @@
 from datetime import datetime
 
+from django.contrib.auth.decorators import login_required
+
 from .models import Document, InternalDoc, ExternalDoc
 from .forms import ExternalDocForm, ExternalDocFilterForm, InternalDocFilterForm
 from django.shortcuts import redirect, render
 
 
+@login_required(login_url='login')
 def index(request):
     return render(request, 'index.html')
 
-
+@login_required(login_url='login')
 def document_list(request, doc_type):
     if request.method == 'POST':
         if doc_type == 'external':
@@ -63,6 +66,7 @@ def document_list(request, doc_type):
     return render(request, 'document_list.html', context=context)
 
 
+@login_required(login_url='login')
 def document_detail(request, id):
     document = Document.objects.get(pk=id)
     if hasattr(document, 'internaldoc'):
@@ -71,6 +75,7 @@ def document_detail(request, id):
         return render(request, 'document_detail.html', {'document': document.externaldoc, 'doc_type': 'external'})
 
 
+@login_required(login_url='login')
 def external_add(request):
     if request.method == 'POST':
         form = ExternalDocForm(request.POST, request.FILES)

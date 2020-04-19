@@ -8,9 +8,9 @@
             <p>{{ document.version }}</p>
             <p>{{ document.running_no }}</p>
             <p>{{ document.release_date }}</p>
-            <p>{{ document.type }}</p>
-            <p>{{ document.status }}</p>
-            <p>{{ document.state }}</p>
+            <p>{{ document.get_type_display }}</p>
+            <p>{{ document.get_status_display }}</p>
+            <p>{{ document.get_state_display }}</p>
             <p>{{ document.parent_doc }}</p>
         {% elif doc_type == 'external' %}
             <p>{{ document.detail }}</p>

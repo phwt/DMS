@@ -8,13 +8,12 @@ class Department(models.Model):
 
 class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    fname = models.CharField(max_length=50, null=False)
-    lname = models.CharField(max_length=50, null=False)
     ROLES = [
+        ('EMP', 'Employee'),
         ('DCC', 'Document Control Clerk'),
         ('MR', 'Management Representative'),
         ('VP', 'Vice President'),
         ('SVP', 'Senior Vice President'),
     ]
-    role = models.CharField(max_length=3, choices=ROLES)
-    dept_id = models.ForeignKey(to=Department, on_delete=models.CASCADE)
+    role = models.CharField(max_length=3, choices=ROLES, null=False, default='EMP')
+    department = models.ForeignKey(to=Department, on_delete=models.CASCADE, null=False)

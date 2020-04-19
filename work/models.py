@@ -30,9 +30,9 @@ class Work(models.Model):
         default='N'
     )
     create_date = models.DateTimeField(auto_now_add=True)
-    complete_date = models.DateTimeField()
-    document_id = models.ForeignKey(InternalDoc, on_delete=models.CASCADE)
-    creator = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    complete_date = models.DateTimeField(null=True)
+    document = models.ForeignKey(InternalDoc, on_delete=models.CASCADE, null=False)
+    creator = models.ForeignKey(Employee, on_delete=models.CASCADE, null=False)
     employees = models.ManyToManyField('authen.Employee', through='DelegateUser', related_name='works')
 
 

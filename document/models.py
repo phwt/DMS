@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -36,7 +37,7 @@ class InternalDoc(Document):
 
 class ExternalDoc(Document):
     source = models.TextField(null=False)
-    detail = models.TextField(null=False)
+    detail = models.TextField(null=True)
     create_date = models.DateTimeField(auto_now_add=True)
-    # creator = REF USER
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
 

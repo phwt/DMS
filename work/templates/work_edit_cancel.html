@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2>Document {% if work_type == 'edit' %}Edit{% elif work_type == 'cancel' %}Cancel{% endif %} Request Form</h2>
+    <h2 class="pb-5">Document {% if work_type == 'edit' %}Edit{% elif work_type == 'cancel' %}Cancel{% endif %} Request Form</h2>
 
     <form action="" method="POST">
         {% csrf_token %}

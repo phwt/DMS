@@ -42,4 +42,4 @@ class WorkFilterForm(ModelForm):
         super(WorkFilterForm, self).__init__(*args, **kwargs)
         all_field_required_false(self.fields)
         for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control'})
+            self.fields[field].widget.attrs.update({'class': 'form-control form-control-sm'})

@@ -29,6 +29,7 @@ class Work(models.Model):
         null=False,
         default='N'
     )
+    detail = models.TextField(blank=True)
     create_date = models.DateTimeField(auto_now_add=True)
     complete_date = models.DateTimeField(null=True)
     document = models.ForeignKey(InternalDoc, on_delete=models.CASCADE, null=False)

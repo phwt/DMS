@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 
+from work.models import Work
 from .models import Document, InternalDoc, ExternalDoc
 from .forms import ExternalDocForm, ExternalDocFilterForm, InternalDocFilterForm
 from django.shortcuts import redirect, render
@@ -9,7 +10,13 @@ from django.shortcuts import redirect, render
 
 @login_required(login_url='login')
 def index(request):
-    return render(request, 'index.html')
+    works = Work.objects.all().order_by('-id')[:10]
+    internal = InternalDoc.objects.all().order_by('-id')[:10]
+    context = {
+        'works': works,
+        'documents': internal
+    }
+    return render(request, 'index.html', context=context)
 
 @login_required(login_url='login')
 def document_list(request, doc_type):

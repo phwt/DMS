@@ -9,18 +9,11 @@ class DocumentCreateForm(ModelForm):
     class Meta:
         model = InternalDoc
         exclude = ['file_location', 'state']
-        widgets = {
-            'name': TextInput(attrs={'class': 'form-control form-control-sm'}),
-            'version': NumberInput(attrs={'class': 'form-control form-control-sm'}),
-            'running_no': NumberInput(attrs={'class': 'form-control form-control-sm'}),
-            'type': Select(attrs={'class': 'form-control form-control-sm'}),
-            'status': Select(attrs={'class': 'form-control form-control-sm'}),
-            'parent_doc': Select(attrs={'class': 'form-control form-control-sm'}),
-        }
 
     def __init__(self, *args, **kwargs):
         super(DocumentCreateForm, self).__init__(*args, **kwargs)
         self.fields['parent_doc'].required = False
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
 class DocumentEditCancelForm(ModelForm):
@@ -28,9 +21,13 @@ class DocumentEditCancelForm(ModelForm):
         model = Work
         fields = ['document', 'detail']
         widgets = {
-            'document': TextInput(attrs={'class': 'form-control form-control-sm'}),
-            'detail': Textarea(attrs={'class': 'form-control form-control-sm'}),
+            'document': TextInput(),
+            'detail': Textarea(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(DocumentEditCancelForm, self).__init__(*args, **kwargs)
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
 class WorkFilterForm(ModelForm):

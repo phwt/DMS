@@ -10,12 +10,10 @@ class ExternalDocForm(ModelForm):
     class Meta:
         model = ExternalDoc
         fields = ['name', 'source', 'detail', 'file_location']
-        widgets = {
-            'name': TextInput(attrs={'class': 'form-control form-control-sm'}),
-            'source': Textarea(attrs={'class': 'form-control form-control-sm'}),
-            'detail': Textarea(attrs={'class': 'form-control form-control-sm'}),
-            'file_location': FileInput(attrs={'class': 'form-control form-control-sm'}),
-        }
+
+    def __init__(self, *args, **kwargs):
+        super(ExternalDocForm, self).__init__(*args, **kwargs)
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
 class ExternalDocFilterForm(ModelForm):

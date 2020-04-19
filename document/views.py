@@ -28,10 +28,10 @@ def document_list(request, doc_type):
                 print(filter_forms.cleaned_data)
                 documents = InternalDoc.objects.filter(
                     name__icontains=filter_forms.cleaned_data['name'],
-                    release_date__range=(
-                        filter_forms.cleaned_data['released_start'],
-                        filter_forms.cleaned_data['released_end']
-                    ),
+                    # work__create_date__range=(
+                    #     filter_forms.cleaned_data['released_start'],
+                    #     filter_forms.cleaned_data['released_end']
+                    # ),
                 )
 
                 if filter_forms.cleaned_data['version'] is not None:
@@ -48,8 +48,8 @@ def document_list(request, doc_type):
                 if filter_forms.cleaned_data['type'] != '':
                     documents = documents.filter(type__exact=filter_forms.cleaned_data['type'])
 
-                if filter_forms.cleaned_data['status'] != '':
-                    documents = documents.filter(status__exact=filter_forms.cleaned_data['status'])
+                if filter_forms.cleaned_data['state'] != '':
+                    documents = documents.filter(state__exact=filter_forms.cleaned_data['state'])
 
     else:
         if doc_type == 'internal':

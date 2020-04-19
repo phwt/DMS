@@ -86,8 +86,7 @@
                                     <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{ user.get_full_name }}
                                 </a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item text-dark disabled">{{ user.username }}</a>
-                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-dark disabled font-weight-bold">{{ user.username }}</a>
                                     <a class="dropdown-item text-dark" href="{% url 'change-password' %}">Change Password</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-dark" href="{% url 'logout' %}">Logout</a>

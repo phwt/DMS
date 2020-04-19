@@ -17,7 +17,7 @@
                     <th scope="col">Running No</th>
                     <th scope="col">Release Date</th>
                     <th scope="col">Type</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">State</th>
                     {#                    <th scope="col">State</th>#}
                     {#                    <th scope="col">Next Review</th>#}
                     <th scope="col">Parent Doc</th>
@@ -62,7 +62,7 @@
                         </div>
                     </td>
                     <td>{{ filter_forms.type }}</td>
-                    <td>{{ filter_forms.status }}</td>
+                    <td>{{ filter_forms.state }}</td>
                     {#                    <td></td>#}
                     {#                    <td></td>#}
                     <td>{{ filter_forms.parent_doc_name }}</td>
@@ -81,7 +81,11 @@
                         <td>{{ document.running_no }}</td>
                         <td>{{ document.release_date }}</td>
                         <td>{{ document.get_type_display }}</td>
-                        <td>{{ document.get_status_display }}</td>
+                        {% if document.get_state_display == '' %}
+                        <td>-</td>
+                        {% else %}
+                            <td>{{ document.get_state_display }}</td>
+                        {% endif %}
                         {#                        <td>'***'</td>#}
                         {#                        <td>'***'</td>#}
                         {% if document.parent_doc.id == null %}

@@ -33,7 +33,7 @@
     <div class="col-2"></div>
     <div class="col-8">
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#">LOGO</a>
+            <a class="navbar-brand" href="{% url 'index' %}">DMS</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -41,18 +41,60 @@
                 <ul class="navbar-nav mr-auto">
                 </ul>
                 <span class="navbar-text">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-            </ul>
-        </span>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown">
+                                Document
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;&nbsp;Internal Document</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View All</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View: In-Progress</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View: Released</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View: Obsoleted</a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_create' %}">Request Document&nbsp;&nbsp;<i class="fa fa-plus-square" aria-hidden="true"></i></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;&nbsp;External Document</a>
+                                <a class="dropdown-item text-dark" href="{% url 'external_doc' %}">View All</a>
+                                <a class="dropdown-item text-dark" href="{% url 'external_add' %}">Add Document&nbsp;&nbsp;<i class="fa fa-plus-square" aria-hidden="true"></i></a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown">
+                                Work
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark" href="{% url 'work_list' %}"><i class="fa fa-th-list" aria-hidden="true"></i>&nbsp;&nbsp;Work List</a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_list' %}"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;My Work</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled">|</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" role="button"
+                                   data-toggle="dropdown">
+                                    <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{ user.get_full_name }}
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item text-dark disabled">{{ user.username }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-dark" href="{% url 'logout' %}">Logout</a>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </span>
             </div>
         </nav>
     </div>

@@ -10,6 +10,9 @@ class ExternalDocForm(ModelForm):
     class Meta:
         model = ExternalDoc
         fields = ['name', 'source', 'detail', 'file_location']
+        widgets = {
+            'source': TextInput()
+        }
 
     def __init__(self, *args, **kwargs):
         super(ExternalDocForm, self).__init__(*args, **kwargs)

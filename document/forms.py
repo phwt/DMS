@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select
+from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select, Textarea, FileInput
 
 from DMS.utils import all_field_required_false, apply_class_to_fields
 from document.models import ExternalDoc, InternalDoc
@@ -10,6 +10,12 @@ class ExternalDocForm(ModelForm):
     class Meta:
         model = ExternalDoc
         fields = ['name', 'source', 'detail', 'file_location']
+        widgets = {
+            'name': TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'source': Textarea(attrs={'class': 'form-control form-control-sm'}),
+            'detail': Textarea(attrs={'class': 'form-control form-control-sm'}),
+            'file_location': FileInput(attrs={'class': 'form-control form-control-sm'}),
+        }
 
 
 class ExternalDocFilterForm(ModelForm):

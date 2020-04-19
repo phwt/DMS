@@ -1,4 +1,44 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2 class="pb-5">Dashboard</h2>
+    <div class="row">
+        <div class="col-6">
+            <table class="table table">
+                <thead>
+                    <tr>
+                        <th scope="col">Related Document</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Create Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                {% for work in works %}
+                    <tr>
+                        <td>{{ work }}</td>
+                        <td>{{ work.get_type_display }}</td>
+                        <td>{{ work.create_date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        <div class="col-6">
+                <table class="table table">
+                    <thead>
+                       <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Version</th>
+                            <th scope="col">Running No</th>
+                            <th scope="col">Release Date</th>
+                            <th scope="col">Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+{#                {% for work in works %}#}
+{#                    <tr>#}
+{#                        #}
+{#                    </tr>#}
+{#                {% endfor %}#}
+            </table>
+        </div>
+    </div>
 {% endblock %}

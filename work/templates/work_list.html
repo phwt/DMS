@@ -6,9 +6,11 @@
         <table class="table table">
             <thead>
                 <tr>
-                    <th scope="col">Document Name</th>
+                    <th scope="col">Work Name</th>
+                    <th scope="col">Type</th>
                     <th scope="col">Status</th>
                     <th scope="col">Create Date</th>
+                    <th scope="col">Complete Date</th>
                     <th></th>
                 </tr>
             </thead>
@@ -17,8 +19,14 @@
                         <td>
                             <a href="{% url 'work_detail' id=work.id %}">{{ work }}</a>
                         </td>
+                        <td>{{ work.get_type_display }}</td>
                         <td>{{ work.get_state_display }}</td>
                         <td>{{ work.create_date }}</td>
+                        {% if work.complete_date == null %}
+                        <td>-</td>
+                        {% else %}
+                            <td>{{ work.complete_date }}</td>
+                        {% endif %}
                         <td>
                             <a href="{% url 'work_detail' id=work.id %}">
                                 <button type="button" class="btn btn-secondary btn-block btn-sm">

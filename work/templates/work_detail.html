@@ -7,11 +7,17 @@
                 <p class="text-muted"><small>{{ work.create_date }}</small></p>
                 <p class="text-muted"><small>by {{ work.creator }}</small></p>
 
-                <p>{{ work.type }}</p>
-                <p>{{ work.state }}</p>
-                <p>{{ work.complete_date }}</p>
-                <p>{{ work.document_id }}</p>
-
+                <p>Type: {{ work.get_type_display }}</p>
+                <p>State: {{ work.get_state_display }}</p>
+                {% if work.complete_date == null %}
+                    <p>work not completed</p>
+                {% else %}
+                    <p>{{ work.complete_date }}</p>
+                {% endif %}
+                <a href="{% url 'doc_detail' id=work.document_id %}">
+                    <button type="button" class="btn btn-secondary">View Document
+                    </button>
+                </a>
             </div>
         </div>
     </div>

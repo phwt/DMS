@@ -40,6 +40,7 @@ def work_edit_cancel(request, work_type):
         'work_type': work_type
     })
 
+
 def work_detail(request, id):
     work = Work.objects.get(pk=id)
     return render(request, template_name='work_detail.html', context={

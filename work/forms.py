@@ -1,6 +1,6 @@
 from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select, Textarea
 
-from document.forms import all_field_required_false
+from DMS.utils import all_field_required_false, apply_class_to_fields
 from document.models import InternalDoc
 from work.models import Work
 
@@ -41,5 +41,4 @@ class WorkFilterForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(WorkFilterForm, self).__init__(*args, **kwargs)
         all_field_required_false(self.fields)
-        for field in self.fields:
-            self.fields[field].widget.attrs.update({'class': 'form-control form-control-sm'})
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')

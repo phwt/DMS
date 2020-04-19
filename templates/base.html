@@ -56,7 +56,10 @@
                                 <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View: In-Progress</a>
                                 <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View: Released</a>
                                 <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View: Obsoleted</a>
-                                <a class="dropdown-item text-dark" href="{% url 'work_create' %}">Request Document&nbsp;&nbsp;<i class="fa fa-plus-square" aria-hidden="true"></i></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-dark" href="{% url 'work_create' %}">Create Document&nbsp;&nbsp;<i class="fa fa-plus-square" aria-hidden="true"></i></a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_edit' %}">Edit Document&nbsp;&nbsp;<i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_cancel' %}">Cancel Document&nbsp;&nbsp;<i class="fa fa-minus-square" aria-hidden="true"></i></a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;&nbsp;External Document</a>
                                 <a class="dropdown-item text-dark" href="{% url 'external_doc' %}">View All</a>

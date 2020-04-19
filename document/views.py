@@ -14,7 +14,7 @@ def index(request):
     internal = InternalDoc.objects.all().order_by('-id')[:10]
     context = {
         'works': works,
-        'document': internal
+        'documents': internal
     }
     return render(request, 'index.html', context=context)
 

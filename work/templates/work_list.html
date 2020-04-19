@@ -13,8 +13,8 @@
             </thead>
                 {% for work in works %}
                     <tr>
-                        <td>{{ work.document_id.name }}</td>
-                        <td>{{ work.status }}</td>
+                        <td>{{ work.document.name }}</td>
+                        <td>{{ work.state }}</td>
                         <td>{{ work.create_date }}</td>
                     </tr>
                 {% endfor %}

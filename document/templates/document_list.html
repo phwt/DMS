@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2 class="pb-5">View All Documents</h2>
+    {% if doc_type == 'internal' %}
+    <h2 class="pb-5">View All Internal Documents</h2>
+    {% endif %}
+    {% if doc_type == 'external' %}
+    <h2 class="pb-5">View All External Documents</h2>
+    {% endif %}
     <form method="POST" action="">
         {% csrf_token %}
         <table class="table table-responsive">

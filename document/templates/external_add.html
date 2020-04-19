@@ -2,22 +2,23 @@
 {% block content %}
     <h2 class="pb-5">External Document Creation Form</h2>
     <form action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
+        {% csrf_token %}
 
-            {{ form.name.errors }}
-            <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
-            {{ form.name }}
+        {{ form.name.errors }}
+        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
 
-            {{ form.source.errors }}
-            <label for="{{ form.source.id_for_label }}">{{ form.source.label }}</label>
-            {{ form.source }}
+        {{ form.source.errors }}
+        <label for="{{ form.source.id_for_label }}">{{ form.source.label }}</label>
+        {{ form.source }}
 
-            {{ form.detail.errors }}
-            <label for="{{ form.detail.id_for_label }}">{{ form.detail.label }}</label>
-            {{ form.detail }}
+        {{ form.detail.errors }}
+        <label for="{{ form.detail.id_for_label }}">{{ form.detail.label }}</label>
+        {{ form.detail }}
 
-            {{ form.file_location.errors }}
-            <label for="{{ form.file_location.id_for_label }}">{{ form.file_location.label }}</label>
+        {{ form.file_location.errors }}
+        <label for="{{ form.file_location.id_for_label }}">{{ form.file_location.label }}</label>
+        <div class="custom-file">
             <input
                     type="file"
                     class="custom-file-input"
@@ -25,7 +26,9 @@
                     id="{{ form.file_location.id_for_label }}"
                     value="form.file_location.value"
             >
-            {{ form.file_location }}
-            <input type="submit" class="btn btn-success" value="Submit">
+            <label class="custom-file-label" for="customFile">Choose file</label>
+            {#            {{ form.file_location }}#}
+        </div>
+        <input type="submit" class="btn btn-success mt-3" value="Submit">
     </form>
 {% endblock content %}

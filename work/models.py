@@ -17,10 +17,10 @@ class Work(models.Model):
     )
     STATES = [
         ('N', 'New'),
-        ('DCC', 'DCC-review'),
-        ('MR', 'MR-review'),
-        ('VP', 'VP-review'),
-        ('SVP', 'SVP-review'),
+        ('DCC', 'DCC Review'),
+        ('MR', 'MR Review'),
+        ('VP', 'VP Review'),
+        ('SVP', 'SVP Review'),
         ('C', 'Completed'),
     ]
     state = models.CharField(
@@ -37,7 +37,8 @@ class Work(models.Model):
     employees = models.ManyToManyField('authen.Employee', through='DelegateUser', related_name='works')
 
     def __str__(self):
-        return f'{self.get_type_display()} - {self.document.name}'
+        # return f'{self.get_type_display()} - {self.document.name}'
+        return self.document.name
 
 
 class DelegateUser(models.Model):

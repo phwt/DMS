@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if doc_type == 'internal' %}
+    {% if doc_type != 'external' %}
     <h2 class="pb-5">View All Internal Documents</h2>
     {% endif %}
     {% if doc_type == 'external' %}
@@ -10,7 +10,7 @@
         {% csrf_token %}
         <table class="table table-responsive">
             <thead>
-            {% if doc_type == 'internal' %}
+            {% if doc_type != 'external' %}
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Version</th>
@@ -36,7 +36,7 @@
             {% endif %}
             </thead>
 
-            {% if doc_type == 'internal' %}
+            {% if doc_type != 'external' %}
                 <tr>
                     <td>{{ filter_forms.name }}</td>
                     <td>{{ filter_forms.version }}</td>

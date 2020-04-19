@@ -58,12 +58,15 @@ def document_list(request, doc_type):
         elif doc_type == 'internal-in':
             documents = InternalDoc.objects.filter(state='IN')
             filter_forms = InternalDocFilterForm(initial={'state': 'IN'})
+            doc_type = 'internal'
         elif doc_type == 'internal-re':
             documents = InternalDoc.objects.filter(state='RE')
             filter_forms = InternalDocFilterForm(initial={'state': 'RE'})
+            doc_type = 'internal'
         elif doc_type == 'internal-ob':
             documents = InternalDoc.objects.filter(state='OB')
             filter_forms = InternalDocFilterForm(initial={'state': 'OB'})
+            doc_type = 'internal'
         elif doc_type == 'external':
             documents = ExternalDoc.objects.all()
             filter_forms = ExternalDocFilterForm()

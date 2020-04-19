@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if doc_type == 'internal' %}
+    {% if doc_type != 'external' %}
     <h2 class="pb-5">View All Internal Documents</h2>
     {% endif %}
     {% if doc_type == 'external' %}
@@ -10,14 +10,14 @@
         {% csrf_token %}
         <table class="table table-responsive">
             <thead>
-            {% if doc_type == 'internal' %}
+            {% if doc_type != 'external' %}
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Version</th>
                     <th scope="col">Running No</th>
                     <th scope="col">Release Date</th>
                     <th scope="col">Type</th>
-                    <th scope="col">Status</th>
+                    <th scope="col">State</th>
                     {#                    <th scope="col">State</th>#}
                     {#                    <th scope="col">Next Review</th>#}
                     <th scope="col">Parent Doc</th>
@@ -36,7 +36,7 @@
             {% endif %}
             </thead>
 
-            {% if doc_type == 'internal' %}
+            {% if doc_type != 'external' %}
                 <tr>
                     <td>{{ filter_forms.name }}</td>
                     <td>{{ filter_forms.version }}</td>
@@ -62,7 +62,7 @@
                         </div>
                     </td>
                     <td>{{ filter_forms.type }}</td>
-                    <td>{{ filter_forms.status }}</td>
+                    <td>{{ filter_forms.state }}</td>
                     {#                    <td></td>#}
                     {#                    <td></td>#}
                     <td>{{ filter_forms.parent_doc_name }}</td>

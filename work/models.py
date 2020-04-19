@@ -36,6 +36,9 @@ class Work(models.Model):
     creator = models.ForeignKey(Employee, on_delete=models.CASCADE, null=False)
     employees = models.ManyToManyField('authen.Employee', through='DelegateUser', related_name='works')
 
+    def __str__(self):
+        return f'{self.get_type_display()} - {self.document.name}'
+
 
 class DelegateUser(models.Model):
     work = models.ForeignKey(Work, on_delete=models.CASCADE)

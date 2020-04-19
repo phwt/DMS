@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h2 class="pb-5">View All Works</h2>
-<form method="POST" action="">
-    {% csrf_token %}
+    <h2 class="pb-5">View All Works</h2>
+    <form method="POST" action="">
+        {% csrf_token %}
 
-    {{ filter_forms }}
+        {{ filter_forms }}
 
-    <table class="table table">
-        <thead>
+        <table class="table table">
+            <thead>
             <tr>
                 <th scope="col">Work Name</th>
                 <th scope="col">Type</th>
@@ -16,29 +16,29 @@
                 <th scope="col">Complete Date</th>
                 <th></th>
             </tr>
-        </thead>
-        {% for work in works %}
-        <tr>
-            <td>
-                <a href="{% url 'work_detail' id=work.id %}">{{ work }}</a>
-            </td>
-            <td>{{ work.get_type_display }}</td>
-            <td>{{ work.get_state_display }}</td>
-            <td>{{ work.create_date }}</td>
-            {% if work.complete_date == null %}
-            <td>-</td>
-            {% else %}
-            <td>{{ work.complete_date }}</td>
-            {% endif %}
-            <td>
-                <a href="{% url 'work_detail' id=work.id %}">
-                    <button type="button" class="btn btn-secondary btn-block btn-sm">
-                        <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    </button>
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</form>
+            </thead>
+            {% for work in works %}
+                <tr>
+                    <td>
+                        <a href="{% url 'work_detail' id=work.id %}">{{ work }}</a>
+                    </td>
+                    <td>{{ work.get_type_display }}</td>
+                    <td>{{ work.get_state_display }}</td>
+                    <td>{{ work.create_date }}</td>
+                    {% if work.complete_date == null %}
+                        <td>-</td>
+                    {% else %}
+                        <td>{{ work.complete_date }}</td>
+                    {% endif %}
+                    <td>
+                        <a href="{% url 'work_detail' id=work.id %}">
+                            <button type="button" class="btn btn-secondary btn-block btn-sm">
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </form>
 {% endblock %}

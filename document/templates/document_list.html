@@ -81,7 +81,11 @@
                         <td>{{ document.running_no }}</td>
                         <td>{{ document.release_date }}</td>
                         <td>{{ document.get_type_display }}</td>
-                        <td>{{ document.get_status_display }}</td>
+                        {% if document.get_state_display == '' %}
+                        <td>-</td>
+                        {% else %}
+                            <td>{{ document.get_state_display }}</td>
+                        {% endif %}
                         {#                        <td>'***'</td>#}
                         {#                        <td>'***'</td>#}
                         {% if document.parent_doc.id == null %}

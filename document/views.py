@@ -11,6 +11,7 @@ from django.shortcuts import redirect, render
 def index(request):
     return render(request, 'index.html')
 
+
 @login_required(login_url='login')
 def document_list(request, doc_type):
     if request.method == 'POST':

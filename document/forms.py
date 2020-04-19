@@ -24,7 +24,7 @@ class ExternalDocFilterForm(ModelForm):
         widgets = {
             'name': TextInput(attrs={'class': 'form-control form-control-sm'}),
             'source': TextInput(attrs={'class': 'form-control form-control-sm'}),
-            'detail': TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'detail': TextInput(attrs={'class': 'form-control form-control-sm '}),
         }
 
     def __init__(self, *args, **kwargs):

@@ -63,18 +63,12 @@ def document_list(request, doc_type):
     return render(request, 'document_list.html', context=context)
 
 
-def internal_detail(request, id):
-    doc = InternalDoc.objects.get(document_ptr_id=id)
-    return render(request, template_name='internal_detail.html', context={
-        'doc': doc
-    })
-
-
-def external_detail(request, id):
-    doc = ExternalDoc.objects.get(document_ptr_id=id)
-    return render(request, template_name='external_detail.html', context={
-        'doc': doc
-    })
+def document_detail(request, id):
+    document = Document.objects.get(pk=id)
+    if hasattr(document, 'internaldoc'):
+        return render(request, 'document_detail.html', {'document': document.internaldoc, 'doc_type': 'internal'})
+    elif hasattr(document, 'externaldoc'):
+        return render(request, 'document_detail.html', {'document': document.externaldoc, 'doc_type': 'external'})
 
 
 def external_add(request):

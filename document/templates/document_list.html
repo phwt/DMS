@@ -69,7 +69,7 @@
                 {% for document in documents %}
                     <tr>
                         <td>
-                            <a href="{% url 'internal_detail' id=document.id %}">{{ document.name }}</a>
+                            <a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a>
                         </td>
                         <td>{{ document.version }}</td>
                         <td>{{ document.running_no }}</td>
@@ -82,13 +82,13 @@
                             <td>-</td>
                         {% else %}
                             <td>
-                                <a href="{% url 'internal_detail' id=document.parent_doc.id %}">
+                                <a href="{% url 'doc_detail' id=document.parent_doc.id %}">
                                     {{ document.parent_doc.name }}
                                 </a>
                             </td>
                         {% endif %}
                         <td>
-                            <a href="{% url 'internal_detail' id=document.id %}">
+                            <a href="{% url 'doc_detail' id=document.id %}">
                                 <button type="button" class="btn btn-secondary btn-block btn-sm">
                                     <i class="fa fa-chevron-right" aria-hidden="true"></i>
                                 </button>
@@ -113,13 +113,13 @@
                 {% for document in documents %}
                     <tr>
                         <td>
-                            <a href="{% url 'external_detail' id=document.id %}">{{ document.name }}</a>
+                            <a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a>
                         </td>
                         <td>{{ document.source }}</td>
                         <td>{{ document.detail }}</td>
                         <td>{{ document.modify_date }}</td>
                         <td>
-                            <a href="{% url 'external_detail' id=document.id %}">
+                            <a href="{% url 'doc_detail' id=document.id %}">
                                 <button type="button" class="btn btn-secondary btn-block btn-sm">
                                     <i class="fa fa-chevron-right" aria-hidden="true"></i>
                                 </button>

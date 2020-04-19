@@ -35,11 +35,9 @@ def document_list(request, doc_type):
                 )
 
                 if filter_forms.cleaned_data['version'] is not None:
-                    print('fired')
                     documents = documents.filter(version=filter_forms.cleaned_data['version'])
 
                 if filter_forms.cleaned_data['running_no'] is not None:
-                    print('fired2')
                     documents = documents.filter(running_no=filter_forms.cleaned_data['running_no'])
 
                 if filter_forms.cleaned_data['parent_doc_name'] != '':

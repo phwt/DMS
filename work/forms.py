@@ -12,3 +12,9 @@ class DocumentCreateForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(DocumentCreateForm, self).__init__(*args, **kwargs)
         self.fields['parent_doc'].required = False
+
+
+class DocumentEditCancelForm(ModelForm):
+    class Meta:
+        model = Work
+        fields = ['document', 'detail']

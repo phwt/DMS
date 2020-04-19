@@ -9,7 +9,7 @@ class Document(models.Model):
 class InternalDoc(Document):
     version = models.IntegerField(null=False)
     running_no = models.IntegerField(null=False)
-    TYPE_CHOICE = [
+    TYPES = [
         ('M', 'Manual'),
         ('P', 'Procedure'),
         ('W', 'Work Instruction'),
@@ -17,18 +17,18 @@ class InternalDoc(Document):
     ]
     type = models.CharField(
         max_length=1,
-        choices=TYPE_CHOICE,
+        choices=TYPES,
         null=False,
     )
-    STATUS_CHOICE = [
+    STATES = [
         ('IN', 'In-Progress'),
         ('RE', 'Released'),
         ('OB', 'Obsoleted'),
         ('RC', 'Recalled'),
     ]
-    status = models.CharField(
+    state = models.CharField(
         max_length=2,
-        choices=STATUS_CHOICE,
+        choices=STATES,
         null=False,
     )
     parent_doc = models.ForeignKey('self', on_delete=models.CASCADE, null=True)

@@ -3,14 +3,19 @@ from document.models import InternalDoc
 from authen.models import Employee
 
 
-class DelegateUser(models.Model):
-    users = models.ManyToManyField(Employee, through='Work')
-    result = models.BooleanField()
-    review_date = models.DateTimeField()
-
-
 class Work(models.Model):
-    STATUS_CHOICE = [
+    TYPES = [
+        ('CR', 'Create'),
+        ('E', 'Edit'),
+        ('CA', 'Cancel'),
+    ]
+    type = models.CharField(
+        max_length=2,
+        choices=TYPES,
+        null=False,
+        default='CR'
+    )
+    STATES = [
         ('N', 'New'),
         ('DCC', 'DCC-review'),
         ('MR', 'MR-review'),
@@ -18,13 +23,21 @@ class Work(models.Model):
         ('SVP', 'SVP-review'),
         ('C', 'Completed'),
     ]
-    status = models.CharField(
+    state = models.CharField(
         max_length=3,
-        choices=STATUS_CHOICE,
+        choices=STATES,
         null=False,
+        default='N'
     )
-    complete_date = models.DateTimeField()
     create_date = models.DateTimeField(auto_now_add=True)
+    complete_date = models.DateTimeField()
     document_id = models.ForeignKey(InternalDoc, on_delete=models.CASCADE)
-    employees = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    delegate_user = models.ForeignKey(DelegateUser, on_delete=models.CASCADE)
+    creator = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employees = models.ManyToManyField('authen.Employee', through='DelegateUser', related_name='works')
+
+
+class DelegateUser(models.Model):
+    work = models.ForeignKey(Work, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    result = models.BooleanField(null=True)
+    review_date = models.DateTimeField()

@@ -13,9 +13,18 @@
             </thead>
                 {% for work in works %}
                     <tr>
-                        <td>{{ work.document.name }}</td>
+                        <td>
+                            <a href="{% url 'work_detail' id=work.id %}">{{ work }}</a>
+                        </td>
                         <td>{{ work.get_state_display }}</td>
                         <td>{{ work.create_date }}</td>
+                        <td>
+                            <a href="{% url 'work_detail' id=work.id %}">
+                                <button type="button" class="btn btn-secondary btn-block btn-sm">
+                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                </button>
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
         </table>

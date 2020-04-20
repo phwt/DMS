@@ -4,7 +4,8 @@
         <span class="align-baseline">
             <p>Name >> {{ employee.user.first_name }}</p>
             <p>LastName >> {{ employee.user.last_name }}</p>
-            <p>department >> {{ employee.department }}</p>
+            <p>Username >> {{ employee.user.username }}</p>
+            <p>Department >> {{ employee.department }}</p>
             <a class="btn btn-primary" href="{% url 'change-password' %}">Change Password</a>
 
         </span>

@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
+from DMS.utils import date_plus_today
 from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm
-from work.models import Work
+from work.models import Work, DelegateUser
 
 
 @login_required(login_url='login')
@@ -28,6 +29,8 @@ def work_create(request):
         document = create_form.save()
         work = Work(type='CR', state='N', creator=request.user.employee, document=document)
         work.save()
+        delegate = DelegateUser(work=work, employee=request.user.employee, deadline=date_plus_today(5))
+        delegate.save()
     create_form = DocumentCreateForm()
     return render(request, 'work_create.html', {'form': create_form})
 

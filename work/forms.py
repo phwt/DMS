@@ -44,7 +44,13 @@ class WorkFilterForm(ModelForm):
 
 class DocumentSubmitForm(forms.Form):
     file = forms.FileField()
+    delegate_user = forms.ChoiceField()
 
 
 class DocumentReviewForm(forms.Form):
+    result = forms.BooleanField()
+    delegate_user = forms.ChoiceField()
+
+
+class DocumentApproveForm(forms.Form):
     result = forms.BooleanField()

@@ -20,8 +20,7 @@ def date_plus_today(how_many):
 
 
 def pass_delegate(work, state, form_data):
-    work.document.file_location = form_data.cleaned_data['file']
-    work.state = 'DCC'
+    work.state = state
     work.save()
 
     current_delegate = work.delegateuser_set.get(completed=False)

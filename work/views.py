@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from DMS.utils import date_plus_today
+from authen.models import Employee
 from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm, DocumentSubmitForm, \
     DocumentReviewForm
 from work.models import Work, DelegateUser
@@ -55,17 +56,39 @@ def work_edit_cancel(request, work_type):
 @login_required(login_url='login')
 def work_detail(request, id):
     work = Work.objects.get(pk=id)
-    delegate_user = work.employees.through.objects.filter(completed=False)
+    delegate_user = work.employees.through.objects.filter(completed=False, work=work)
+
+    if request.method == 'POST':
+        if work.state == 'N':
+            submit_form = DocumentSubmitForm(request.POST, request.FILES)
+            submit_form.fields['delegate_user'].choices = \
+                [(i.id, i) for i in Employee.objects.filter(user__groups__name='DCC')]
+            if submit_form.is_valid():
+                work.document.file_location = submit_form.cleaned_data['file']
+                work.state = 'DCC'
+                work.save()
+
+                current_delegate = work.delegateuser_set.get(completed=False)
+                current_delegate.completed = True
+                current_delegate.save()
+
+                new_delegate = DelegateUser(
+                    work=work,
+                    employee=Employee.objects.get(pk=submit_form.cleaned_data['delegate_user']),
+                    deadline=date_plus_today(5)
+                )
+                new_delegate.save()
 
     action_form = None
     if work.state == 'N':
         action_form = DocumentSubmitForm()
+        action_form.fields['delegate_user'].choices = \
+            [(i.id, i) for i in Employee.objects.filter(user__groups__name='DCC')]
     elif work.state in ('DCC', 'MR', 'VP', 'SVP'):
         action_form = DocumentReviewForm()
 
     return render(request, template_name='work_detail.html', context={
         'work': work,
-        # 'work_state_group': work_state_group,
         'action_form': action_form,
         'delegate_user': delegate_user[0]
     })

@@ -26,7 +26,7 @@
             <h4>Submit document for review</h4>
             <hr>
             <form action="" method="POST" enctype="multipart/form-data">
-
+                {% csrf_token %}
                 <table>
                     {{ action_form.as_table }}
                 </table>

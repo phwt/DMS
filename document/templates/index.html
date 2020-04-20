@@ -4,41 +4,49 @@
     <div class="row">
         <div class="col-6">
             <h4 class="pb-3">Work List</h4>
-                <table class="table table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Related Document</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Create Date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    {% for work in works %}
-                        <tr>
-                            <td>{{ work }}</td>
-                            <td>{{ work.get_type_display }}</td>
-                            <td>{{ work.create_date }}</td>
-                        </tr>
-                    {% endfor %}
-                </table>
+            <h6>{{ work_cnt }}</h6>
+            <h6>{{ work_cnt_cr }}</h6>
+            <h6>{{ work_cnt_e }}</h6>
+            <h6>{{ work_cnt_ca }}</h6>
+            <table class="table table">
+                <thead>
+                <tr>
+                    <th scope="col">Related Document</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Create Date</th>
+                    <th></th>
+                </tr>
+                </thead>
+                {% for work in works %}
+                    <tr>
+                        <td>{{ work }}</td>
+                        <td>{{ work.get_type_display }}</td>
+                        <td>{{ work.create_date }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
         </div>
         <div class="col-6">
             <h4 class="pb-3">Internal Document</h4>
-                <table class="table table">
-                    <thead>
-                       <tr>
-                           <th scope="col">Name</th>
-                           <th scope="col">Type</th>
-                           <th scope="col">State</th>
-                           <th></th>
-                        </tr>
-                    </thead>
+            <h6>{{ doc_cnt }}</h6>
+            <h6>{{ doc_cnt_in }}</h6>
+            <h6>{{ doc_cnt_re }}</h6>
+            <h6>{{ doc_cnt_ob }}</h6>
+            <table class="table table">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">State</th>
+                    <th></th>
+                </tr>
+                </thead>
                 {% for document in documents %}
                     <tr>
                         <td>{{ document.name }}</td>
                         <td>{{ document.get_type_display }}</td>
                         {% if document.get_state_display == '' %}
-                        <td>-</td>
+                            <td>-</td>
                         {% else %}
                             <td>{{ document.get_state_display }}</td>
                         {% endif %}

@@ -21,9 +21,9 @@ def index(request):
 
 @login_required(login_url='login')
 def document_list(request, doc_type):
-    if request.method == 'POST':
+    if request.method == 'GET':
         if doc_type == 'external':
-            filter_forms = ExternalDocFilterForm(request.POST)
+            filter_forms = ExternalDocFilterForm(request.GET)
             if filter_forms.is_valid():
                 documents = ExternalDoc.objects.filter(
                     name__icontains=filter_forms.cleaned_data['name'],
@@ -31,7 +31,7 @@ def document_list(request, doc_type):
                     detail__icontains=filter_forms.cleaned_data['detail'],
                 )
         elif doc_type == 'internal':
-            filter_forms = InternalDocFilterForm(request.POST)
+            filter_forms = InternalDocFilterForm(request.GET)
             if filter_forms.is_valid():
                 print(filter_forms.cleaned_data)
                 documents = InternalDoc.objects.filter(
@@ -61,18 +61,6 @@ def document_list(request, doc_type):
         if doc_type == 'internal':
             documents = InternalDoc.objects.all()
             filter_forms = InternalDocFilterForm()
-        elif doc_type == 'internal-in':
-            documents = InternalDoc.objects.filter(state='IN')
-            filter_forms = InternalDocFilterForm(initial={'state': 'IN'})
-            doc_type = 'internal'
-        elif doc_type == 'internal-re':
-            documents = InternalDoc.objects.filter(state='RE')
-            filter_forms = InternalDocFilterForm(initial={'state': 'RE'})
-            doc_type = 'internal'
-        elif doc_type == 'internal-ob':
-            documents = InternalDoc.objects.filter(state='OB')
-            filter_forms = InternalDocFilterForm(initial={'state': 'OB'})
-            doc_type = 'internal'
         elif doc_type == 'external':
             documents = ExternalDoc.objects.all()
             filter_forms = ExternalDocFilterForm()

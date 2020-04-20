@@ -6,8 +6,7 @@
     {% if doc_type == 'external' %}
     <h2 class="pb-5">View All External Documents</h2>
     {% endif %}
-    <form method="POST" action="">
-        {% csrf_token %}
+    <form method="GET" action="">
         <table class="table table-responsive">
             <thead>
             {% if doc_type != 'external' %}

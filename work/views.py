@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple
 from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm, DocumentSubmitForm, \
-    DocumentReviewForm
+    DocumentReviewForm, DocumentApproveForm
 from work.models import Work, DelegateUser
 
 
@@ -62,14 +62,39 @@ def work_detail(request, id):
             submit_form = DocumentSubmitForm(request.POST, request.FILES)
             submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')
             if submit_form.is_valid():
+                work.document.file_location = submit_form.cleaned_data['file']
                 pass_delegate(work, 'DCC', submit_form)
+        elif work.state == 'DCC':  # TODO: Check for review result
+            submit_form = DocumentReviewForm(request.POST)
+            submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('MR')
+            if submit_form.is_valid():
+                pass_delegate(work, 'MR', submit_form)
+        elif work.state == 'MR':
+            submit_form = DocumentReviewForm(request.POST)
+            submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('VP')
+            if submit_form.is_valid():
+                pass_delegate(work, 'VP', submit_form)
+        elif work.state == 'VP':
+            submit_form = DocumentReviewForm(request.POST)
+            submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('SVP')
+            if submit_form.is_valid():
+                pass_delegate(work, 'SVP', submit_form)
 
     action_form = None
     if work.state == 'N':
         action_form = DocumentSubmitForm()
         action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')
-    elif work.state in ('DCC', 'MR', 'VP', 'SVP'):
+    elif work.state == 'DCC':
         action_form = DocumentReviewForm()
+        action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('MR')
+    elif work.state == 'MR':
+        action_form = DocumentReviewForm()
+        action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('VP')
+    elif work.state == 'VP':
+        action_form = DocumentReviewForm()
+        action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('SVP')
+    elif work.state == 'SVP':
+        action_form = DocumentApproveForm()
 
     return render(request, template_name='work_detail.html', context={
         'work': work,

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content%}
+    <h2 class="pb-5">Profile</h2>
+        <span class="align-baseline">
+            <p>Name >> {{ employee.user.first_name }}</p>
+            <p>LastName >> {{ employee.user.last_name }}</p>
+            <p>department >> {{ employee.department }}</p>
+        </span>
+{% endblock %}

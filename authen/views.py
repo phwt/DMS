@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
+from authen.models import Employee
+
 
 def auth_login(request):
     context = {}
@@ -50,3 +52,12 @@ def change_password(request):
             context['password'] = password
             context['error'] = 'Wrong password!'
     return render(request, 'changepassword.html', context=context)
+
+
+def profile(request):
+    username = request.user.id
+    employee = Employee.objects.get(pk=username)
+    context = {
+        'employee': employee
+    }
+    return render(request, 'profile.html', context=context)

@@ -5,5 +5,7 @@
             <p>Name >> {{ employee.user.first_name }}</p>
             <p>LastName >> {{ employee.user.last_name }}</p>
             <p>department >> {{ employee.department }}</p>
+            <a class="btn btn-primary" href="{% url 'change-password' %}">Change Password</a>
+
         </span>
 {% endblock %}

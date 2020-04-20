@@ -45,4 +45,4 @@ class DelegateUser(models.Model):
     work = models.ForeignKey(Work, on_delete=models.CASCADE)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     result = models.BooleanField(null=True)
-    review_date = models.DateTimeField()
+    deadline = models.DateTimeField()

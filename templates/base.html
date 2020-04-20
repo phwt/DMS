@@ -8,6 +8,7 @@
     html {
         overflow-x: hidden;
     }
+
     body {
         background-image: url("{% static '/img/nav_bg_gradient.jpg' %}");
         background-repeat: no-repeat;
@@ -21,6 +22,7 @@
     .shadow {
         box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     }
+
     .round {
         border-radius: 25px;
     }
@@ -38,7 +40,11 @@
     <div class="col-2"></div>
     <div class="col-8">
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="{% url 'index' %}">DMS</a>
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static '/img/dms_logo.png' %}" width="30" height="30"
+                     class="d-inline-block align-top" alt="">
+                DMS
+            </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -56,20 +62,26 @@
                                 Document
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;&nbsp;Internal Document</a>
+                                <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text"
+                                                                                                aria-hidden="true"></i>&nbsp;&nbsp;Internal Document</a>
                                 <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View All</a>
                                 <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}?state=IN">View: In-Progress</a>
                                 <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}?state=RE">View: Released</a>
                                 <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}?state=OB">View: Obsoleted</a>
                                 <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}?state=RC">View: Recalled</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-dark" href="{% url 'work_create' %}">Create Document&nbsp;&nbsp;<i class="fa fa-plus-square" aria-hidden="true"></i></a>
-                                <a class="dropdown-item text-dark" href="{% url 'work_edit' %}">Edit Document&nbsp;&nbsp;<i class="fa fa-pencil-square" aria-hidden="true"></i></a>
-                                <a class="dropdown-item text-dark" href="{% url 'work_cancel' %}">Cancel Document&nbsp;&nbsp;<i class="fa fa-minus-square" aria-hidden="true"></i></a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_create' %}">Create Document&nbsp;&nbsp;<i
+                                        class="fa fa-plus-square" aria-hidden="true"></i></a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_edit' %}">Edit Document&nbsp;&nbsp;<i
+                                        class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_cancel' %}">Cancel Document&nbsp;&nbsp;<i
+                                        class="fa fa-minus-square" aria-hidden="true"></i></a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text" aria-hidden="true"></i>&nbsp;&nbsp;External Document</a>
+                                <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text"
+                                                                                                aria-hidden="true"></i>&nbsp;&nbsp;External Document</a>
                                 <a class="dropdown-item text-dark" href="{% url 'external_doc' %}">View All</a>
-                                <a class="dropdown-item text-dark" href="{% url 'external_add' %}">Add Document&nbsp;&nbsp;<i class="fa fa-plus-square" aria-hidden="true"></i></a>
+                                <a class="dropdown-item text-dark" href="{% url 'external_add' %}">Add Document&nbsp;&nbsp;<i
+                                        class="fa fa-plus-square" aria-hidden="true"></i></a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -78,8 +90,10 @@
                                 Work
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item text-dark" href="{% url 'work_list' %}"><i class="fa fa-th-list" aria-hidden="true"></i>&nbsp;&nbsp;Work List</a>
-                                <a class="dropdown-item text-dark" href="{% url 'work_list' %}"><i class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;My Work</a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_list' %}"><i class="fa fa-th-list"
+                                                                                                   aria-hidden="true"></i>&nbsp;&nbsp;Work List</a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_list' %}"><i
+                                        class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;My Work</a>
                             </div>
                         </li>
                         <li class="nav-item">

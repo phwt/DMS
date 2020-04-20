@@ -10,9 +10,15 @@
                     <p>Works</p>
                 </div>
                 <div class="col-6 text-center">
-                    <h6>{{ work_cnt_cr }} — Created</h6>
-                    <h6>{{ work_cnt_e }} — Editing</h6>
-                    <h6>{{ work_cnt_ca }} — Canceled</h6>
+                    <button type="button" class="btn btn-primary">
+                        <span class="badge badge-light">{{ work_cnt_cr }} </span> Created
+                    </button>
+                    <button type="button" class="btn btn-success">
+                        <span class="badge badge-light">{{ work_cnt_e }} </span> Editing
+                    </button>
+                    <button type="button" class="btn btn-danger">
+                        <span class="badge badge-light">{{ work_cnt_ca }} </span> Cancelled
+                    </button>
                 </div>
             </div>
             <table class="table table">

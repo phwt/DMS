@@ -2,7 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from DMS.utils import date_plus_today
-from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm, DocumentSubmitForm
+from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm, DocumentSubmitForm, \
+    DocumentReviewForm
 from work.models import Work, DelegateUser
 
 
@@ -54,10 +55,17 @@ def work_edit_cancel(request, work_type):
 @login_required(login_url='login')
 def work_detail(request, id):
     work = Work.objects.get(pk=id)
-    action_form = DocumentSubmitForm()
     delegate_user = work.employees.through.objects.filter(completed=False)
+
+    action_form = None
+    if work.state == 'N':
+        action_form = DocumentSubmitForm()
+    elif work.state in ('DCC', 'MR', 'VP', 'SVP'):
+        action_form = DocumentReviewForm()
+
     return render(request, template_name='work_detail.html', context={
         'work': work,
+        # 'work_state_group': work_state_group,
         'action_form': action_form,
         'delegate_user': delegate_user[0]
     })

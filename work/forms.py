@@ -1,4 +1,5 @@
 from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select, Textarea
+from django import forms
 
 from DMS.utils import all_field_required_false, apply_class_to_fields
 from document.models import InternalDoc
@@ -39,3 +40,11 @@ class WorkFilterForm(ModelForm):
         super(WorkFilterForm, self).__init__(*args, **kwargs)
         all_field_required_false(self.fields)
         apply_class_to_fields(self.fields, 'form-control form-control-sm')
+
+
+class DocumentSubmitForm(forms.Form):
+    file = forms.FileField()
+
+
+class DocumentReviewForm(forms.Form):
+    result = forms.BooleanField()

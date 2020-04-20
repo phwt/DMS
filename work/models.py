@@ -46,3 +46,4 @@ class DelegateUser(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     result = models.BooleanField(null=True)
     deadline = models.DateTimeField()
+    completed = models.BooleanField(default=False)

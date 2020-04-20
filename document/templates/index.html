@@ -4,10 +4,17 @@
     <div class="row">
         <div class="col-6">
             <h4 class="pb-3">Work List</h4>
-            <h6>{{ work_cnt }}</h6>
-            <h6>{{ work_cnt_cr }}</h6>
-            <h6>{{ work_cnt_e }}</h6>
-            <h6>{{ work_cnt_ca }}</h6>
+            <div class="row shadow-sm pt-3 pb-3 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3">
+                <div class="col-6 text-center">
+                    <h3>{{ work_cnt }}</h3>
+                    <p>Works</p>
+                </div>
+                <div class="col-6 text-center">
+                    <h6>{{ work_cnt_cr }} — Created</h6>
+                    <h6>{{ work_cnt_e }} — Editing</h6>
+                    <h6>{{ work_cnt_ca }} — Canceled</h6>
+                </div>
+            </div>
             <table class="table table">
                 <thead>
                 <tr>
@@ -28,10 +35,17 @@
         </div>
         <div class="col-6">
             <h4 class="pb-3">Internal Document</h4>
-            <h6>{{ doc_cnt }}</h6>
-            <h6>{{ doc_cnt_in }}</h6>
-            <h6>{{ doc_cnt_re }}</h6>
-            <h6>{{ doc_cnt_ob }}</h6>
+            <div class="row shadow-sm pt-3 pb-3 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3">
+                <div class="col-6 text-center">
+                    <h3>{{ doc_cnt }}</h3>
+                    <p>Documents</p>
+                </div>
+                <div class="col-6 text-center">
+                    <h6>{{ doc_cnt_in }} — In-Progress</h6>
+                    <h6>{{ doc_cnt_re }} — Released</h6>
+                    <h6>{{ doc_cnt_ob }} — Obsoleted</h6>
+                </div>
+            </div>
             <table class="table table">
                 <thead>
                 <tr>

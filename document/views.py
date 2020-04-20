@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 from work.models import Work
 from .models import Document, InternalDoc, ExternalDoc
@@ -11,10 +12,29 @@ from django.shortcuts import redirect, render
 @login_required(login_url='login')
 def index(request):
     works = Work.objects.all().order_by('-id')[:10]
+    work_cnt = Work.objects.all().count()
+    work_cnt_cr = Work.objects.filter(type='CR').count()
+    work_cnt_e = Work.objects.filter(type='E').count()
+    work_cnt_ca = Work.objects.filter(type='CA').count()
+
     internal = InternalDoc.objects.all().order_by('-id')[:10]
+    internal_cnt = InternalDoc.objects.all().count()
+    internal_cnt_in = InternalDoc.objects.filter(state='IN').count()
+    internal_cnt_re = InternalDoc.objects.filter(state='RE').count()
+    internal_cnt_ob = InternalDoc.objects.filter(state='OB').count()
+
     context = {
         'works': works,
-        'documents': internal
+        'work_cnt': work_cnt,
+        'work_cnt_cr': work_cnt_cr,
+        'work_cnt_e': work_cnt_e,
+        'work_cnt_ca': work_cnt_ca,
+
+        'documents': internal,
+        'doc_cnt': internal_cnt,
+        'doc_cnt_in': internal_cnt_in,
+        'doc_cnt_re': internal_cnt_re,
+        'doc_cnt_ob': internal_cnt_ob
     }
     return render(request, 'index.html', context=context)
 

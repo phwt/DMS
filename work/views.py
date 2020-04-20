@@ -55,7 +55,9 @@ def work_edit_cancel(request, work_type):
 def work_detail(request, id):
     work = Work.objects.get(pk=id)
     action_form = DocumentSubmitForm()
+    delegate_user = work.employees.through.objects.filter(completed=False)
     return render(request, template_name='work_detail.html', context={
         'work': work,
-        'action_form':action_form
+        'action_form': action_form,
+        'delegate_user': delegate_user[0]
     })

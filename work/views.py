@@ -1,8 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from DMS.utils import date_plus_today
-from authen.models import Employee
+from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple
 from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm, DocumentSubmitForm, \
     DocumentReviewForm
 from work.models import Work, DelegateUser
@@ -61,29 +60,14 @@ def work_detail(request, id):
     if request.method == 'POST':
         if work.state == 'N':
             submit_form = DocumentSubmitForm(request.POST, request.FILES)
-            submit_form.fields['delegate_user'].choices = \
-                [(i.id, i) for i in Employee.objects.filter(user__groups__name='DCC')]
+            submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')
             if submit_form.is_valid():
-                work.document.file_location = submit_form.cleaned_data['file']
-                work.state = 'DCC'
-                work.save()
-
-                current_delegate = work.delegateuser_set.get(completed=False)
-                current_delegate.completed = True
-                current_delegate.save()
-
-                new_delegate = DelegateUser(
-                    work=work,
-                    employee=Employee.objects.get(pk=submit_form.cleaned_data['delegate_user']),
-                    deadline=date_plus_today(5)
-                )
-                new_delegate.save()
+                pass_delegate(work, 'DCC', submit_form)
 
     action_form = None
     if work.state == 'N':
         action_form = DocumentSubmitForm()
-        action_form.fields['delegate_user'].choices = \
-            [(i.id, i) for i in Employee.objects.filter(user__groups__name='DCC')]
+        action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')
     elif work.state in ('DCC', 'MR', 'VP', 'SVP'):
         action_form = DocumentReviewForm()
 

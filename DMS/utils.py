@@ -1,6 +1,9 @@
 import datetime as dt
 from datetime import datetime
 
+from authen.models import Employee
+from work.models import DelegateUser
+
 
 def all_field_required_false(fields):
     for field in fields:
@@ -14,3 +17,24 @@ def apply_class_to_fields(fields, classes):
 
 def date_plus_today(how_many):
     return datetime.now() + dt.timedelta(days=how_many)
+
+
+def pass_delegate(work, state, form_data):
+    work.document.file_location = form_data.cleaned_data['file']
+    work.state = 'DCC'
+    work.save()
+
+    current_delegate = work.delegateuser_set.get(completed=False)
+    current_delegate.completed = True
+    current_delegate.save()
+
+    new_delegate = DelegateUser(
+        work=work,
+        employee=Employee.objects.get(pk=form_data.cleaned_data['delegate_user']),
+        deadline=date_plus_today(5)
+    )
+    new_delegate.save()
+
+
+def get_employees_in_groups_tuple(group_name):
+    return [(i.id, i) for i in Employee.objects.filter(user__groups__name=group_name)]

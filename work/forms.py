@@ -1,7 +1,9 @@
-from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select, Textarea
+from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select, Textarea, ChoiceField, \
+    ModelChoiceField
 from django import forms
 
 from DMS.utils import all_field_required_false, apply_class_to_fields
+from authen.models import Employee
 from document.models import InternalDoc
 from work.models import Work
 
@@ -31,10 +33,11 @@ class DocumentEditCancelForm(ModelForm):
         apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
-class WorkFilterForm(ModelForm):
-    class Meta:
-        model = Work
-        exclude = ['detail', 'creator', 'employees']
+class WorkFilterForm(forms.Form):
+    document = forms.ModelChoiceField(queryset=InternalDoc.objects.all())
+    type = forms.ChoiceField(choices=[('', '----')]+Work.TYPES)
+    state = forms.ChoiceField(choices=[('', '----')]+Work.STATES)
+    employee = forms.ModelChoiceField(queryset=Employee.objects.all())
 
     def __init__(self, *args, **kwargs):
         super(WorkFilterForm, self).__init__(*args, **kwargs)

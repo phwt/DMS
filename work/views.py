@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.db.models import F
+from django.db.models import F, Q
+from django.db.models.functions import Coalesce
 from django.shortcuts import render, redirect
 
 from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review, \
@@ -11,17 +12,25 @@ from work.models import Work, DelegateUser
 
 @login_required(login_url='login')
 def work_list(request):
-    if request.method == 'POST':  # TODO: Make filter working
-        filter_form = WorkFilterForm(request.POST)
-        works = Work.objects.filter(delegateuser__completed=False).annotate(
-            first_name=F('employees__user__first_name'),
-            last_name=F('employees__user__last_name')
-        )
+    works = Work.objects.all().order_by('-id')
+    if request.method == 'GET':  # TODO: Make filter working
+        filter_form = WorkFilterForm(request.GET)
+        print(request.GET)
+        print(filter_form.errors)
+        if filter_form.is_valid():
+            print(filter_form.cleaned_data)
+            if filter_form.cleaned_data['document'] is not None:
+                works = works.filter(document=filter_form.cleaned_data['document'])
+
+            if filter_form.cleaned_data['type'] is not '':
+                works = works.filter(type=filter_form.cleaned_data['type'])
+
+            if filter_form.cleaned_data['state'] is not '':
+                works = works.filter(state=filter_form.cleaned_data['state'])
+
+            if filter_form.cleaned_data['employee'] is not None:
+                works = works.filter(latest_delegate=filter_form.cleaned_data['employee'])
     else:
-        works = Work.objects.filter(delegateuser__completed=False).annotate(
-            first_name=F('employees__user__first_name'),
-            last_name=F('employees__user__last_name')
-        )
         filter_form = WorkFilterForm()
 
     context = {
@@ -36,7 +45,13 @@ def work_create(request):
     if request.method == 'POST':
         create_form = DocumentCreateForm(request.POST)
         document = create_form.save()
-        work = Work(type='CR', state='N', creator=request.user.employee, document=document)
+        work = Work(
+            type='CR',
+            state='N',
+            creator=request.user.employee,
+            document=document,
+            latest_delegate=request.user.employee
+        )
         work.save()
         delegate = DelegateUser(work=work, employee=request.user.employee, deadline=date_plus_today(5))
         delegate.save()

@@ -23,6 +23,7 @@ def complete_work(work, document_state):
     work.state = 'C'
     work.document.state = document_state
     work.complete_date = datetime.now()
+    work.latest_delegate = None
     work.save()
     work.document.save()
 
@@ -32,6 +33,7 @@ def pass_delegate(work, state, form_data):
     current_delegate.completed = True
     current_delegate.save()
 
+    work.latest_delegate = Employee.objects.get(pk=form_data.cleaned_data['delegate_user'])
     work.state = state
     work.save()
 
@@ -49,6 +51,7 @@ def pass_delegate_review(work, state, form_data):
     current_delegate.save()
 
     if form_data.cleaned_data['result']:  # Review result is true (passed)
+        work.latest_delegate = Employee.objects.get(pk=form_data.cleaned_data['delegate_user'])
         work.state = state
         work.save()
 

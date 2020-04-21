@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <h2 class="pb-5">View All Works</h2>
-    <form method="POST" action="">
-        {% csrf_token %}
+    <form method="GET" action="">
+{#        {% csrf_token %}#}
         <table class="table">
             <thead>
             <tr>
@@ -20,8 +20,8 @@
                 <td>{{ filter_forms.type }}</td>
                 <td>{{ filter_forms.state }}</td>
                 <td></td>
-                <td>{{ filter_forms.complete_date }}</td>
                 <td></td>
+                <td>{{ filter_forms.employee }}</td>
                 <td>
                     <button type="submit" class="btn btn-primary btn-block">
                         <i class="fa fa-search" aria-hidden="true"></i>
@@ -41,7 +41,7 @@
                     {% else %}
                         <td>{{ work.complete_date }}</td>
                     {% endif %}
-                    <td>{{ work.first_name }} {{ work.last_name }}</td>
+                    <td>{{ work.latest_delegate }}</td>
                     <td>
                         <a href="{% url 'work_detail' id=work.id %}">
                             <button type="button" class="btn btn-secondary btn-block btn-sm">

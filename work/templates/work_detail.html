@@ -10,7 +10,7 @@
 
         <p>Type: {{ work.get_type_display }}</p>
         <p>State: {{ work.get_state_display }}</p>
-        <p>Delegate User: {{ delegate_user.employee }}</p>
+        <p>Delegate User: {{ delegate_user }}</p>
         {% if work.state == 'C' %}
             <p>{{ work.complete_date }}</p>
         {% else %}

@@ -20,12 +20,12 @@ def date_plus_today(how_many):
 
 
 def pass_delegate(work, state, form_data):
-    work.state = state
-    work.save()
-
     current_delegate = work.delegateuser_set.get(completed=False)
     current_delegate.completed = True
     current_delegate.save()
+
+    work.state = state
+    work.save()
 
     new_delegate = DelegateUser(
         work=work,
@@ -33,6 +33,28 @@ def pass_delegate(work, state, form_data):
         deadline=date_plus_today(5)
     )
     new_delegate.save()
+
+
+def pass_delegate_review(work, state, form_data):
+    current_delegate = work.delegateuser_set.get(completed=False)
+    current_delegate.completed = True
+    current_delegate.save()
+
+    if form_data.cleaned_data['result']:  # Review result is true (passed)
+        work.state = state
+        work.save()
+
+        new_delegate = DelegateUser(
+            work=work,
+            employee=Employee.objects.get(pk=form_data.cleaned_data['delegate_user']),
+            deadline=date_plus_today(5)
+        )
+        new_delegate.save()
+    else:
+        work.state = 'C'
+        work.document.state = 'RC'
+        work.complete_date = datetime.now()
+        work.save()
 
 
 def get_employees_in_groups_tuple(group_name):

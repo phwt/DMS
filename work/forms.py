@@ -48,9 +48,9 @@ class DocumentSubmitForm(forms.Form):
 
 
 class DocumentReviewForm(forms.Form):
-    result = forms.BooleanField()
+    result = forms.BooleanField(required=False)
     delegate_user = forms.ChoiceField()
 
 
 class DocumentApproveForm(forms.Form):
-    result = forms.BooleanField()
+    result = forms.BooleanField(required=False)

@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple
+from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review
 from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm, DocumentSubmitForm, \
     DocumentReviewForm, DocumentApproveForm
 from work.models import Work, DelegateUser
@@ -64,21 +64,21 @@ def work_detail(request, id):
             if submit_form.is_valid():
                 work.document.file_location = submit_form.cleaned_data['file']
                 pass_delegate(work, 'DCC', submit_form)
-        elif work.state == 'DCC':  # TODO: Check for review result
+        elif work.state == 'DCC':
             submit_form = DocumentReviewForm(request.POST)
             submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('MR')
             if submit_form.is_valid():
-                pass_delegate(work, 'MR', submit_form)
+                pass_delegate_review(work, 'MR', submit_form)
         elif work.state == 'MR':
             submit_form = DocumentReviewForm(request.POST)
             submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('VP')
             if submit_form.is_valid():
-                pass_delegate(work, 'VP', submit_form)
+                pass_delegate_review(work, 'VP', submit_form)
         elif work.state == 'VP':
             submit_form = DocumentReviewForm(request.POST)
             submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('SVP')
             if submit_form.is_valid():
-                pass_delegate(work, 'SVP', submit_form)
+                pass_delegate_review(work, 'SVP', submit_form)
 
     action_form = None
     if work.state == 'N':
@@ -96,8 +96,13 @@ def work_detail(request, id):
     elif work.state == 'SVP':
         action_form = DocumentApproveForm()
 
+    try:
+        delegate_name = delegate_user[0].employee
+    except IndexError:
+        delegate_name = '-'
+
     return render(request, template_name='work_detail.html', context={
         'work': work,
         'action_form': action_form,
-        'delegate_user': delegate_user[0]
+        'delegate_user': delegate_name
     })

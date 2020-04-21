@@ -3,7 +3,7 @@
     <h2 class="pb-5">View All Works</h2>
     <form method="POST" action="">
         {% csrf_token %}
-        <table class="table table">
+        <table class="table">
             <thead>
             <tr>
                 <th scope="col">Related Document</th>
@@ -41,7 +41,7 @@
                     {% else %}
                         <td>{{ work.complete_date }}</td>
                     {% endif %}
-                    <td></td>
+                    <td>{{ work.first_name }} {{ work.last_name }}</td>
                     <td>
                         <a href="{% url 'work_detail' id=work.id %}">
                             <button type="button" class="btn btn-secondary btn-block btn-sm">

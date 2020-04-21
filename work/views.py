@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import F
 from django.shortcuts import render, redirect
 
 from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review, \
@@ -10,11 +11,17 @@ from work.models import Work, DelegateUser
 
 @login_required(login_url='login')
 def work_list(request):
-    if request.method == 'POST':
+    if request.method == 'POST':  # TODO: Make filter working
         filter_form = WorkFilterForm(request.POST)
-        works = Work.objects.all() # TODO: Make filter working
+        works = Work.objects.filter(delegateuser__completed=False).annotate(
+            first_name=F('employees__user__first_name'),
+            last_name=F('employees__user__last_name')
+        )
     else:
-        works = Work.objects.all()
+        works = Work.objects.filter(delegateuser__completed=False).annotate(
+            first_name=F('employees__user__first_name'),
+            last_name=F('employees__user__last_name')
+        )
         filter_form = WorkFilterForm()
 
     context = {

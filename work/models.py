@@ -34,6 +34,7 @@ class Work(models.Model):
     complete_date = models.DateTimeField(null=True)
     document = models.ForeignKey(InternalDoc, on_delete=models.CASCADE, null=False)
     creator = models.ForeignKey(Employee, on_delete=models.CASCADE, null=False)
+    latest_delegate = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='latest_delegate', null=True)
     employees = models.ManyToManyField('authen.Employee', through='DelegateUser', related_name='works')
 
     def __str__(self):

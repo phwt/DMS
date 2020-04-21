@@ -104,7 +104,7 @@ def work_detail(request, id):
                 action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('SVP')
             elif work.state == 'SVP':
                 action_form = DocumentApproveForm()
-            delegate_name = delegate_user[0].employee
+        delegate_name = delegate_user[0].employee
     except IndexError:
         delegate_name = '-'
 

@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review, \
     pass_delegate_approve
@@ -33,6 +33,7 @@ def work_create(request):
         work.save()
         delegate = DelegateUser(work=work, employee=request.user.employee, deadline=date_plus_today(5))
         delegate.save()
+        return redirect('work_detail', id=work.id)
     create_form = DocumentCreateForm()
     return render(request, 'work_create.html', {'form': create_form})
 
@@ -65,6 +66,7 @@ def work_detail(request, id):
             if submit_form.is_valid():
                 work.document.file_location = submit_form.cleaned_data['file']
                 pass_delegate(work, 'DCC', submit_form)
+                work.document.save()
         elif work.state == 'DCC':
             submit_form = DocumentReviewForm(request.POST)
             submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('MR')

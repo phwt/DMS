@@ -31,6 +31,7 @@ class InternalDoc(Document):
         max_length=2,
         choices=STATES,
         null=False,
+        default='IN'
     )
     parent_doc = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
 

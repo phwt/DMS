@@ -24,6 +24,7 @@ def complete_work(work, document_state):
     work.document.state = document_state
     work.complete_date = datetime.now()
     work.save()
+    work.document.save()
 
 
 def pass_delegate(work, state, form_data):

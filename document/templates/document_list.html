@@ -9,7 +9,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Version</th>
                     <th scope="col">Running No</th>
-                    <th scope="col">Release Date</th>
+{#                    <th scope="col">Release Date</th>#}
                     <th scope="col">Type</th>
                     <th scope="col">State</th>
                     {#                    <th scope="col">State</th>#}
@@ -35,26 +35,26 @@
                     <td>{{ filter_forms.name }}</td>
                     <td>{{ filter_forms.version }}</td>
                     <td>{{ filter_forms.running_no }}</td>
-                    <td class="row no-gutters">
-                        <div class="col-6">
-                            <input
-                                    type="datetime-local"
-                                    class="form-control form-control-sm"
-                                    name="{{ filter_forms.released_start.name }}"
-                                    id="{{ filter_forms.released_start.id_for_label }}"
-                                    value="{{ filter_forms.released_start.value }}"
-                            />
-                        </div>
-                        <div class="col-6">
-                            <input
-                                    type="datetime-local"
-                                    class="form-control form-control-sm"
-                                    name="{{ filter_forms.released_end.name }}"
-                                    id="{{ filter_forms.released_end.id_for_label }}"
-                                    value="{{ filter_forms.released_end.value }}"
-                            />
-                        </div>
-                    </td>
+{#                    <td class="row no-gutters">#}
+{#                        <div class="col-6">#}
+{#                            <input#}
+{#                                    type="datetime-local"#}
+{#                                    class="form-control form-control-sm"#}
+{#                                    name="{{ filter_forms.released_start.name }}"#}
+{#                                    id="{{ filter_forms.released_start.id_for_label }}"#}
+{#                                    value="{{ filter_forms.released_start.value }}"#}
+{#                            />#}
+{#                        </div>#}
+{#                        <div class="col-6">#}
+{#                            <input#}
+{#                                    type="datetime-local"#}
+{#                                    class="form-control form-control-sm"#}
+{#                                    name="{{ filter_forms.released_end.name }}"#}
+{#                                    id="{{ filter_forms.released_end.id_for_label }}"#}
+{#                                    value="{{ filter_forms.released_end.value }}"#}
+{#                            />#}
+{#                        </div>#}
+{#                    </td>#}
                     <td>{{ filter_forms.type }}</td>
                     <td>{{ filter_forms.state }}</td>
                     {#                    <td></td>#}
@@ -73,7 +73,7 @@
                         </td>
                         <td>{{ document.version }}</td>
                         <td>{{ document.running_no }}</td>
-                        <td>{{ document. }}</td>
+{#                        <td>{{ document. }}</td>#}
                         <td>{{ document.get_type_display }}</td>
                         {% if document.get_state_display == '' %}
                             <td>-</td>

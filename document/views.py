@@ -106,7 +106,10 @@ def external_add(request):
     if request.method == 'POST':
         form = ExternalDocForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            doc = form.save(commit=False)
+            doc.creator = request.user
+            doc.save()
+            return redirect('doc_detail', id=doc.id)
     return render(request, 'external_add.html', {'form': ExternalDocForm()})
 
 

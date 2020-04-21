@@ -88,23 +88,23 @@ def work_detail(request, id):
                 pass_delegate_approve(work, submit_form)
 
     action_form = None
-    if work.state == 'N':
-        action_form = DocumentSubmitForm()
-        action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')
-    elif work.state == 'DCC':
-        action_form = DocumentReviewForm()
-        action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('MR')
-    elif work.state == 'MR':
-        action_form = DocumentReviewForm()
-        action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('VP')
-    elif work.state == 'VP':
-        action_form = DocumentReviewForm()
-        action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('SVP')
-    elif work.state == 'SVP':
-        action_form = DocumentApproveForm()
-
     try:
-        delegate_name = delegate_user[0].employee
+        if delegate_user[0].employee == request.user.employee:
+            if work.state == 'N':
+                action_form = DocumentSubmitForm()
+                action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')
+            elif work.state == 'DCC':
+                action_form = DocumentReviewForm()
+                action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('MR')
+            elif work.state == 'MR':
+                action_form = DocumentReviewForm()
+                action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('VP')
+            elif work.state == 'VP':
+                action_form = DocumentReviewForm()
+                action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('SVP')
+            elif work.state == 'SVP':
+                action_form = DocumentApproveForm()
+            delegate_name = delegate_user[0].employee
     except IndexError:
         delegate_name = '-'
 

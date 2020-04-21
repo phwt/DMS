@@ -6,6 +6,9 @@ class Document(models.Model):
     name = models.CharField(max_length=50, null=False)
     file_location = models.FileField(upload_to='', null=True)
 
+    def __str__(self):
+        return self.name
+
 
 class InternalDoc(Document):
     version = models.IntegerField(null=False)

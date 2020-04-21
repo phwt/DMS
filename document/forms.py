@@ -45,11 +45,11 @@ class InternalDocFilterForm(ModelForm):
         initial=datetime.now().strftime('%Y-%m-%dT%H:%M'),
         input_formats=('%Y-%m-%dT%H:%M',)
     )
-    parent_doc_name = CharField()
+    # parent_doc_name = CharField()
 
     class Meta:
         model = InternalDoc
-        exclude = ['file_location', 'release_date', 'create_date', 'parent_doc']
+        exclude = ['file_location', 'release_date', 'create_date']
 
     def __init__(self, *args, **kwargs):
         super(InternalDocFilterForm, self).__init__(*args, **kwargs)

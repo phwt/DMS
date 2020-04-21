@@ -62,14 +62,14 @@ def document_list(request, doc_type):
                     # ),
                 )
 
+                if filter_forms.cleaned_data['parent_doc'] is not None:
+                    documents = documents.filter(parent_doc=filter_forms.cleaned_data['parent_doc'])
+
                 if filter_forms.cleaned_data['version'] is not None:
                     documents = documents.filter(version=filter_forms.cleaned_data['version'])
 
                 if filter_forms.cleaned_data['running_no'] is not None:
                     documents = documents.filter(running_no=filter_forms.cleaned_data['running_no'])
-
-                if filter_forms.cleaned_data['parent_doc_name'] != '':
-                    documents = documents.filter(parent_doc__name__icontains=filter_forms.cleaned_data['parent_doc_name'])
 
                 if filter_forms.cleaned_data['type'] != '':
                     documents = documents.filter(type__exact=filter_forms.cleaned_data['type'])

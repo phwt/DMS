@@ -1,15 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if doc_type != 'external' %}
-    <h2 class="pb-5">View All Internal Documents</h2>
-    {% endif %}
-    {% if doc_type == 'external' %}
-    <h2 class="pb-5">View All External Documents</h2>
-    {% endif %}
+    <h2 class="pb-5">View {{ doc_type|title }} Documents</h2>
     <form method="GET" action="">
         <table class="table table-responsive">
             <thead>
-            {% if doc_type != 'external' %}
+            {% if doc_type == 'internal' %}
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Version</th>
@@ -35,7 +30,7 @@
             {% endif %}
             </thead>
 
-            {% if doc_type != 'external' %}
+            {% if doc_type == 'internal' %}
                 <tr>
                     <td>{{ filter_forms.name }}</td>
                     <td>{{ filter_forms.version }}</td>
@@ -64,7 +59,7 @@
                     <td>{{ filter_forms.state }}</td>
                     {#                    <td></td>#}
                     {#                    <td></td>#}
-                    <td>{{ filter_forms.parent_doc_name }}</td>
+                    <td>{{ filter_forms.parent_doc }}</td>
                     <td>
                         <button type="submit" class="btn btn-primary btn-block">
                             <i class="fa fa-search" aria-hidden="true"></i>
@@ -78,10 +73,10 @@
                         </td>
                         <td>{{ document.version }}</td>
                         <td>{{ document.running_no }}</td>
-                        <td>{{ document.release_date }}</td>
+                        <td>{{ document. }}</td>
                         <td>{{ document.get_type_display }}</td>
                         {% if document.get_state_display == '' %}
-                        <td>-</td>
+                            <td>-</td>
                         {% else %}
                             <td>{{ document.get_state_display }}</td>
                         {% endif %}

@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review
+from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review, \
+    pass_delegate_approve
 from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm, DocumentSubmitForm, \
     DocumentReviewForm, DocumentApproveForm
 from work.models import Work, DelegateUser
@@ -79,6 +80,10 @@ def work_detail(request, id):
             submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('SVP')
             if submit_form.is_valid():
                 pass_delegate_review(work, 'SVP', submit_form)
+        elif work.state == 'SVP':
+            submit_form = DocumentApproveForm(request.POST)
+            if submit_form.is_valid():
+                pass_delegate_approve(work, submit_form)
 
     action_form = None
     if work.state == 'N':

@@ -38,6 +38,7 @@ class InternalDocFilterForm(forms.Form):
     type = forms.ChoiceField(choices=[('', '----')]+InternalDoc.TYPES)
     state = forms.ChoiceField(choices=[('', '----')]+InternalDoc.STATES)
     parent_doc = forms.ModelChoiceField(queryset=InternalDoc.objects.all())
+    creator = forms.ModelChoiceField(queryset=Employee.objects.all())
 
     def __init__(self, *args, **kwargs):
         super(InternalDocFilterForm, self).__init__(*args, **kwargs)

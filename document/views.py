@@ -74,6 +74,9 @@ def document_list(request, doc_type):
 
             if filter_forms.cleaned_data['state'] != '':
                 documents = documents.filter(state__exact=filter_forms.cleaned_data['state'])
+
+            if filter_forms.cleaned_data['creator'] is not None:
+                documents = documents.filter(creator=filter_forms.cleaned_data['creator'])
     context = {
         'documents': documents,
         'doc_type': doc_type,

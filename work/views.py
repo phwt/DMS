@@ -44,7 +44,9 @@ def work_list(request):
 def work_create(request):
     if request.method == 'POST':
         create_form = DocumentCreateForm(request.POST)
-        document = create_form.save()
+        document = create_form.save(commit=False)
+        document.creator = request.user.employee
+        document.save()
         work = Work(
             type='CR',
             state='N',

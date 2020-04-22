@@ -35,7 +35,7 @@ class WorkFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(WorkFilterForm, self).__init__(*args, **kwargs)
         all_field_required_false(self.fields)
-        apply_class_to_fields(self.fields, 'form-control form-control-sm selectpicker')
+        apply_class_to_fields(self.fields, 'form-control form-control-sm form-control-sm-select selectpicker')
 
     select_option = {
         'data-live-search': 'true',

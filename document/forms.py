@@ -31,7 +31,7 @@ class ExternalDocFilterForm(forms.Form):
         apply_class_to_fields(self.fields, 'form-control form-control-sm', exclude=['creator'])
 
     select_option = {
-        'class': 'form-control form-control-sm selectpicker',
+        'class': 'form-control form-control-sm form-control-sm-select selectpicker',
         'data-live-search': 'true',
         'data-style': 'form-control border'
     }
@@ -55,7 +55,7 @@ class InternalDocFilterForm(forms.Form):
         apply_class_to_fields(self.fields, 'form-control form-control-sm', exclude=['parent_doc', 'department', 'creator'])
 
     select_option = {
-        'class': 'form-control form-control-sm selectpicker',
+        'class': 'form-control form-control-sm form-control-sm-select selectpicker',
         'data-live-search': 'true',
         'data-style': 'form-control border'
     }

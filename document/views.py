@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, F
 
 from work.models import Work
 from .models import Document, InternalDoc, ExternalDoc
@@ -77,6 +77,8 @@ def document_list(request, doc_type):
 
             if filter_forms.cleaned_data['creator'] is not None:
                 documents = documents.filter(creator=filter_forms.cleaned_data['creator'])
+
+            documents = documents.annotate(dept_name=F('creator__department__name'))
     context = {
         'documents': documents,
         'doc_type': doc_type,

@@ -15,6 +15,7 @@
                     {#                    <th scope="col">State</th>#}
                     {#                    <th scope="col">Next Review</th>#}
                     <th scope="col">Parent Doc</th>
+                    <th>Creator</th>
                     <th></th>
                 </tr>
             {% endif %}
@@ -58,8 +59,8 @@
                     <td>{{ filter_forms.type }}</td>
                     <td>{{ filter_forms.state }}</td>
                     {#                    <td></td>#}
-                    {#                    <td></td>#}
                     <td>{{ filter_forms.parent_doc }}</td>
+                    <td></td>
                     <td>
                         <button type="submit" class="btn btn-primary btn-block">
                             <i class="fa fa-search" aria-hidden="true"></i>
@@ -91,6 +92,7 @@
                                 </a>
                             </td>
                         {% endif %}
+                        <td>{{ document.creator }}</td>
                         <td>
                             <a href="{% url 'doc_detail' id=document.id %}">
                                 <button type="button" class="btn btn-secondary btn-block btn-sm">

@@ -38,6 +38,7 @@ class InternalDoc(Document):
         null=False,
         default='IN'
     )
+    creator = models.ForeignKey(Employee, on_delete=models.CASCADE)
     parent_doc = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
 
 

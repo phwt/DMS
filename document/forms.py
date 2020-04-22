@@ -28,7 +28,15 @@ class ExternalDocFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ExternalDocFilterForm, self).__init__(*args, **kwargs)
         all_field_required_false(self.fields)
-        apply_class_to_fields(self.fields, 'form-control form-control-sm')
+        apply_class_to_fields(self.fields, 'form-control form-control-sm', exclude=['creator'])
+
+    select_option = {
+        'class': 'form-control form-control-sm form-control-sm-select selectpicker',
+        'data-live-search': 'true',
+        'data-style': 'form-control border'
+    }
+
+    creator.widget.attrs.update(select_option)
 
 
 class InternalDocFilterForm(forms.Form):
@@ -44,12 +52,14 @@ class InternalDocFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(InternalDocFilterForm, self).__init__(*args, **kwargs)
         all_field_required_false(self.fields)
-        apply_class_to_fields(self.fields, 'form-control form-control-sm', exclude=['parent_doc'])
+        apply_class_to_fields(self.fields, 'form-control form-control-sm', exclude=['parent_doc', 'department', 'creator'])
 
     select_option = {
-        'class': 'form-control form-control-sm selectpicker',
+        'class': 'form-control form-control-sm form-control-sm-select selectpicker',
         'data-live-search': 'true',
         'data-style': 'form-control border'
     }
 
     parent_doc.widget.attrs.update(select_option)
+    department.widget.attrs.update(select_option)
+    creator.widget.attrs.update(select_option)

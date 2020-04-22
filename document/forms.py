@@ -3,6 +3,7 @@ from datetime import datetime
 from django import forms
 
 from DMS.utils import all_field_required_false, apply_class_to_fields
+from authen.models import Employee
 from document.models import ExternalDoc, InternalDoc
 
 
@@ -22,6 +23,7 @@ class ExternalDocForm(forms.ModelForm):
 class ExternalDocFilterForm(forms.Form):
     name = forms.CharField()
     source = forms.CharField()
+    creator = forms.ModelChoiceField(queryset=Employee.objects.all())
 
     def __init__(self, *args, **kwargs):
         super(ExternalDocFilterForm, self).__init__(*args, **kwargs)

@@ -44,10 +44,15 @@ def document_list(request, doc_type):
     if doc_type == 'external':
         filter_forms = ExternalDocFilterForm(request.GET)
         if filter_forms.is_valid():
+            print(filter_forms.cleaned_data)
             documents = ExternalDoc.objects.filter(
                 name__icontains=filter_forms.cleaned_data['name'],
                 source__icontains=filter_forms.cleaned_data['source'],
             )
+
+            if filter_forms.cleaned_data['creator'] is not None:
+                documents = documents.filter(creator=filter_forms.cleaned_data['creator'])
+
     elif doc_type == 'internal':
         filter_forms = InternalDocFilterForm(request.GET)
         if filter_forms.is_valid():

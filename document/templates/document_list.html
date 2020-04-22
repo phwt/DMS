@@ -24,7 +24,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Source</th>
                     <th scope="col">Detail</th>
-                    <th scope="col">Modify date</th>
+                    <th scope="col">Creator</th>
                     <th></th>
                 </tr>
             {% endif %}
@@ -106,8 +106,8 @@
                 <tr>
                     <td>{{ filter_forms.name }}</td>
                     <td>{{ filter_forms.source }}</td>
-                    <td>{{ filter_forms.detail }}</td>
                     <td></td>
+                    <td>{{ filter_forms.creator }}</td>
                     <td>
                         <button type="submit" class="btn btn-primary btn-block">
                             <i class="fa fa-search" aria-hidden="true"></i>
@@ -121,7 +121,7 @@
                         </td>
                         <td>{{ document.source }}</td>
                         <td>{{ document.detail }}</td>
-                        <td>{{ document.modify_date }}</td>
+                        <td>{{ document.creator }}</td>
                         <td>
                             <a href="{% url 'doc_detail' id=document.id %}">
                                 <button type="button" class="btn btn-secondary btn-block btn-sm">

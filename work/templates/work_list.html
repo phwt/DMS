@@ -41,7 +41,13 @@
                     {% else %}
                         <td>{{ work.complete_date }}</td>
                     {% endif %}
-                    <td>{{ work.latest_delegate }}</td>
+                    {% if work.latest_delegate == null %}
+                       <td>-</td>
+                    {% else %}
+                    <td>
+                        <a href="{% url 'profile-other' id=work.latest_delegate.user_id %}">{{ work.latest_delegate }}</a>
+                    </td>
+                    {% endif %}
                     <td>
                         <a href="{% url 'work_detail' id=work.id %}">
                             <button type="button" class="btn btn-secondary btn-block btn-sm">

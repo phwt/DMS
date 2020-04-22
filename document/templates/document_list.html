@@ -75,7 +75,6 @@
                         </td>
                         <td>{{ document.version }}</td>
                         <td>{{ document.running_no }}</td>
-{#                        <td>{{ document. }}</td>#}
                         <td>{{ document.get_type_display }}</td>
                         {% if document.get_state_display == '' %}
                             <td>-</td>
@@ -94,7 +93,9 @@
                             </td>
                         {% endif %}
                         <td>{{ document.dept_name }}</td>
-                        <td>{{ document.creator }}</td>
+                        <td>
+                            <a href="{% url 'profile-other' id=document.creator.id %}">{{ document.creator }}</a>
+                        </td>
                         <td>
                             <a href="{% url 'doc_detail' id=document.id %}">
                                 <button type="button" class="btn btn-secondary btn-block btn-sm">
@@ -125,7 +126,9 @@
                         </td>
                         <td>{{ document.source }}</td>
                         <td>{{ document.detail }}</td>
-                        <td>{{ document.creator }}</td>
+                        <td>
+                            <a href="{% url 'profile-other' id=document.creator.id %}">{{ document.creator }}</a>
+                        </td>
                         <td>
                             <a href="{% url 'doc_detail' id=document.id %}">
                                 <button type="button" class="btn btn-secondary btn-block btn-sm">

@@ -13,12 +13,9 @@ from work.models import Work, DelegateUser
 @login_required(login_url='login')
 def work_list(request):
     works = Work.objects.all().order_by('-id')
-    if request.method == 'GET':  # TODO: Make filter working
+    if request.method == 'GET':
         filter_form = WorkFilterForm(request.GET)
-        print(request.GET)
-        print(filter_form.errors)
         if filter_form.is_valid():
-            print(filter_form.cleaned_data)
             if filter_form.cleaned_data['document'] is not None:
                 works = works.filter(document=filter_form.cleaned_data['document'])
 

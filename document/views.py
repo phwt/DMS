@@ -41,49 +41,36 @@ def index(request):
 
 @login_required(login_url='login')
 def document_list(request, doc_type):
-    if request.method == 'GET':
-        if doc_type == 'external':
-            filter_forms = ExternalDocFilterForm(request.GET)
-            if filter_forms.is_valid():
-                documents = ExternalDoc.objects.filter(
-                    name__icontains=filter_forms.cleaned_data['name'],
-                    source__icontains=filter_forms.cleaned_data['source'],
-                    detail__icontains=filter_forms.cleaned_data['detail'],
-                )
-        elif doc_type == 'internal':
-            filter_forms = InternalDocFilterForm(request.GET)
-            if filter_forms.is_valid():
-                print(filter_forms.cleaned_data)
-                documents = InternalDoc.objects.filter(
-                    name__icontains=filter_forms.cleaned_data['name'],
-                    # work__create_date__range=(
-                    #     filter_forms.cleaned_data['released_start'],
-                    #     filter_forms.cleaned_data['released_end']
-                    # ),
-                )
+    if doc_type == 'external':
+        filter_forms = ExternalDocFilterForm(request.GET)
+        if filter_forms.is_valid():
+            documents = ExternalDoc.objects.filter(
+                name__icontains=filter_forms.cleaned_data['name'],
+                source__icontains=filter_forms.cleaned_data['source'],
+                detail__icontains=filter_forms.cleaned_data['detail'],
+            )
+    elif doc_type == 'internal':
+        filter_forms = InternalDocFilterForm(request.GET)
+        if filter_forms.is_valid():
+            print(filter_forms.cleaned_data)
+            documents = InternalDoc.objects.filter(
+                name__icontains=filter_forms.cleaned_data['name'],
+            )
 
-                if filter_forms.cleaned_data['parent_doc'] is not None:
-                    documents = documents.filter(parent_doc=filter_forms.cleaned_data['parent_doc'])
+            if filter_forms.cleaned_data['parent_doc'] is not None:
+                documents = documents.filter(parent_doc=filter_forms.cleaned_data['parent_doc'])
 
-                if filter_forms.cleaned_data['version'] is not None:
-                    documents = documents.filter(version=filter_forms.cleaned_data['version'])
+            if filter_forms.cleaned_data['version'] is not None:
+                documents = documents.filter(version=filter_forms.cleaned_data['version'])
 
-                if filter_forms.cleaned_data['running_no'] is not None:
-                    documents = documents.filter(running_no=filter_forms.cleaned_data['running_no'])
+            if filter_forms.cleaned_data['running_no'] is not None:
+                documents = documents.filter(running_no=filter_forms.cleaned_data['running_no'])
 
-                if filter_forms.cleaned_data['type'] != '':
-                    documents = documents.filter(type__exact=filter_forms.cleaned_data['type'])
+            if filter_forms.cleaned_data['type'] != '':
+                documents = documents.filter(type__exact=filter_forms.cleaned_data['type'])
 
-                if filter_forms.cleaned_data['state'] != '':
-                    documents = documents.filter(state__exact=filter_forms.cleaned_data['state'])
-
-    else:
-        if doc_type == 'internal':
-            documents = InternalDoc.objects.all()
-            filter_forms = InternalDocFilterForm()
-        elif doc_type == 'external':
-            documents = ExternalDoc.objects.all()
-            filter_forms = ExternalDocFilterForm()
+            if filter_forms.cleaned_data['state'] != '':
+                documents = documents.filter(state__exact=filter_forms.cleaned_data['state'])
     context = {
         'documents': documents,
         'doc_type': doc_type,

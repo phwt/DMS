@@ -10,9 +10,10 @@ def all_field_required_false(fields):
         fields[field].required = False
 
 
-def apply_class_to_fields(fields, classes):
+def apply_class_to_fields(fields, classes, exclude=[]):
     for field in fields:
-        fields[field].widget.attrs.update({'class': classes})
+        if field not in exclude:
+            fields[field].widget.attrs.update({'class': classes})
 
 
 def date_plus_today(how_many):

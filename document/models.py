@@ -1,6 +1,8 @@
 from django.contrib.auth.models import User
 from django.db import models
 
+from authen.models import Employee
+
 
 class Document(models.Model):
     name = models.CharField(max_length=50, null=False)
@@ -43,5 +45,5 @@ class ExternalDoc(Document):
     source = models.TextField(null=False)
     detail = models.TextField(null=True)
     create_date = models.DateTimeField(auto_now_add=True)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+    creator = models.ForeignKey(Employee, on_delete=models.CASCADE, null=False)
 

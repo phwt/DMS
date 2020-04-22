@@ -59,6 +59,7 @@ def document_list(request, doc_type):
             documents = InternalDoc.objects.filter(
                 name__icontains=filter_forms.cleaned_data['name'],
             )
+            documents = documents.annotate(dept_name=F('creator__department__name'))
 
             if filter_forms.cleaned_data['parent_doc'] is not None:
                 documents = documents.filter(parent_doc=filter_forms.cleaned_data['parent_doc'])
@@ -78,7 +79,9 @@ def document_list(request, doc_type):
             if filter_forms.cleaned_data['creator'] is not None:
                 documents = documents.filter(creator=filter_forms.cleaned_data['creator'])
 
-            documents = documents.annotate(dept_name=F('creator__department__name'))
+            if filter_forms.cleaned_data['department'] is not None:
+                documents = documents.filter(creator__department=filter_forms.cleaned_data['department'])
+
     context = {
         'documents': documents,
         'doc_type': doc_type,

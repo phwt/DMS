@@ -3,7 +3,7 @@ from datetime import datetime
 from django import forms
 
 from DMS.utils import all_field_required_false, apply_class_to_fields
-from authen.models import Employee
+from authen.models import Employee, Department
 from document.models import ExternalDoc, InternalDoc
 
 
@@ -38,6 +38,7 @@ class InternalDocFilterForm(forms.Form):
     type = forms.ChoiceField(choices=[('', '----')]+InternalDoc.TYPES)
     state = forms.ChoiceField(choices=[('', '----')]+InternalDoc.STATES)
     parent_doc = forms.ModelChoiceField(queryset=InternalDoc.objects.all())
+    department = forms.ModelChoiceField(queryset=Department.objects.all())
     creator = forms.ModelChoiceField(queryset=Employee.objects.all())
 
     def __init__(self, *args, **kwargs):

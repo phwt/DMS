@@ -65,10 +65,24 @@ def work_edit_cancel(request, work_type):
     form = DocumentEditCancelForm()
 
     if request.method == 'POST':
-        work = DocumentEditCancelForm(request.POST).save(commit=False)
-        work.type = 'E' if work_type == 'edit' else 'CA'
-        work.creator = request.user.employee
-        work.save()
+        request_form = DocumentEditCancelForm(request.POST)
+        if request_form.is_valid():
+            work = Work(
+                type='E' if work_type == 'edit' else 'CA',
+                state='N' if work_type == 'edit' else 'DCC',
+                detail=request_form.cleaned_data['detail'],
+                document=request_form.cleaned_data['requested_document'],
+                creator=request.user.employee,
+                latest_delegate=request_form.cleaned_data['delegate_user'].employee
+            )
+            work.save()
+            delegate_user = DelegateUser(
+                work=work,
+                employee=work.latest_delegate,
+                deadline=date_plus_today(5),
+            )
+            delegate_user.save()
+            return redirect('work_detail', id=work.id)
 
     return render(request, 'work_edit_cancel.html', {
         'form': form,
@@ -111,7 +125,8 @@ def work_detail(request, id):
 
     action_form = None
     try:
-        if delegate_user[0].employee == request.user.employee:
+        # if delegate_user[0].employee == request.user.employee:
+        if True:
             if work.state == 'N':
                 action_form = DocumentSubmitForm()
                 action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')

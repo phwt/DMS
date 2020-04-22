@@ -62,7 +62,10 @@ def pass_delegate_review(work, state, form_data):
         )
         new_delegate.save()
     else:
-        complete_work(work, 'RC')
+        if work.type == 'CR':
+            complete_work(work, 'RC')
+        elif work.type in ('CA', 'E'):
+            complete_work(work, 'RE')
 
 
 def pass_delegate_approve(work, form_data):
@@ -71,9 +74,20 @@ def pass_delegate_approve(work, form_data):
     current_delegate.save()
 
     if form_data.cleaned_data['result']:  # Review result is true (passed)
-        complete_work(work, 'RE')
+        if work.type == 'CR':
+            complete_work(work, 'RE')
+        elif work.type == 'CA':
+            complete_work(work, 'OB')
+        elif work.type == 'E':
+            complete_work(work, 'RE')
+            work.document.version += 1
+            work.save()
+            work.document.save()
     else:
-        complete_work(work, 'RC')
+        if work.type == 'CR':
+            complete_work(work, 'RC')
+        elif work.type in ('CA', 'E'):
+            complete_work(work, 'RE')
 
 
 def get_employees_in_groups_tuple(group_name):

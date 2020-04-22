@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select, Textarea, ChoiceField, \
     ModelChoiceField
 from django import forms
@@ -19,18 +20,10 @@ class DocumentCreateForm(ModelForm):
         apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
-class DocumentEditCancelForm(ModelForm):
-    class Meta:
-        model = Work
-        fields = ['document', 'detail']
-        widgets = {
-            'document': TextInput(),
-            'detail': Textarea(),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super(DocumentEditCancelForm, self).__init__(*args, **kwargs)
-        apply_class_to_fields(self.fields, 'form-control form-control-sm')
+class DocumentEditCancelForm(forms.Form):
+    requested_document = forms.ModelChoiceField(queryset=InternalDoc.objects.filter(state='RE'))
+    detail = forms.CharField(widget=Textarea())
+    delegate_user = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='DCC'))
 
 
 class WorkFilterForm(forms.Form):

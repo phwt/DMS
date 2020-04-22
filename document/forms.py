@@ -19,42 +19,14 @@ class ExternalDocForm(forms.ModelForm):
         apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
-class ExternalDocFilterForm(forms.ModelForm):
-    class Meta:
-        model = ExternalDoc
-        fields = ['name', 'source', 'detail']
-        widgets = {
-            'source': forms.TextInput(),
-            'detail': forms.TextInput(),
-        }
+class ExternalDocFilterForm(forms.Form):
+    name = forms.CharField()
+    source = forms.CharField()
 
     def __init__(self, *args, **kwargs):
         super(ExternalDocFilterForm, self).__init__(*args, **kwargs)
         all_field_required_false(self.fields)
         apply_class_to_fields(self.fields, 'form-control form-control-sm')
-
-
-# class InternalDocFilterForm(forms.ModelForm):
-#     # created_start = DateTimeField()
-#     # created_end = DateTimeField()
-#     released_start = forms.DateTimeField(
-#         initial='1970-01-01T00:00',
-#         input_formats=('%Y-%m-%dT%H:%M',)
-#     )
-#     released_end = forms.DateTimeField(
-#         initial=datetime.now().strftime('%Y-%m-%dT%H:%M'),
-#         input_formats=('%Y-%m-%dT%H:%M',)
-#     )
-#     # parent_doc_name = CharField()
-#
-#     class Meta:
-#         model = InternalDoc
-#         exclude = ['file_location', 'release_date', 'create_date']
-#
-#     def __init__(self, *args, **kwargs):
-#         super(InternalDocFilterForm, self).__init__(*args, **kwargs)
-#         all_field_required_false(self.fields)
-#         apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
 class InternalDocFilterForm(forms.Form):

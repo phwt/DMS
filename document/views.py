@@ -47,12 +47,10 @@ def document_list(request, doc_type):
             documents = ExternalDoc.objects.filter(
                 name__icontains=filter_forms.cleaned_data['name'],
                 source__icontains=filter_forms.cleaned_data['source'],
-                detail__icontains=filter_forms.cleaned_data['detail'],
             )
     elif doc_type == 'internal':
         filter_forms = InternalDocFilterForm(request.GET)
         if filter_forms.is_valid():
-            print(filter_forms.cleaned_data)
             documents = InternalDoc.objects.filter(
                 name__icontains=filter_forms.cleaned_data['name'],
             )

@@ -11,6 +11,7 @@
             <p>Running No: {{ document.running_no }}</p>
             <p>Type: {{ document.get_type_display }}</p>
             <p>State: {{ document.get_state_display }}</p>
+            <p>Creator: {{ document.creator }}</p>
             <p>Parent Doc: {{ document.parent_doc }}</p>
         {% elif doc_type == 'external' %}
             <h4>Document Detail</h4>

@@ -155,7 +155,9 @@ def get_dashboard_work_list(request):
 
 
 def get_dashboard_internal_list(request):
-    works = Work.objects.all().order_by('-id')[:10]
-    
-    work_list = list(works)
-    return JsonResponse(work_list, safe=False)
+    internal = InternalDoc.objects.all().order_by('-id')[:10].annotate(
+        type_name=WithChoices(InternalDoc, 'type'),
+        state_name=WithChoices(InternalDoc, 'state')
+    ).values()
+    internal_list = list(internal)
+    return JsonResponse(internal_list, safe=False)

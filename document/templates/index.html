@@ -31,7 +31,6 @@
                     <tr>
                         <td>{{ work }}</td>
                         <td>{{ work.get_type_display }}</td>
-{#                        <td>{{ work.create_date }}</td>#}
                         <td>{{ work.create_date|date:"d-M-Y" }} {{  work.create_date|time:"H:i" }}</td>
                     </tr>
                 {% endfor %}
@@ -54,7 +53,7 @@
                     <h6 id="internal_cnt_ob">{{ doc_cnt_ob }} — Obsoleted</h6>
                 </div>
             </div>
-            <table class="table">
+            <table class="table" id="internal">
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -92,7 +91,7 @@
         };
 
         function UpdateTable() {
-            axios.get('document/api/work/')
+            axios.get('document/api/work/') {# work list #}
                 .then(function (response) {
                     items = response.data;
                     let tbody = document.querySelector("#work > tbody");
@@ -103,6 +102,25 @@
                             <td>${item.document_name}</td>
                             <td>${item.type_name}</td>
                             <td>${formatDate(new Date(item.create_date))}</td>
+                        `;
+                        tbody.appendChild(elem);
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+            {# internal document list #}
+            axios.get('document/api/internal/')
+                .then(function (response) {
+                    items = response.data;
+                    let tbody = document.querySelector("#internal > tbody");
+                    tbody.innerHTML = "";
+                    items.forEach((item) => {
+                        let elem = document.createElement("tr");
+                        elem.innerHTML = `
+                            <td>${item.name}</td>
+                            <td>${item.type_name}</td>
+                            <td>${item.state_name}</td>
                         `;
                         tbody.appendChild(elem);
                     })

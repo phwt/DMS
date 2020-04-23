@@ -1,16 +1,33 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<script src="{% static 'js/jquery-3.4.1.slim.min.js' %}"></script>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-select.min.js' %}"></script>
 <style>
+    html {
+        overflow-x: hidden;
+    }
+
     body {
-        background-image: url("{% static '/img/nav_bg.jpg' %}");
+        background-image: url("{% static '/img/nav_bg_gradient.jpg' %}");
         background-repeat: no-repeat;
-        background-attachment: fixed;
         background-position: center top;
+    }
 
     .navbar {
         background: transparent;
     }
 
+    .shadow {
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    }
+
+    .round {
+        border-radius: 25px;
     }
 </style>
 <html>
@@ -22,44 +39,112 @@
     <title>Document</title>
 </head>
 <body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <div class="row mt-5">
-    <div class="col-2"></div>
+    <div class="col-2">
+    </div>
     <div class="col-8">
-        <nav class="navbar navbar-dark d-none d-md-flex">
-            <a class="navbar-brand">
-                LOGO
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static '/img/dms_logo.png' %}" width="30" height="30"
+                     class="d-inline-block align-top" alt="">
+                DMS
             </a>
-{#            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"#}
-{#                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">#}
-{#                <span class="navbar-toggler-icon"></span>#}
-{#            </button>#}
-{#            <div class="collapse navbar-collapse navbar-text" id="navbarNav">#}
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Features</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Pricing</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Disabled</a>
-                    </li>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
                 </ul>
-{#            </div>#}
+                <span class="navbar-text">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'index' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown">
+                                Document
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text"
+                                                                                                aria-hidden="true"></i>&nbsp;&nbsp;Internal Document</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}">View All</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}?state=IN">View: In-Progress</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}?state=RE">View: Released</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}?state=OB">View: Obsoleted</a>
+                                <a class="dropdown-item text-dark" href="{% url 'internal_doc' %}?state=RC">View: Recalled</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-dark" href="{% url 'work_create' %}">Create Document&nbsp;&nbsp;<i
+                                        class="fa fa-plus-square" aria-hidden="true"></i></a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_edit' %}">Edit Document&nbsp;&nbsp;<i
+                                        class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                <a class="dropdown-item text-dark" href="{% url 'work_cancel' %}">Cancel Document&nbsp;&nbsp;<i
+                                        class="fa fa-minus-square" aria-hidden="true"></i></a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-dark disabled font-weight-bold"><i class="fa fa-file-text"
+                                                                                                aria-hidden="true"></i>&nbsp;&nbsp;External Document</a>
+                                <a class="dropdown-item text-dark" href="{% url 'external_doc' %}">View All</a>
+                                <a class="dropdown-item text-dark" href="{% url 'external_add' %}">Add Document&nbsp;&nbsp;<i
+                                        class="fa fa-plus-square" aria-hidden="true"></i></a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown">
+                                Work
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item text-dark" href="{% url 'work_list' %}"><i class="fa fa-th-list"
+                                                                                                   aria-hidden="true"></i>&nbsp;&nbsp;Work List</a>
+                                <a class="dropdown-item text-dark"
+                                   href="{% url 'work_list' %}?employee={{ request.user.id }}"><i
+                                        class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;My Work</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled">|</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" role="button"
+                                   data-toggle="dropdown">
+                                    <i class="fa fa-user" aria-hidden="true"></i>&nbsp;&nbsp;{{ user.get_full_name }}
+                                </a>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item text-dark disabled font-weight-bold">{{ user.username }}</a>
+                                    <a class="dropdown-item text-dark" href="{% url 'profile' %}">Profile</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-dark" href="{% url 'logout' %}">Logout</a>
+                                </div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'login' %}">Login</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </span>
+            </div>
         </nav>
     </div>
     <div class="col-2"></div>
 </div>
 <div class="container-fluid row m-0 p-0 mt-5">
     <div class="col-2"></div>
-    <div class="col-8 bg-light">
+    <div class="col-8 bg-light shadow p-5 h-100 round">
         {% block content %}
         {% endblock %}
     </div>
     <div class="col-2"></div>
 </div>
 </body>
+<script>
+    $(document).ready(() => {
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    })
+</script>
 </html>

@@ -1,19 +1,21 @@
+from django.contrib.auth.models import User
 from django.db import models
-from django.forms import ModelForm
+
+from authen.models import Employee
 
 
 class Document(models.Model):
     name = models.CharField(max_length=50, null=False)
     file_location = models.FileField(upload_to='', null=True)
-    create_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
 
 
 class InternalDoc(Document):
-    # document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     version = models.IntegerField(null=False)
     running_no = models.IntegerField(null=False)
-    release_date = models.DateTimeField(null=True)
-    TYPE_CHOICE = [
+    TYPES = [
         ('M', 'Manual'),
         ('P', 'Procedure'),
         ('W', 'Work Instruction'),
@@ -21,30 +23,28 @@ class InternalDoc(Document):
     ]
     type = models.CharField(
         max_length=1,
-        choices=TYPE_CHOICE,
+        choices=TYPES,
         null=False,
     )
-    STATUS_CHOICE = [
-        ('I', 'In-Progress'),
-        ('R', 'Released'),
-        ('O', 'Obsolete'),
+    STATES = [
+        ('IN', 'In-Progress'),
+        ('RE', 'Released'),
+        ('OB', 'Obsoleted'),
+        ('RC', 'Recalled'),
     ]
-    status = models.CharField(
-        max_length=1,
-        choices=STATUS_CHOICE,
+    state = models.CharField(
+        max_length=2,
+        choices=STATES,
         null=False,
+        default='IN'
     )
+    creator = models.ForeignKey(Employee, on_delete=models.CASCADE)
     parent_doc = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
 
 
 class ExternalDoc(Document):
-    # document_id = models.OneToOneField(Document, primary_key=True, on_delete=models.CASCADE)
     source = models.TextField(null=False)
-    detail = models.TextField(null=False)
-    modify_date = models.DateTimeField(null=True)
+    detail = models.TextField(null=True)
+    create_date = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(Employee, on_delete=models.CASCADE, null=False)
 
-
-class ExternalDocForm(ModelForm):
-    class Meta:
-        model = ExternalDoc
-        fields = ['name', 'source', 'detail', 'file_location']

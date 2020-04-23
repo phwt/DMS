@@ -1,4 +1,158 @@
 {% extends 'base.html' %}
 {% block content %}
-    Test Index
+    <h2 class="pb-5">Dashboard</h2>
+    <div class="row">
+        <div class="col-6">
+            <h4 class="pb-3">Work List</h4>
+            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
+                 style=" background-image: linear-gradient(-90deg, red, yellow);">
+                <div class="col-6 text-center text-light">
+                    <h3 id="work_cnt">{{ work_cnt }}</h3>
+                    <p>Works</p>
+                </div>
+                <div class="col-6 text-center text-light">
+                    <h6 id="work_cnt_cr">{{ work_cnt_cr }} — Create</h6>
+                    <h6 id="work_cnt_e">{{ work_cnt_e }} — Edit</h6>
+                    <h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6>
+                </div>
+            </div>
+
+            <table class="table" id="work">
+                <thead>
+                <tr>
+                    <th scope="col">Related Document</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Create Date</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for work in works %}
+                    <tr>
+                        <td>{{ work }}</td>
+                        <td>{{ work.get_type_display }}</td>
+                        <td>{{ work.create_date|date:"d-M-Y" }} {{  work.create_date|time:"H:i" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-6">
+            <button onclick="UpdateTable()">'Reeeee'</button>
+            <h4 class="pb-3">Internal Document</h4>
+            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
+                 style="background-image: linear-gradient(to right, red,#ffa500,yellow,green,blue,indigo,violet);">
+                <div class="col-6 text-center text-light">
+                    <h3 id="internal_cnt">{{ doc_cnt }}</h3>
+                    <p>Documents</p>
+                </div>
+                <div class="col-6 text-center text-light">
+                    <h6 id="internal_cnt_in">{{ doc_cnt_in }} — In-Progress</h6>
+                    <h6 id="internal_cnt_re">{{ doc_cnt_re }} — Released</h6>
+                    <h6 id="internal_cnt_ob">{{ doc_cnt_ob }} — Obsoleted</h6>
+                </div>
+            </div>
+            <table class="table" id="internal">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">State</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for document in documents %} {# table internal doucument list in dashboard #}
+                    <tr>
+                        <td>{{ document.name }}</td>
+                        <td>{{ document.get_type_display }}</td>
+                        {% if document.get_state_display == '' %}
+                            <td>-</td>
+                        {% else %}
+                            <td>{{ document.get_state_display }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        var items = []
+
+        let formatDate = (date) => {
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            return `${date.getDate()}-` +
+                `${months[date.getMonth()]}-` +
+                `${date.getFullYear()} ` +
+                `${date.getHours().toString().padStart(2, '0')}:` +
+                `${date.getMinutes().toString().padStart(2, '0')}`;
+        };
+
+        function UpdateTable() {
+            axios.get('document/api/work/') {# work list #}
+                .then(function (response) {
+                    items = response.data;
+                    let tbody = document.querySelector("#work > tbody");
+                    tbody.innerHTML = "";
+                    items.forEach((item) => {
+                        let elem = document.createElement("tr");
+                        elem.innerHTML = `
+                            <td>${item.document_name}</td>
+                            <td>${item.type_name}</td>
+                            <td>${formatDate(new Date(item.create_date))}</td>
+                        `;
+                        tbody.appendChild(elem);
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+            {# internal document list #}
+            axios.get('document/api/internal/')
+                .then(function (response) {
+                    items = response.data;
+                    let tbody = document.querySelector("#internal > tbody");
+                    tbody.innerHTML = "";
+                    items.forEach((item) => {
+                        let elem = document.createElement("tr");
+                        elem.innerHTML = `
+                            <td>${item.name}</td>
+                            <td>${item.type_name}</td>
+                            <td>${item.state_name}</td>
+                        `;
+                        tbody.appendChild(elem);
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+        }
+
+        setInterval(() => {
+            axios.get('document/api/work_cnt/')
+                .then(function (response) {
+                    items = response.data;
+                    document.getElementById("work_cnt").innerText = items.cnt;
+                    document.getElementById("work_cnt_cr").innerText = items.cr + " — Create";
+                    document.getElementById("work_cnt_e").innerText = items.e + " — Edit";
+                    document.getElementById("work_cnt_ca").innerText = items.ca + " — Cancel"
+                })
+                .catch(function (error) {
+                    console.log(error)
+                });
+            axios.get('document/api/internal_cnt/')
+                .then(function (response) {
+                    items = response.data;
+                    document.getElementById("internal_cnt").innerText = items.cnt;
+                    document.getElementById("internal_cnt_in").innerText = items.in + " — In-Progress";
+                    document.getElementById("internal_cnt_re").innerText = items.re + " — Released";
+                    document.getElementById("internal_cnt_ob").innerText = items.ob + " — Obsoleted"
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+        }, 1000);
+    </script>
 {% endblock %}

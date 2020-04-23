@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <div>
+        <h2>{{ work }}</h2>
+        <p class="text-muted"><small>{{ work.create_date }}</small></p>
+        <p class="text-muted"><small>by {{ work.creator }}</small></p>
+
+        <h4>Work Detail</h4>
+        <hr>
+
+        <p>Type: {{ work.get_type_display }}</p>
+        <p>State: {{ work.get_state_display }}</p>
+        <p>Delegate User: {{ delegate_user }}</p>
+        {% if work.state == 'C' %}
+            <p>{{ work.complete_date }}</p>
+        {% else %}
+            <p>Work isn't completed</p>
+        {% endif %}
+        <a href="{% url 'doc_detail' id=work.document_id %}">
+            <button type="button" class="btn btn-secondary">View Document
+            </button>
+        </a>
+        <br><br> {# TODO: Switch to padding/magrin for spacing instead #}
+
+        {% if action_form is not None %}
+            <h4>Submit document for review</h4>
+            <hr>
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ action_form.as_table }}
+                </table>
+
+                <input class="btn btn-success" type="submit" value="Submit">
+            </form>
+        {% endif %}
+    </div>
+{% endblock content %}

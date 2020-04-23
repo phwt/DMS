@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+    <h2 class="pb-5">Document {% if work_type == 'edit' %}Edit{% elif work_type == 'cancel' %}Cancel{% endif %} Request Form</h2>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+        <input type="submit" class="btn btn-success" value="Submit">
+    </form>
+{% endblock %}

@@ -1,0 +1,19 @@
+body {
+    background-image: url('/static/img/nav_bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center top;
+}
+
+.shadow {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+ }
+
+.form-control-sm-select {
+    height: calc(1.5em + .5rem + 2px) !important;
+}

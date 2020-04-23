@@ -1,12 +1,14 @@
-from django.contrib import admin
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.index),
-    path('internal/', views.internal_doc, name='internal_doc'),
-    path('external/', views.external_doc, name='external_doc'),
-    path('internal/detail/<int:id>/', views.internal_detail, name='internal_detail'),
-    path('external/detail/<int:id>/', views.external_detail, name='external_detail'),
-    path('external/add', views.external_add),
+    path('internal/', views.document_list, {'doc_type': 'internal'}, name='internal_doc'),
+    path('external/', views.document_list, {'doc_type': 'external'}, name='external_doc'),
+    path('detail/<int:id>/', views.document_detail, name='doc_detail'),
+    path('external/add', views.external_add, name='external_add'),
+    path('api/work/', views.get_dashboard_work_list),
+    path('api/internal/', views.get_dashboard_internal_list),
+    path('api/work_cnt/', views.get_dashboard_work_cnt),
+    path('api/internal_cnt/', views.get_dashboard_internal_cnt),
+
 ]

@@ -12,7 +12,7 @@ from work.models import Work
 class DocumentCreateForm(ModelForm):
     class Meta:
         model = InternalDoc
-        exclude = ['file_location', 'state']
+        exclude = ['file_location', 'state', 'creator']
 
     def __init__(self, *args, **kwargs):
         super(DocumentCreateForm, self).__init__(*args, **kwargs)

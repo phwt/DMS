@@ -4,7 +4,8 @@
     <div class="row">
         <div class="col-6">
             <h4 class="pb-3">Work List</h4>
-            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round" style=" background-image: linear-gradient(-90deg, red, yellow);">
+            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
+                 style=" background-image: linear-gradient(-90deg, red, yellow);">
                 <div class="col-6 text-center text-light">
                     <h3 id="work_cnt">{{ work_cnt }}</h3>
                     <p>Works</p>
@@ -15,7 +16,7 @@
                     <h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6>
                 </div>
             </div>
-            <table class="table table" id="work">
+            <table class="table" id="work">
                 <thead>
                 <tr>
                     <th scope="col">Related Document</th>
@@ -24,19 +25,20 @@
                     <th></th>
                 </tr>
                 </thead>
-{#                {% for work in works %} {# table work list in dashboard #}
-{#                    <tr id="work">#}
-{#                        <td>{{ work }}</td>#}
-{#                        <td>{{ work.get_type_display }}</td>#}
-{#                        <td>{{ work.create_date }}</td>#}
-{#                    </tr>#}
-{#                {% endfor %}#}
+                {#                {% for work in works %} {# table work list in dashboard #}
+                {#                    <tr id="work">#}
+                {#                        <td>{{ work }}</td>#}
+                {#                        <td>{{ work.get_type_display }}</td>#}
+                {#                        <td>{{ work.create_date }}</td>#}
+                {#                    </tr>#}
+                {#                {% endfor %}#}
             </table>
         </div>
         <div class="col-6">
             <button onclick="UpdateTable()">'Reeeee'</button>
             <h4 class="pb-3">Internal Document</h4>
-            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round" style="background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);">
+            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
+                 style="background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);">
                 <div class="col-6 text-center text-light">
                     <h3 id="internal_cnt">{{ doc_cnt }}</h3>
                     <p>Documents</p>
@@ -47,7 +49,7 @@
                     <h6 id="internal_cnt_ob">{{ doc_cnt_ob }} — Obsoleted</h6>
                 </div>
             </div>
-            <table class="table table">
+            <table class="table">
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -77,7 +79,7 @@
             const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
             return `${date.getDate()}-` +
                 `${months[date.getMonth()]}-` +
-                `${date.getFullYear()} `+
+                `${date.getFullYear()} ` +
                 `${date.getHours().toString().padStart(2, '0')}:` +
                 `${date.getMinutes().toString().padStart(2, '0')}`;
         }
@@ -110,28 +112,28 @@
         }
 
         setInterval(() => {
-                axios.get('document/api/work_cnt/')
-                    .then(function (response) {
-                        items = response.data
-                        document.getElementById("work_cnt").innerText = items.cnt
-                        document.getElementById("work_cnt_cr").innerText = items.cr + " — Create"
-                        document.getElementById("work_cnt_e").innerText = items.e + " — Edit"
-                        document.getElementById("work_cnt_ca").innerText = items.ca + " — Cancel"
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    })
-                axios.get('document/api/internal_cnt/')
-                    .then(function (response) {
-                        items = response.data
-                        document.getElementById("internal_cnt").innerText = items.cnt
-                        document.getElementById("internal_cnt_in").innerText = items.in + " — In-Progress"
-                        document.getElementById("internal_cnt_re").innerText = items.re + " — Released"
-                        document.getElementById("internal_cnt_ob").innerText = items.ob + " — Obsoleted"
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    })
+            axios.get('document/api/work_cnt/')
+                .then(function (response) {
+                    items = response.data
+                    document.getElementById("work_cnt").innerText = items.cnt
+                    document.getElementById("work_cnt_cr").innerText = items.cr + " — Create"
+                    document.getElementById("work_cnt_e").innerText = items.e + " — Edit"
+                    document.getElementById("work_cnt_ca").innerText = items.ca + " — Cancel"
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+            axios.get('document/api/internal_cnt/')
+                .then(function (response) {
+                    items = response.data
+                    document.getElementById("internal_cnt").innerText = items.cnt
+                    document.getElementById("internal_cnt_in").innerText = items.in + " — In-Progress"
+                    document.getElementById("internal_cnt_re").innerText = items.re + " — Released"
+                    document.getElementById("internal_cnt_ob").innerText = items.ob + " — Obsoleted"
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
         }, 1000);
     </script>
 {% endblock %}

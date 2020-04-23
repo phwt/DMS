@@ -98,7 +98,7 @@
                 })
         }
 
-        setInverval(() => {
+        setInterval(() => {
                 axios.get('document/api/work_cnt/')
                     .then(function (response) {
                         items = response.data

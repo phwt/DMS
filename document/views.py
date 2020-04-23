@@ -124,23 +124,23 @@ def get_dashboard_work_cnt(request):
     work_cnt_ca = Work.objects.filter(type='CA').count()
     work_cnt = {
             "cnt": work_cnt,
-            "cnt_cr": work_cnt_cr,
-            "cnt_e": work_cnt_e,
-            "cnt_ca": work_cnt_ca
+            "cr": work_cnt_cr,
+            "e": work_cnt_e,
+            "ca": work_cnt_ca
     }
     return JsonResponse(work_cnt, safe=False)
 
 
-def get_dashboard_doc_cnt(request):
+def get_dashboard_internal_cnt(request):
     internal_cnt = InternalDoc.objects.all().count()
     internal_cnt_in = InternalDoc.objects.filter(state='IN').count()
     internal_cnt_re = InternalDoc.objects.filter(state='RE').count()
     internal_cnt_ob = InternalDoc.objects.filter(state='OB').count()
     internal_cnt = {
                 "cnt": internal_cnt,
-                "cnt_in": internal_cnt_in,
-                "cnt_re": internal_cnt_re,
-                "cnt_ob": internal_cnt_ob
+                "in": internal_cnt_in,
+                "re": internal_cnt_re,
+                "ob": internal_cnt_ob
     }
     return JsonResponse(internal_cnt, safe=False)
 

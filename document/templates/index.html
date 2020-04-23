@@ -6,19 +6,13 @@
             <h4 class="pb-3">Work List</h4>
             <div class="row shadow-sm pt-3 pb-3 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round">
                 <div class="col-6 text-center">
-                    <h3>{{ work_cnt }}</h3>
+                    <h3 id="work_cnt">{{ work_cnt }}</h3>
                     <p>Works</p>
                 </div>
                 <div class="col-6 text-center">
-                    <button type="button" class="btn btn-primary">
-                        <span class="badge badge-light">{{ work_cnt_cr }} </span> Create
-                    </button>
-                    <button type="button" class="btn btn-success">
-                        <span class="badge badge-light">{{ work_cnt_e }} </span> Edit
-                    </button>
-                    <button type="button" class="btn btn-danger">
-                        <span class="badge badge-light">{{ work_cnt_ca }} </span> Cancel
-                    </button>
+                    <h6 id="work_cnt_cr">{{ work_cnt_cr }} — Create</h6>
+                    <h6 id="work_cnt_e">{{ work_cnt_e }} — Edit</h6>
+                    <h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6>
                 </div>
             </div>
             <table class="table table" id="work">
@@ -44,13 +38,13 @@
             <h4 class="pb-3">Internal Document</h4>
             <div class="row shadow-sm pt-3 pb-3 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round">
                 <div class="col-6 text-center">
-                    <h3>{{ doc_cnt }}</h3>
+                    <h3 id="internal_cnt">{{ doc_cnt }}</h3>
                     <p>Documents</p>
                 </div>
                 <div class="col-6 text-center">
-                    <h6>{{ doc_cnt_in }} — In-Progress</h6>
-                    <h6>{{ doc_cnt_re }} — Released</h6>
-                    <h6>{{ doc_cnt_ob }} — Obsoleted</h6>
+                    <h6 id="internal_cnt_in">{{ doc_cnt_in }} — In-Progress</h6>
+                    <h6 id="internal_cnt_re">{{ doc_cnt_re }} — Released</h6>
+                    <h6 id="internal_cnt_ob">{{ doc_cnt_ob }} — Obsoleted</h6>
                 </div>
             </div>
             <table class="table table">
@@ -114,5 +108,30 @@
                     console.log(error)
                 })
         }
+
+        setInterval(() => {
+                axios.get('document/api/work_cnt/')
+                    .then(function (response) {
+                        items = response.data
+                        document.getElementById("work_cnt").innerText = items.cnt
+                        document.getElementById("work_cnt_cr").innerText = items.cr + " — Create"
+                        document.getElementById("work_cnt_e").innerText = items.e + " — Edit"
+                        document.getElementById("work_cnt_ca").innerText = items.ca + " — Cancel"
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+                axios.get('document/api/internal_cnt/')
+                    .then(function (response) {
+                        items = response.data
+                        document.getElementById("internal_cnt").innerText = items.cnt
+                        document.getElementById("internal_cnt_in").innerText = items.in + " — In-Progress"
+                        document.getElementById("internal_cnt_re").innerText = items.re + " — Released"
+                        document.getElementById("internal_cnt_ob").innerText = items.ob + " — Obsoleted"
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
+        }, 1000);
     </script>
 {% endblock %}

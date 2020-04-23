@@ -115,6 +115,7 @@ def external_add(request):
 def parse_html_time(time_string):
     return datetime.strptime(time_string, '%Y-%m-%dT%H:%M')
 
+
 def get_dashboard_work_cnt(request):
     work_cnt = Work.objects.all().count()
     work_cnt_cr = Work.objects.filter(type='CR').count()
@@ -122,6 +123,7 @@ def get_dashboard_work_cnt(request):
     work_cnt_ca = Work.objects.filter(type='CA').count()
     work_cnt = [work_cnt, work_cnt_cr, work_cnt_e, work_cnt_ca]
     return JsonResponse(work_cnt, safe=False)
+
 
 def get_dashboard_doc_cnt(request):
     internal_cnt = InternalDoc.objects.all().count()
@@ -131,7 +133,17 @@ def get_dashboard_doc_cnt(request):
     internal_cnt = [internal_cnt, internal_cnt_in, internal_cnt_re, internal_cnt_ob]
     return JsonResponse(internal_cnt, safe=False)
 
+
 def get_dashboard_work_list(request):
+    works = Work.objects.all().order_by('-id')[:10].values()
+    work_list = list(works)  # important: convert the QuerySet to a list object
+    print(works)
+    print('---------------')
+    print(work_list)
+    return JsonResponse(work_list, safe=False)
+
+
+def get_dashboard_internal_document_list(request):
     works = Work.objects.all().order_by('-id')[:10].values()
     work_list = list(works)  # important: convert the QuerySet to a list object
     print(works)

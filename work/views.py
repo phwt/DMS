@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 
 from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review, \
     pass_delegate_approve
+from document.models import Document, InternalDoc
 from work.forms import DocumentCreateForm, WorkFilterForm, DocumentSubmitForm, \
     DocumentReviewForm, DocumentApproveForm, DocumentCancelForm, DocumentEditForm
 from work.models import Work, DelegateUser
@@ -73,6 +74,16 @@ def work_edit(request):
                 creator=request.user.employee,
                 latest_delegate=request.user.employee
             )
+            new_doc = InternalDoc(
+                name=work.document.name,
+                version=work.document.version + 1,
+                running_no=work.document.running_no,
+                type=work.document.type,
+                state='IN',
+                creator=request.user.employee,
+                parent_doc=work.document.parent_doc
+            ).save()
+            work.new_document = new_doc
             work.save()
             delegate_user = DelegateUser(
                 work=work,
@@ -127,7 +138,10 @@ def work_detail(request, id):
             submit_form = DocumentSubmitForm(request.POST, request.FILES)
             submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')
             if submit_form.is_valid():
-                work.document.file_location = submit_form.cleaned_data['file']
+                if work.type == 'E':
+                    work.new_document.file_location = submit_form.cleaned_data['file']
+                else:
+                    work.document.file_location = submit_form.cleaned_data['file']
                 pass_delegate(work, 'DCC', submit_form)
                 work.document.save()
         elif work.state == 'DCC':

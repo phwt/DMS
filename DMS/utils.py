@@ -81,9 +81,11 @@ def pass_delegate_approve(work, form_data):
         elif work.type == 'CA':
             complete_work(work, 'OB')
         elif work.type == 'E':
-            complete_work(work, 'RE')
-            work.document.version += 1
-            work.save()
+            work.state = 'C'
+            work.document.state = 'OB'
+            work.complete_date = datetime.now()
+            work.latest_delegate = None
+            work.new_document.state = 'RE'
             work.document.save()
     else:
         if work.type == 'CR':

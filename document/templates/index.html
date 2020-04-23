@@ -31,7 +31,8 @@
                     <tr>
                         <td>{{ work }}</td>
                         <td>{{ work.get_type_display }}</td>
-                        <td>{{ work.create_date }}</td>
+{#                        <td>{{ work.create_date }}</td>#}
+                        <td>{{ work.create_date|date:"d-M-Y" }} {{  work.create_date|time:"H:i" }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -42,7 +43,7 @@
             <button onclick="UpdateTable()">'Reeeee'</button>
             <h4 class="pb-3">Internal Document</h4>
             <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
-                 style="background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);">
+                 style="background-image: linear-gradient(to right, red,#ffa500,yellow,green,blue,indigo,violet);">
                 <div class="col-6 text-center text-light">
                     <h3 id="internal_cnt">{{ doc_cnt }}</h3>
                     <p>Documents</p>

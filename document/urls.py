@@ -8,4 +8,5 @@ urlpatterns = [
     path('external/add', views.external_add, name='external_add'),
     path('api/work', views.get_dashboard_work_list),
     path('api/internal', views.get_dashboard_internal_document_list),
+    path('api/work_cnt', views.get_dashboard_doc_cnt),
 ]

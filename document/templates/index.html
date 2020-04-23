@@ -15,7 +15,7 @@
                     <h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6>
                 </div>
             </div>
-            <table class="table table">
+            <table class="table table" id="work">
                 <thead>
                 <tr>
                     <th scope="col">Related Document</th>
@@ -24,13 +24,13 @@
                     <th></th>
                 </tr>
                 </thead>
-                {% for work in works %} {# table work list in dashboard #}
-                    <tr>
-                        <td>{{ work }}</td>
-                        <td>{{ work.get_type_display }}</td>
-                        <td>{{ work.create_date }}</td>
-                    </tr>
-                {% endfor %}
+{#                {% for work in works %} {# table work list in dashboard #}
+{#                    <tr id="work">#}
+{#                        <td>{{ work }}</td>#}
+{#                        <td>{{ work.get_type_display }}</td>#}
+{#                        <td>{{ work.create_date }}</td>#}
+{#                    </tr>#}
+{#                {% endfor %}#}
             </table>
         </div>
         <div class="col-6">
@@ -73,19 +73,36 @@
     <script>
         var items = []
 
+        let formatDate = (date) => {
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            return `${date.getDate()}-` +
+                `${months[date.getMonth()]}-` +
+                `${date.getFullYear()} `+
+                `${date.getHours().toString().padStart(2, '0')}:` +
+                `${date.getMinutes().toString().padStart(2, '0')}`;
+        }
+
         function UpdateTable() {
             axios.get('document/api/work/')
                 .then(function (response) {
                     items = response.data
-
+                    var Table = document.querySelector("tr#work");
+                    Table.innerHTML = "";
                     items.forEach((item) => {
-                        console.log(item)
-                        {#console.log(item.type)#}
-                        {#console.log(item.create_date)#}
-
+                        let doucument_name = item.document_name
+                        let type_name = item.type_name
+                        let create_date = formatDate(new Date(item.create_date))
+                        let tr = document.createElement('tr')
+                        let td = document.createElement('td')
+                        let table = document.querySelector('table#work')
+                        td.innerText = doucument_name
+                        tr.appendChild(td)
+                        {#td.innerText = type_name#}
+                        {#tr.appendChild(td)#}
+                        {#td.innerText = create_date#}
+                        {#tr.appendChild(td)#}
+                        table.append(tr)
                     })
-
-
                 })
                 .catch(function (error) {
                     console.log(error)

@@ -97,7 +97,8 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item text-dark" href="{% url 'work_list' %}"><i class="fa fa-th-list"
                                                                                                    aria-hidden="true"></i>&nbsp;&nbsp;Work List</a>
-                                <a class="dropdown-item text-dark" href="{% url 'work_list' %}?employee={{ request.user.id }}"><i
+                                <a class="dropdown-item text-dark"
+                                   href="{% url 'work_list' %}?employee={{ request.user.id }}"><i
                                         class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;My Work</a>
                             </div>
                         </li>
@@ -138,4 +139,12 @@
     <div class="col-2"></div>
 </div>
 </body>
+<script>
+    $(document).ready(() => {
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    })
+</script>
 </html>

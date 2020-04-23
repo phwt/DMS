@@ -5,8 +5,8 @@ from django.shortcuts import render, redirect
 
 from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review, \
     pass_delegate_approve
-from work.forms import DocumentCreateForm, DocumentEditCancelForm, WorkFilterForm, DocumentSubmitForm, \
-    DocumentReviewForm, DocumentApproveForm
+from work.forms import DocumentCreateForm, WorkFilterForm, DocumentSubmitForm, \
+    DocumentReviewForm, DocumentApproveForm, DocumentCancelForm, DocumentEditForm
 from work.models import Work, DelegateUser
 
 
@@ -60,15 +60,43 @@ def work_create(request):
 
 
 @login_required(login_url='login')
-def work_edit_cancel(request, work_type):
-    form = DocumentEditCancelForm()
-
+def work_edit(request):
+    form = DocumentEditForm()
     if request.method == 'POST':
-        request_form = DocumentEditCancelForm(request.POST)
+        request_form = DocumentEditForm(request.POST)
         if request_form.is_valid():
             work = Work(
-                type='E' if work_type == 'edit' else 'CA',
-                state='N' if work_type == 'edit' else 'DCC',
+                type='E',
+                state='N',
+                detail=request_form.cleaned_data['detail'],
+                document=request_form.cleaned_data['requested_document'],
+                creator=request.user.employee,
+                latest_delegate=request.user.employee
+            )
+            work.save()
+            delegate_user = DelegateUser(
+                work=work,
+                employee=work.latest_delegate,
+                deadline=date_plus_today(5),
+            )
+            delegate_user.save()
+            return redirect('work_detail', id=work.id)
+
+    return render(request, 'work_edit_cancel.html', {
+        'form': form,
+        'work_type': 'edit'
+    })
+
+
+@login_required(login_url='login')
+def work_cancel(request):
+    form = DocumentCancelForm()
+    if request.method == 'POST':
+        request_form = DocumentCancelForm(request.POST)
+        if request_form.is_valid():
+            work = Work(
+                type='CA',
+                state='DCC',
                 detail=request_form.cleaned_data['detail'],
                 document=request_form.cleaned_data['requested_document'],
                 creator=request.user.employee,
@@ -85,7 +113,7 @@ def work_edit_cancel(request, work_type):
 
     return render(request, 'work_edit_cancel.html', {
         'form': form,
-        'work_type': work_type
+        'work_type': 'cancel'
     })
 
 

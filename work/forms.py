@@ -20,10 +20,15 @@ class DocumentCreateForm(ModelForm):
         apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
-class DocumentEditCancelForm(forms.Form):
+class DocumentCancelForm(forms.Form):
     requested_document = forms.ModelChoiceField(queryset=InternalDoc.objects.filter(state='RE'))
     detail = forms.CharField(widget=Textarea())
     delegate_user = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='DCC'))
+
+
+class DocumentEditForm(forms.Form):
+    requested_document = forms.ModelChoiceField(queryset=InternalDoc.objects.filter(state='RE'))
+    detail = forms.CharField(widget=Textarea())
 
 
 class WorkFilterForm(forms.Form):
@@ -46,6 +51,10 @@ class WorkFilterForm(forms.Form):
     type.widget.attrs.update(select_option)
     state.widget.attrs.update(select_option)
     employee.widget.attrs.update(select_option)
+
+# class DocumentEditSubmitForm(forms.Form):
+#     file = forms.FileField()
+    # delegate_user = forms.ModelChoiceField(queryset=Employee.objects.filter(user__groups__name='DCC'))
 
 
 class DocumentSubmitForm(forms.Form):

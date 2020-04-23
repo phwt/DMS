@@ -16,6 +16,7 @@
                     <h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6>
                 </div>
             </div>
+
             <table class="table" id="work">
                 <thead>
                 <tr>
@@ -25,14 +26,17 @@
                     <th></th>
                 </tr>
                 </thead>
-                {#                {% for work in works %} {# table work list in dashboard #}
-                {#                    <tr id="work">#}
-                {#                        <td>{{ work }}</td>#}
-                {#                        <td>{{ work.get_type_display }}</td>#}
-                {#                        <td>{{ work.create_date }}</td>#}
-                {#                    </tr>#}
-                {#                {% endfor %}#}
+                <tbody>
+                {% for work in works %}
+                    <tr>
+                        <td>{{ work }}</td>
+                        <td>{{ work.get_type_display }}</td>
+                        <td>{{ work.create_date }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
+
         </div>
         <div class="col-6">
             <button onclick="UpdateTable()">'Reeeee'</button>
@@ -58,6 +62,7 @@
                     <th></th>
                 </tr>
                 </thead>
+                <tbody>
                 {% for document in documents %} {# table internal doucument list in dashboard #}
                     <tr>
                         <td>{{ document.name }}</td>
@@ -69,6 +74,7 @@
                         {% endif %}
                     </tr>
                 {% endfor %}
+                </tbody>
             </table>
         </div>
     </div>
@@ -82,28 +88,22 @@
                 `${date.getFullYear()} ` +
                 `${date.getHours().toString().padStart(2, '0')}:` +
                 `${date.getMinutes().toString().padStart(2, '0')}`;
-        }
+        };
 
         function UpdateTable() {
             axios.get('document/api/work/')
                 .then(function (response) {
-                    items = response.data
-                    var Table = document.querySelector("tr#work");
-                    Table.innerHTML = "";
+                    items = response.data;
+                    let tbody = document.querySelector("#work > tbody");
+                    tbody.innerHTML = "";
                     items.forEach((item) => {
-                        let doucument_name = item.document_name
-                        let type_name = item.type_name
-                        let create_date = formatDate(new Date(item.create_date))
-                        let tr = document.createElement('tr')
-                        let td = document.createElement('td')
-                        let table = document.querySelector('table#work')
-                        td.innerText = doucument_name
-                        tr.appendChild(td)
-                        {#td.innerText = type_name#}
-                        {#tr.appendChild(td)#}
-                        {#td.innerText = create_date#}
-                        {#tr.appendChild(td)#}
-                        table.append(tr)
+                        let elem = document.createElement("tr");
+                        elem.innerHTML = `
+                            <td>${item.document_name}</td>
+                            <td>${item.type_name}</td>
+                            <td>${formatDate(new Date(item.create_date))}</td>
+                        `;
+                        tbody.appendChild(elem);
                     })
                 })
                 .catch(function (error) {
@@ -114,21 +114,21 @@
         setInterval(() => {
             axios.get('document/api/work_cnt/')
                 .then(function (response) {
-                    items = response.data
-                    document.getElementById("work_cnt").innerText = items.cnt
-                    document.getElementById("work_cnt_cr").innerText = items.cr + " — Create"
-                    document.getElementById("work_cnt_e").innerText = items.e + " — Edit"
+                    items = response.data;
+                    document.getElementById("work_cnt").innerText = items.cnt;
+                    document.getElementById("work_cnt_cr").innerText = items.cr + " — Create";
+                    document.getElementById("work_cnt_e").innerText = items.e + " — Edit";
                     document.getElementById("work_cnt_ca").innerText = items.ca + " — Cancel"
                 })
                 .catch(function (error) {
                     console.log(error)
-                })
+                });
             axios.get('document/api/internal_cnt/')
                 .then(function (response) {
-                    items = response.data
-                    document.getElementById("internal_cnt").innerText = items.cnt
-                    document.getElementById("internal_cnt_in").innerText = items.in + " — In-Progress"
-                    document.getElementById("internal_cnt_re").innerText = items.re + " — Released"
+                    items = response.data;
+                    document.getElementById("internal_cnt").innerText = items.cnt;
+                    document.getElementById("internal_cnt_in").innerText = items.in + " — In-Progress";
+                    document.getElementById("internal_cnt_re").innerText = items.re + " — Released";
                     document.getElementById("internal_cnt_ob").innerText = items.ob + " — Obsoleted"
                 })
                 .catch(function (error) {

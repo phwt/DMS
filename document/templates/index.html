@@ -30,7 +30,7 @@
                     <th></th>
                 </tr>
                 </thead>
-                {% for work in works %}
+                {% for work in works %} {# table work list in dashboard #}
                     <tr>
                         <td>{{ work }}</td>
                         <td>{{ work.get_type_display }}</td>
@@ -61,7 +61,7 @@
                     <th></th>
                 </tr>
                 </thead>
-                {% for document in documents %}
+                {% for document in documents %} {# table internal doucument list in dashboard #}
                     <tr>
                         <td>{{ document.name }}</td>
                         <td>{{ document.get_type_display }}</td>
@@ -75,4 +75,9 @@
             </table>
         </div>
     </div>
+{#    <script>#}
+{#        function UpdateTable() {#}
+{#            #}
+{#        }#}
+{#    </script>#}
 {% endblock %}

@@ -33,6 +33,7 @@ class Work(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     complete_date = models.DateTimeField(null=True)
     document = models.ForeignKey(InternalDoc, on_delete=models.CASCADE, null=False)
+    new_document = models.ForeignKey(InternalDoc, on_delete=models.CASCADE, null=True, related_name="new_document")  # For EDIT flow
     creator = models.ForeignKey(Employee, on_delete=models.CASCADE, null=False)
     latest_delegate = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='latest_delegate', null=True)
     employees = models.ManyToManyField('authen.Employee', through='DelegateUser', related_name='works')

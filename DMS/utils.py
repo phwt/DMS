@@ -3,6 +3,7 @@ from datetime import datetime
 
 from authen.models import Employee
 from work.models import DelegateUser
+from django.db.models import Case, CharField, Value, When
 
 
 def all_field_required_false(fields):
@@ -93,3 +94,13 @@ def pass_delegate_approve(work, form_data):
 
 def get_employees_in_groups_tuple(group_name):
     return [(i.id, i) for i in Employee.objects.filter(user__groups__name=group_name)]
+
+
+class WithChoices(Case):
+    """
+    https://stackoverflow.com/a/60158573/
+    """
+    def __init__(self, model, field, condition=None, then=None, **lookups):
+        choices = dict(model._meta.get_field(field).flatchoices)
+        whens = [When(**{field: k, 'then': Value(v)}) for k, v in choices.items()]
+        return super().__init__(*whens, output_field=CharField())

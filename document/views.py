@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count, F
 from django.http import JsonResponse
 
+from DMS.utils import WithChoices
 from work.models import Work
 from .models import Document, InternalDoc, ExternalDoc
 from .forms import ExternalDocForm, ExternalDocFilterForm, InternalDocFilterForm
@@ -147,6 +148,7 @@ def get_dashboard_doc_cnt(request):
 def get_dashboard_work_list(request):
     works = Work.objects.all().order_by('-id')[:10].annotate(
         document_name=F('document__name'),
+        type_name=WithChoices(Work, 'type'),
     ).values()
     work_list = list(works)
     return JsonResponse(work_list, safe=False)

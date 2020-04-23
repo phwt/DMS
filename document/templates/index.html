@@ -99,7 +99,6 @@
         }
 
         setInverval(() => {
-            function UpdateWorkCnt() {
                 axios.get('document/api/work_cnt/')
                     .then(function (response) {
                         items = response.data
@@ -111,8 +110,6 @@
                     .catch(function (error) {
                         console.log(error)
                     })
-            }
-            function UpdateinternalCnt() {
                 axios.get('document/api/internal_cnt/')
                     .then(function (response) {
                         items = response.data
@@ -124,7 +121,6 @@
                     .catch(function (error) {
                         console.log(error)
                     })
-            }
         }, 1000);
     </script>
 {% endblock %}

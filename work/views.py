@@ -124,8 +124,7 @@ def work_detail(request, id):
 
     action_form = None
     try:
-        # if delegate_user[0].employee == request.user.employee:
-        if True:
+        if delegate_user[0].employee == request.user.employee:
             if work.state == 'N':
                 action_form = DocumentSubmitForm()
                 action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')

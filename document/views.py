@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, F
+from django.http import JsonResponse
 
 from work.models import Work
 from .models import Document, InternalDoc, ExternalDoc
@@ -129,3 +130,11 @@ def get_dashboard_doc_cnt(request):
     internal_cnt_ob = InternalDoc.objects.filter(state='OB').count()
     internal_cnt = [internal_cnt, internal_cnt_in, internal_cnt_re, internal_cnt_ob]
     return JsonResponse(internal_cnt, safe=False)
+
+def get_dashboard_work_list(request):
+    works = Work.objects.all().order_by('-id')[:10].values()
+    work_list = list(works)  # important: convert the QuerySet to a list object
+    print(works)
+    print('---------------')
+    print(work_list)
+    return JsonResponse(work_list, safe=False)

@@ -40,6 +40,7 @@
             </table>
         </div>
         <div class="col-6">
+            <button onclick="UpdateTable()">'Reeeee'</button>
             <h4 class="pb-3">Internal Document</h4>
             <div class="row shadow-sm pt-3 pb-3 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round">
                 <div class="col-6 text-center">
@@ -75,9 +76,18 @@
             </table>
         </div>
     </div>
-{#    <script>#}
-{#        function UpdateTable() {#}
-{#            #}
-{#        }#}
-{#    </script>#}
+    <script>
+        var item = []
+        function UpdateTable() {
+            axios.get('api/work/')
+            .then(function (response) {
+                item = response.data
+                console.log(item)
+
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+        }
+    </script>
 {% endblock %}

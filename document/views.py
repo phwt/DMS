@@ -151,6 +151,7 @@ def get_dashboard_work_list(request):
 
 
 def get_dashboard_internal_list(request):
-    works = Work.objects.all().order_by('-id')[:10].values()
+    works = Work.objects.all().order_by('-id')[:10]
+    
     work_list = list(works)  # important: convert the QuerySet to a list object
     return JsonResponse(work_list, safe=False)

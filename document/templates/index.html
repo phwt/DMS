@@ -77,12 +77,19 @@
         </div>
     </div>
     <script>
-        var item = []
+        var items = []
         function UpdateTable() {
-            axios.get('api/work/')
+            axios.get('document/api/work/')
             .then(function (response) {
-                item = response.data
-                console.log(item)
+                items = response.data
+
+                items.forEach((item) => {
+                    console.log(item)
+                    {#console.log(item.type)#}
+                    {#console.log(item.create_date)#}
+
+                })
+
 
             })
             .catch(function (error) {

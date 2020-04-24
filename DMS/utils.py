@@ -82,16 +82,22 @@ def pass_delegate_approve(work, form_data):
             complete_work(work, 'OB')
         elif work.type == 'E':
             work.state = 'C'
-            work.document.state = 'OB'
             work.complete_date = datetime.now()
             work.latest_delegate = None
-            work.new_document.state = 'RE'
+            work.document.state = 'OB'
             work.document.save()
+            work.new_document.state = 'RE'
+            work.new_document.save()
     else:
         if work.type == 'CR':
             complete_work(work, 'RC')
-        elif work.type in ('CA', 'E'):
+        elif work.type == 'CA':
             complete_work(work, 'RE')
+        elif work.type == 'E':
+            work.state = 'C'
+            work.complete_date = datetime.now()
+            work.latest_delegate = None
+            work.new_document.delete()  # Delete the unapproved edit
 
 
 def get_employees_in_groups_tuple(group_name):

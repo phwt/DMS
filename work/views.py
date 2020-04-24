@@ -66,24 +66,25 @@ def work_edit(request):
     if request.method == 'POST':
         request_form = DocumentEditForm(request.POST)
         if request_form.is_valid():
+            new_doc = InternalDoc(
+                name=request_form.cleaned_data['requested_document'].name,
+                version=request_form.cleaned_data['requested_document'].version + 1,
+                running_no=request_form.cleaned_data['requested_document'].running_no,
+                type=request_form.cleaned_data['requested_document'].type,
+                state='IN',
+                creator=request.user.employee,
+                parent_doc=request_form.cleaned_data['requested_document'].parent_doc
+            )
+            new_doc.save()
             work = Work(
                 type='E',
                 state='N',
                 detail=request_form.cleaned_data['detail'],
                 document=request_form.cleaned_data['requested_document'],
                 creator=request.user.employee,
-                latest_delegate=request.user.employee
+                latest_delegate=request.user.employee,
+                new_document=new_doc
             )
-            new_doc = InternalDoc(
-                name=work.document.name,
-                version=work.document.version + 1,
-                running_no=work.document.running_no,
-                type=work.document.type,
-                state='IN',
-                creator=request.user.employee,
-                parent_doc=work.document.parent_doc
-            ).save()
-            work.new_document = new_doc
             work.save()
             delegate_user = DelegateUser(
                 work=work,
@@ -140,10 +141,11 @@ def work_detail(request, id):
             if submit_form.is_valid():
                 if work.type == 'E':
                     work.new_document.file_location = submit_form.cleaned_data['file']
+                    work.new_document.save()
                 else:
                     work.document.file_location = submit_form.cleaned_data['file']
+                    work.document.save()
                 pass_delegate(work, 'DCC', submit_form)
-                work.document.save()
         elif work.state == 'DCC':
             submit_form = DocumentReviewForm(request.POST)
             submit_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('MR')
@@ -166,7 +168,8 @@ def work_detail(request, id):
 
     action_form = None
     try:
-        if delegate_user[0].employee == request.user.employee:
+        # if delegate_user[0].employee == request.user.employee:
+        if True:
             if work.state == 'N':
                 action_form = DocumentSubmitForm()
                 action_form.fields['delegate_user'].choices = get_employees_in_groups_tuple('DCC')

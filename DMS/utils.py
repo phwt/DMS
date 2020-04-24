@@ -97,7 +97,8 @@ def pass_delegate_approve(work, form_data):
             work.state = 'C'
             work.complete_date = datetime.now()
             work.latest_delegate = None
-            work.new_document.delete()  # Delete the unapproved edit
+            work.new_document.state = 'OB'  # Obsolete the unapproved edit
+            work.new_document.save()
 
 
 def get_employees_in_groups_tuple(group_name):

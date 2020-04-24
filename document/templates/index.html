@@ -4,6 +4,7 @@
     <button onclick="UpdateTableWork()">Re Work</button>
     <button onclick="UpdateTableInternal()">Re Internal</button>
     <div class="row">
+{#Document Overview#}
         <div class="col-3">
             <div class="card bg-0">
                 <div class="card-body">
@@ -57,7 +58,7 @@
                 </div>
             </div>
         </div>
-
+{#Document list last 10#}
         <div class="col-6">
             <table class="table table-borderless text-light" id="internal">
                 <thead class="bg-0">
@@ -90,6 +91,7 @@
                 </tbody>
             </table>
         </div>
+{#Document In-Progress last 10#}
         <div class="col-3">
             <table class="table table-borderless text-light" id="progress">
                 <thead class="bg-0">
@@ -108,7 +110,7 @@
                 </tbody>
             </table>
         </div>
-
+{#Document Released last 10#}
         <div class="col-3">
             <table class="table table-borderless text-light" id="released">
                 <thead class="bg-0">
@@ -157,8 +159,6 @@
                 </tbody>
             </table>
         </div>
-
-
 
     </div>
     <script>

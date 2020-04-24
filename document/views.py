@@ -144,12 +144,22 @@ def get_dashboard_work_cnt(request):
     work_cnt_cr = Work.objects.filter(type='CR').count()
     work_cnt_e = Work.objects.filter(type='E').count()
     work_cnt_ca = Work.objects.filter(type='CA').count()
+    work_cnt_cr_w = Work.objects.filter(type='CR', create_date__gte=datetime.today() - timedelta(days=7)).count()
+    work_cnt_ca_w = Work.objects.filter(type='CA', create_date__gte=datetime.today() - timedelta(days=7)).count()
+    work_cnt_cr_d = Work.objects.filter(type='CR', create_date__range=(datetime.combine(datetime.today(), dt.time.min),
+                                                                       datetime.combine(datetime.today(), dt.time.max))).count()
+    work_cnt_ca_d = Work.objects.filter(type='CA', create_date__range=(datetime.combine(datetime.today(), dt.time.min),
+                                                                       datetime.combine(datetime.today(), dt.time.max))).count()
 
     work_cnt = {
         "cnt": work_cnt,
         "cr": work_cnt_cr,
         "e": work_cnt_e,
-        "ca": work_cnt_ca
+        "ca": work_cnt_ca,
+        'cr_w': work_cnt_cr_w,
+        'ca_w': work_cnt_ca_w,
+        'cr_d': work_cnt_cr_d,
+        'ca_d': work_cnt_ca_d
     }
     return JsonResponse(work_cnt, safe=False)
 

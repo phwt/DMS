@@ -2,11 +2,14 @@
 {% block content %}
     <h2 class="pb-5">Dashboard</h2>
     <div class="row">
+            <div class="col-3 bg-dark ml-3"><h3 id="work_cnt">{{ work_cnt }}</h3></div>
+            <div class="col-3 bg-success ml-3"><h6 id="work_cnt_cr">{{ work_cnt_cr }} — Create</h6></div>
+            <div class="col-3 bg-warning ml-3"><h6 id="work_cnt_e">{{ work_cnt_e }} — Edit</h6></div>
+            <div class="col-3 bg-danger ml-3"><h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6></div>
         <div class="col-6">
             <button onclick="UpdateTableWork()">Re Work</button>
             <h4 class="pb-3">Work List</h4>
-            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
-                 style=" background-image: linear-gradient(to left top, #326280, #ce6a6b);">
+            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 bg-info">
                 <div class="col-6 text-center text-light">
                     <h3 id="work_cnt">{{ work_cnt }}</h3>
                     <p>Works</p>
@@ -42,8 +45,7 @@
         <div class="col-6">
             <button onclick="UpdateTableInternal()">Re Internal</button>
             <h4 class="pb-3">Internal Document</h4>
-            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
-                 style="background-image: linear-gradient(to left top, #326280, #ffdfcb);">
+            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round bg-danger">
                 <div class="col-6 text-center text-light">
                     <h3 id="internal_cnt">{{ doc_cnt }}</h3>
                     <p>Documents</p>

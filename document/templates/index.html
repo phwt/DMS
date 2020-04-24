@@ -2,10 +2,39 @@
 {% block content %}
     <h2 class="pb-5">Dashboard</h2>
     <div class="row">
-            <div class="col-3 bg-dark ml-3"><h3 id="work_cnt">{{ work_cnt }}</h3></div>
-            <div class="col-3 bg-success ml-3"><h6 id="work_cnt_cr">{{ work_cnt_cr }} — Create</h6></div>
-            <div class="col-3 bg-warning ml-3"><h6 id="work_cnt_e">{{ work_cnt_e }} — Edit</h6></div>
-            <div class="col-3 bg-danger ml-3"><h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6></div>
+
+        <div class="col-3">
+            <div class="card bg-0">
+                <div class="card-body">
+                    <h5 class="card-title">{{ work_cnt }}</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">{{ work_cnt_cr }}</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card bg-warning">
+                <div class="card-body">
+                    <h5 class="card-title">{{ work_cnt_e }}</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card bg-danger">
+                <div class="card-body">
+                    <h5 class="card-title">{{ work_cnt_ca }}</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                </div>
+            </div>
+        </div>
         <div class="col-6">
             <button onclick="UpdateTableWork()">Re Work</button>
             <h4 class="pb-3">Work List</h4>
@@ -21,8 +50,8 @@
                 </div>
             </div>
 
-            <table class="table" id="work">
-                <thead>
+            <table class="table table-borderless text-light" id="work">
+                <thead class="bg-0">
                 <tr>
                     <th scope="col">Related Document</th>
                     <th scope="col">Type</th>
@@ -35,7 +64,15 @@
                 {% for work in works %}
                     <tr>
                         <td><a href="{% url 'work_detail' id=work.id %}">{{ work }}</a></td>
-                        <td>{{ work.get_type_display }}</td>
+
+                        {% if work.get_type_display == 'Create' %}
+                            <td><span class="badge badge-pill badge-success">{{ work.get_type_display }}</span></td>
+                        {% elif work.get_type_display == 'Edit' %}
+                            <td><span class="badge badge-pill badge-warning">{{ work.get_type_display }}</span></td>
+                        {% elif work.get_type_display == 'Cancel' %}
+                            <td><span class="badge badge-pill badge-danger">{{ work.get_type_display }}</span></td>
+                        {% endif %}
+
                         <td>{{ work.get_state_display }}</td>
                         <td>{{ work.create_date|date:"d-M-Y" }} {{ work.create_date|time:"H:i" }}</td>
                     </tr>
@@ -58,8 +95,8 @@
                     <h6 id="internal_cnt_ob">{{ doc_cnt_ob }} — Obsoleted</h6>
                 </div>
             </div>
-            <table class="table" id="internal">
-                <thead>
+            <table class="table table-borderless text-light" id="internal">
+                <thead class="bg-0">
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
@@ -72,10 +109,18 @@
                     <tr>
                         <td><a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a></td>
                         <td>{{ document.get_type_display }}</td>
-                        {% if document.get_state_display == '' %}
-                            <td>-</td>
-                        {% else %}
-                            <td colspan="2">{{ document.get_state_display }}</td>
+                        {% if document.get_state_display == 'Released' %}
+                            <td><span class="badge badge-pill badge-success">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'In-Progress' %}
+                            <td><span class="badge badge-pill badge-info">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'Obsoleted' %}
+                            <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'Recalled' %}
+                            <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
+                            </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -105,7 +150,16 @@
                         let elem = document.createElement("tr");
                         elem.innerHTML = `
                             <td><a href="./work/${item.id}">${item.document_name}</a></td>
-                            <td>${item.type_name}</td>
+                        `;
+                        if (item.type_name == 'Create') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-success">${item.type_name}</span></td>`;
+                        } else if (item.type_name == 'Edit') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-warning">${item.type_name}</span></td>`;
+                        } else if (item.type_name == 'Cancel') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-danger">${item.type_name}</span></td>`;
+                        }
+
+                        elem.innerHTML += `
                             <td>${item.state_name}</td>
                             <td>${formatDate(new Date(item.create_date))}</td>
                         `;
@@ -128,8 +182,16 @@
                         elem.innerHTML = `
                             <td><a href="./document/detail/${item.id}">${item.name}</a></td>
                             <td>${item.type_name}</td>
-                            <td colspan="2">${item.state_name}</td>
                         `;
+                        if (item.state_name == 'Released') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-success">${item.state_name}</span></td>`;
+                        } else if (item.state_name == 'In-Progress') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-info">${item.state_name}</span></td>`;
+                        } else if (item.state_name == 'Obsoleted') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-warning">${item.state_name}</span></td>`;
+                        } else if (item.state_name == 'Recalled') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-danger">${item.state_name}</span></td>`;
+                        }
                         tbody.appendChild(elem);
                     })
                 })

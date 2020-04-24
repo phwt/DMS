@@ -26,6 +26,7 @@
                 <tr>
                     <th scope="col">Related Document</th>
                     <th scope="col">Type</th>
+                    <th scope="col">State</th>
                     <th scope="col">Create Date</th>
                     <th></th>
                 </tr>
@@ -35,6 +36,7 @@
                     <tr>
                         <td><a href="{% url 'work_detail' id=work.id %}">{{ work }}</a></td>
                         <td>{{ work.get_type_display }}</td>
+                        <td>{{ work.get_state_display }}</td>
                         <td>{{ work.create_date|date:"d-M-Y" }} {{ work.create_date|time:"H:i" }}</td>
                     </tr>
                 {% endfor %}
@@ -104,6 +106,7 @@
                         elem.innerHTML = `
                             <td><a href="./work/${item.id}">${item.document_name}</a></td>
                             <td>${item.type_name}</td>
+                            <td>${item.state_name}</td>
                             <td>${formatDate(new Date(item.create_date))}</td>
                         `;
                         tbody.appendChild(elem);

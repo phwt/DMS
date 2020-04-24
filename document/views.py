@@ -1,5 +1,5 @@
-from datetime import datetime, date, timedelta
-
+from datetime import datetime , date, timedelta
+import datetime as dt
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, F
 from django.http import JsonResponse, HttpResponse
@@ -28,8 +28,10 @@ def index(request):
 
     work_cnt_cr_w = Work.objects.filter(type='CR', create_date__gte=datetime.today() - timedelta(days=7)).count()
     work_cnt_ca_w = Work.objects.filter(type='CA', create_date__gte=datetime.today() - timedelta(days=7)).count()
-    work_cnt_cr_d = Work.objects.filter(type='CR', create_date=datetime.today()).count()
-    work_cnt_ca_d = Work.objects.filter(type='CA', create_date=datetime.today()).count()
+    work_cnt_cr_d = Work.objects.filter(type='CR', create_date__range=(datetime.combine(datetime.today(), dt.time.min),
+                                                                       datetime.combine(datetime.today(), dt.time.max))).count()
+    work_cnt_ca_d = Work.objects.filter(type='CA', create_date__range=(datetime.combine(datetime.today(), dt.time.min),
+                                                                       datetime.combine(datetime.today(), dt.time.max))).count()
 
     internal = InternalDoc.objects.all().order_by('-id')[:10]
     internal_dashboard = InternalDoc.objects.filter(state='IN').order_by('-id')[:10]

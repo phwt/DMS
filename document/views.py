@@ -285,10 +285,7 @@ def document_template(request, id):
 def get_dashboard_internal_progress(request):
     progress = InternalDoc.objects.filter(
         state='IN'
-    ).order_by('-id')[:10].annotate(
-        type_name=WithChoices(InternalDoc, 'type'),
-        state_name=WithChoices(InternalDoc, 'state')
-    ).values()
+    ).order_by('-id')[:10].values()
     progress_list = list(progress)
     return JsonResponse(progress_list, safe=False)
 
@@ -296,9 +293,6 @@ def get_dashboard_internal_progress(request):
 def get_dashboard_internal_released(request):
     progress = InternalDoc.objects.filter(
         state='RE'
-    ).order_by('-id')[:10].annotate(
-        type_name=WithChoices(InternalDoc, 'type'),
-        state_name=WithChoices(InternalDoc, 'state')
-    ).values()
+    ).order_by('-id')[:10].values()
     progress_list = list(progress)
     return JsonResponse(progress_list, safe=False)

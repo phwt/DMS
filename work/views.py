@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import F, Q
 from django.db.models.functions import Coalesce
 from django.shortcuts import render, redirect
@@ -13,23 +14,32 @@ from work.models import Work, DelegateUser
 
 @login_required(login_url='login')
 def work_list(request):
-    works = Work.objects.all().order_by('-id')
+    work_list = Work.objects.all().order_by('-id')
     if request.method == 'GET':
         filter_form = WorkFilterForm(request.GET)
         if filter_form.is_valid():
             if filter_form.cleaned_data['document'] is not None:
-                works = works.filter(document=filter_form.cleaned_data['document'])
+                work_list = work_list.filter(document=filter_form.cleaned_data['document'])
 
             if filter_form.cleaned_data['type'] is not '':
-                works = works.filter(type=filter_form.cleaned_data['type'])
+                work_list = work_list.filter(type=filter_form.cleaned_data['type'])
 
             if filter_form.cleaned_data['state'] is not '':
-                works = works.filter(state=filter_form.cleaned_data['state'])
+                work_list = work_list.filter(state=filter_form.cleaned_data['state'])
 
             if filter_form.cleaned_data['employee'] is not None:
-                works = works.filter(latest_delegate=filter_form.cleaned_data['employee'])
+                work_list = work_list.filter(latest_delegate=filter_form.cleaned_data['employee'])
     else:
         filter_form = WorkFilterForm()
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(work_list, 10)
+    try:
+        works = paginator.page(page)
+    except PageNotAnInteger:
+        works = paginator.page(1)
+    except EmptyPage:
+        works = paginator.page(paginator.num_pages)
 
     context = {
         'works': works,

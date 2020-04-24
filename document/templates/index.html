@@ -104,7 +104,7 @@
                 {% for document_in in documents_in %} {# inprogresssssssssssssssssssssssssssssssssssssssssssssssssss #}
                     <tr>
                         <td><a href="{% url 'doc_detail' id=document_in.id %}">{{ document_in.name }}</a></td>
-                        <td>{{ document_in.get_type_display }}</td>
+                        <td>{{ document_in.type }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -123,7 +123,7 @@
                 {% for document_re in documents_re %} {#  #}
                     <tr>
                         <td><a href="{% url 'doc_detail' id=document_re.id %}">{{ document_re.name }}</a></td>
-                        <td>{{ document_re.get_type_display }}</td>
+                        <td>{{ document_re.type }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -214,7 +214,7 @@
                         let elem = document.createElement("tr");
                         elem.innerHTML = `
                             <td><a href="./document/detail/${item.id}">${item.name}</a></td>
-                            <td>${item.type_name}</td>
+                            <td>${item.type}</td>
                         `;
                         tbody.appendChild(elem);
                     })
@@ -232,7 +232,7 @@
                         let elem = document.createElement("tr");
                         elem.innerHTML = `
                             <td><a href="./document/detail/${item.id}">${item.name}</a></td>
-                            <td>${item.type_name}</td>
+                            <td>${item.type}</td>
                         `;
                         tbody.appendChild(elem);
                     })

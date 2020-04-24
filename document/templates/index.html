@@ -3,6 +3,7 @@
     <h2 class="pb-5">Dashboard</h2>
     <div class="row">
         <div class="col-6">
+            <button onclick="UpdateTableWork()">Re Work</button>
             <h4 class="pb-3">Work List</h4>
             <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
                  style=" background-image: linear-gradient(-90deg, red, yellow);">
@@ -29,9 +30,9 @@
                 <tbody>
                 {% for work in works %}
                     <tr>
-                        <td>{{ work }}</td>
+                        <td><a href="{% url 'work_detail' id=work.id %}">{{ work }}</a></td>
                         <td>{{ work.get_type_display }}</td>
-                        <td>{{ work.create_date|date:"d-M-Y" }} {{  work.create_date|time:"H:i" }}</td>
+                        <td>{{ work.create_date|date:"d-M-Y" }} {{ work.create_date|time:"H:i" }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -39,7 +40,7 @@
 
         </div>
         <div class="col-6">
-            <button onclick="UpdateTable()">'Reeeee'</button>
+            <button onclick="UpdateTableInternal()">Re Internal</button>
             <h4 class="pb-3">Internal Document</h4>
             <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
                  style="background-image: linear-gradient(to right, red,#ffa500,yellow,green,blue,indigo,violet);">
@@ -65,12 +66,12 @@
                 <tbody>
                 {% for document in documents %} {# table internal doucument list in dashboard #}
                     <tr>
-                        <td>{{ document.name }}</td>
+                        <td><a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a></td>
                         <td>{{ document.get_type_display }}</td>
                         {% if document.get_state_display == '' %}
                             <td>-</td>
                         {% else %}
-                            <td>{{ document.get_state_display }}</td>
+                            <td colspan="2">{{ document.get_state_display }}</td>
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -90,7 +91,7 @@
                 `${date.getMinutes().toString().padStart(2, '0')}`;
         };
 
-        function UpdateTable() {
+        function UpdateTableWork() {
             axios.get('document/api/work/') {# work list #}
                 .then(function (response) {
                     items = response.data;
@@ -99,7 +100,7 @@
                     items.forEach((item) => {
                         let elem = document.createElement("tr");
                         elem.innerHTML = `
-                            <td>${item.document_name}</td>
+                            <td><a href="./work/${item.id}">${item.document_name}</a></td>
                             <td>${item.type_name}</td>
                             <td>${formatDate(new Date(item.create_date))}</td>
                         `;
@@ -109,7 +110,9 @@
                 .catch(function (error) {
                     console.log(error)
                 })
-            {# internal document list #}
+        }
+
+        function UpdateTableInternal() {
             axios.get('document/api/internal/')
                 .then(function (response) {
                     items = response.data;
@@ -118,9 +121,9 @@
                     items.forEach((item) => {
                         let elem = document.createElement("tr");
                         elem.innerHTML = `
-                            <td>${item.name}</td>
+                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
                             <td>${item.type_name}</td>
-                            <td>${item.state_name}</td>
+                            <td colspan="2">${item.state_name}</td>
                         `;
                         tbody.appendChild(elem);
                     })

@@ -187,7 +187,7 @@
                     <div class="card-body pb-0">
                         <div class="row">
                             <div class="col-5">
-                                <h1 class="font-l"><u class="text-success">{{ work_cnt_cr_d }}</u></h1>
+                                <u class="text-success"><h1 class="font-l" id="work_cnt_cr_d">{{ work_cnt_cr_d }}</h1></u>
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title">Works</h5>
@@ -200,7 +200,7 @@
                     <div class="card-body pb-0">
                         <div class="row">
                             <div class="col-5">
-                                <h1 class="font-l"><u class="text-success">{{ work_cnt_cr_w }}</u></h1>
+                                <u class="text-success"><h1 class="font-l" id="work_cnt_cr_w">{{ work_cnt_cr_w }}</h1></u>
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title">Works</h5>
@@ -241,7 +241,7 @@
                     <div class="card-body pb-0">
                         <div class="row">
                             <div class="col-5">
-                                <h1 class="font-l"><u class="text-danger">{{ work_cnt_ca_d }}</u></h1>
+                                <u class="text-danger"><h1 class="font-l" id="work_cnt_ca_d">{{ work_cnt_ca_d }}</h1></u>
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title">Works</h5>
@@ -254,7 +254,7 @@
                     <div class="card-body pb-0">
                         <div class="row">
                             <div class="col-5">
-                                <h1 class="font-l"><u class="text-danger">{{ work_cnt_ca_w }}</u></h1>
+                                <u class="text-danger"><h1 class="font-l" id="work_cnt_ca_w">{{ work_cnt_ca_w }}</h1></u>
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title">Works</h5>
@@ -418,6 +418,10 @@
                     document.getElementById("work_cnt_cr").innerText = items.cr;
                     document.getElementById("work_cnt_e").innerText = items.e;
                     document.getElementById("work_cnt_ca").innerText = items.ca;
+                    document.getElementById("work_cnt_cr_w").innerText = items.cr_w;
+                    document.getElementById("work_cnt_ca_w").innerText = items.ca_w;
+                    document.getElementById("work_cnt_cr_d").innerText = items.cr_d;
+                    document.getElementById("work_cnt_ca_d").innerText = items.ca_d;
                 })
                 .catch(function (error) {
                     console.log(error)

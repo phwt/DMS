@@ -68,7 +68,6 @@ def document_list(request, doc_type):
     if doc_type == 'external':
         filter_forms = ExternalDocFilterForm(request.GET)
         if filter_forms.is_valid():
-            print(filter_forms.cleaned_data)
             documents = ExternalDoc.objects.filter(
                 name__icontains=filter_forms.cleaned_data['name'],
                 source__icontains=filter_forms.cleaned_data['source'],
@@ -79,33 +78,37 @@ def document_list(request, doc_type):
 
     elif doc_type == 'internal':
         filter_forms = InternalDocFilterForm(request.GET)
-        if filter_forms.is_valid():
-            documents = InternalDoc.objects.filter(
-                name__icontains=filter_forms.cleaned_data['name'],
-            )
-            documents = documents.annotate(dept_name=F('creator__department__name'))
+        if 'name' in request.GET:
+            print('y')
+            if filter_forms.is_valid():
+                documents = InternalDoc.objects.filter(
+                    name__icontains=filter_forms.cleaned_data['name'],
+                )
 
-            if filter_forms.cleaned_data['parent_doc'] is not None:
-                documents = documents.filter(parent_doc=filter_forms.cleaned_data['parent_doc'])
+                if filter_forms.cleaned_data['parent_doc'] is not None:
+                    documents = documents.filter(parent_doc=filter_forms.cleaned_data['parent_doc'])
 
-            if filter_forms.cleaned_data['version'] is not None:
-                documents = documents.filter(version=filter_forms.cleaned_data['version'])
+                if filter_forms.cleaned_data['version'] is not None:
+                    documents = documents.filter(version=filter_forms.cleaned_data['version'])
 
-            if filter_forms.cleaned_data['running_no'] is not None:
-                documents = documents.filter(running_no=filter_forms.cleaned_data['running_no'])
+                if filter_forms.cleaned_data['running_no'] is not None:
+                    documents = documents.filter(running_no=filter_forms.cleaned_data['running_no'])
 
-            if filter_forms.cleaned_data['type'] != '':
-                documents = documents.filter(type__exact=filter_forms.cleaned_data['type'])
+                if filter_forms.cleaned_data['type'] != '':
+                    documents = documents.filter(type__exact=filter_forms.cleaned_data['type'])
 
-            if filter_forms.cleaned_data['state'] != '':
-                documents = documents.filter(state__exact=filter_forms.cleaned_data['state'])
+                if filter_forms.cleaned_data['state'] != '':
+                    documents = documents.filter(state__exact=filter_forms.cleaned_data['state'])
 
-            if filter_forms.cleaned_data['creator'] is not None:
-                documents = documents.filter(creator=filter_forms.cleaned_data['creator'])
+                if filter_forms.cleaned_data['creator'] is not None:
+                    documents = documents.filter(creator=filter_forms.cleaned_data['creator'])
 
-            if filter_forms.cleaned_data['department'] is not None:
-                documents = documents.filter(creator__department=filter_forms.cleaned_data['department'])
-
+                if filter_forms.cleaned_data['department'] is not None:
+                    documents = documents.filter(creator__department=filter_forms.cleaned_data['department'])
+        else:
+            print('n')
+            documents = InternalDoc.objects.all().prefetch_related('creator__department', 'creator')
+    documents = documents.annotate(dept_name=F('creator__department__name'))
     context = {
         'documents': documents,
         'doc_type': doc_type,
@@ -144,12 +147,22 @@ def get_dashboard_work_cnt(request):
     work_cnt_cr = Work.objects.filter(type='CR').count()
     work_cnt_e = Work.objects.filter(type='E').count()
     work_cnt_ca = Work.objects.filter(type='CA').count()
+    work_cnt_cr_w = Work.objects.filter(type='CR', create_date__gte=datetime.today() - timedelta(days=7)).count()
+    work_cnt_ca_w = Work.objects.filter(type='CA', create_date__gte=datetime.today() - timedelta(days=7)).count()
+    work_cnt_cr_d = Work.objects.filter(type='CR', create_date__range=(datetime.combine(datetime.today(), dt.time.min),
+                                                                       datetime.combine(datetime.today(), dt.time.max))).count()
+    work_cnt_ca_d = Work.objects.filter(type='CA', create_date__range=(datetime.combine(datetime.today(), dt.time.min),
+                                                                       datetime.combine(datetime.today(), dt.time.max))).count()
 
     work_cnt = {
         "cnt": work_cnt,
         "cr": work_cnt_cr,
         "e": work_cnt_e,
-        "ca": work_cnt_ca
+        "ca": work_cnt_ca,
+        'cr_w': work_cnt_cr_w,
+        'ca_w': work_cnt_ca_w,
+        'cr_d': work_cnt_cr_d,
+        'ca_d': work_cnt_ca_d
     }
     return JsonResponse(work_cnt, safe=False)
 

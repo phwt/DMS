@@ -20,6 +20,12 @@ def index(request):
     work_cnt_ca = Work.objects.filter(type='CA').count()
 
     internal = InternalDoc.objects.all().order_by('-id')[:10]
+    internal_dashboard = InternalDoc.objects.filter(
+        state='IN'
+    ).order_by('-id')[:10]
+    internal_dashboard_re = InternalDoc.objects.filter(
+        state='RE'
+    ).order_by('-id')[:10]
     internal_cnt = InternalDoc.objects.all().count()
     internal_cnt_in = InternalDoc.objects.filter(state='IN').count()
     internal_cnt_re = InternalDoc.objects.filter(state='RE').count()
@@ -33,6 +39,8 @@ def index(request):
         'work_cnt_ca': work_cnt_ca,
 
         'documents': internal,
+        'documents_in': internal_dashboard,
+        'documents_re': internal_dashboard_re,
         'doc_cnt': internal_cnt,
         'doc_cnt_in': internal_cnt_in,
         'doc_cnt_re': internal_cnt_re,
@@ -162,3 +170,25 @@ def get_dashboard_internal_list(request):
     ).values()
     internal_list = list(internal)
     return JsonResponse(internal_list, safe=False)
+
+
+def get_dashboard_internal_progress(request):
+    progress = InternalDoc.objects.filter(
+        state='IN'
+    ).order_by('-id')[:10].annotate(
+        type_name=WithChoices(InternalDoc, 'type'),
+        state_name=WithChoices(InternalDoc, 'state')
+    ).values()
+    progress_list = list(progress)
+    return JsonResponse(progress_list, safe=False)
+
+
+def get_dashboard_internal_released(request):
+    progress = InternalDoc.objects.filter(
+        state='RE'
+    ).order_by('-id')[:10].annotate(
+        type_name=WithChoices(InternalDoc, 'type'),
+        state_name=WithChoices(InternalDoc, 'state')
+    ).values()
+    progress_list = list(progress)
+    return JsonResponse(progress_list, safe=False)

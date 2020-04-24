@@ -147,6 +147,52 @@
             </table>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-6">
+            <table class="table table-borderless text-light" id="progress">
+                <thead class="bg-0">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">State</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for document_in in documents_in %} {# inprogresssssssssssssssssssssssssssssssssssssssssssssssssss #}
+                    <tr>
+                        <td><a href="{% url 'doc_detail' id=document_in.id %}">{{ document_in.name }}</a></td>
+                        <td>{{ document_in.get_type_display }}</td>
+                        <td><span class="badge badge-pill badge-info">{{ document_in.get_state_display }}</span></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-6">
+            <table class="table table-borderless text-light" id="released">
+                <thead class="bg-0">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">State</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for document_re in documents_re %} {# inprogresssssssssssssssssssssssssssssssssssssssssssssssssss #}
+                    <tr>
+                        <td><a href="{% url 'doc_detail' id=document_re.id %}">{{ document_re.name }}</a></td>
+                        <td>{{ document_re.get_type_display }}</td>
+                        <td><span class="badge badge-pill badge-success">{{ document_re.get_state_display }}</span></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <script>
         var items = []
 
@@ -191,6 +237,44 @@
         }
 
         function UpdateTableInternal() {
+            axios.get('document/api/internal/progress/')
+                .then(function (response) {
+                    items = response.data;
+                    let tbody = document.querySelector("#progress > tbody");
+                    tbody.innerHTML = "";
+                    items.forEach((item) => {
+                        let elem = document.createElement("tr");
+                        elem.innerHTML = `
+                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
+                            <td>${item.type_name}</td>
+                            <td><span class="badge badge-pill badge-info">${item.state_name}</span></td>
+                        `;
+                        tbody.appendChild(elem);
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+
+            axios.get('document/api/internal/released/')
+                .then(function (response) {
+                    items = response.data;
+                    let tbody = document.querySelector("#released > tbody");
+                    tbody.innerHTML = "";
+                    items.forEach((item) => {
+                        let elem = document.createElement("tr");
+                        elem.innerHTML = `
+                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
+                            <td>${item.type_name}</td>
+                            <td><span class="badge badge-pill badge-success">${item.state_name}</span></td>
+                        `;
+                        tbody.appendChild(elem);
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+
             axios.get('document/api/internal/')
                 .then(function (response) {
                     items = response.data;

@@ -40,16 +40,15 @@ class WorkFilterForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(WorkFilterForm, self).__init__(*args, **kwargs)
         all_field_required_false(self.fields)
-        apply_class_to_fields(self.fields, 'form-control form-control-sm form-control-sm-select selectpicker')
+        apply_class_to_fields(self.fields, 'form-control form-control-sm', exclude=['document', 'employee'])
 
     select_option = {
+        'class': 'form-control form-control-sm form-control-sm-select selectpicker',
         'data-live-search': 'true',
         'data-style': 'form-control border'
     }
 
     document.widget.attrs.update(select_option)
-    type.widget.attrs.update(select_option)
-    state.widget.attrs.update(select_option)
     employee.widget.attrs.update(select_option)
 
 # class DocumentEditSubmitForm(forms.Form):

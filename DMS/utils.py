@@ -75,7 +75,7 @@ def pass_delegate_approve(work, form_data):
     current_delegate.completed = True
     current_delegate.save()
 
-    if form_data.cleaned_data['result']:  # Review result is true (passed)
+    if form_data.cleaned_data['approve']:  # Review result is true (passed)
         if work.type == 'CR':
             complete_work(work, 'RE')
         elif work.type == 'CA':

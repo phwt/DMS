@@ -51,10 +51,6 @@ class WorkFilterForm(forms.Form):
     document.widget.attrs.update(select_option)
     employee.widget.attrs.update(select_option)
 
-# class DocumentEditSubmitForm(forms.Form):
-#     file = forms.FileField()
-    # delegate_user = forms.ModelChoiceField(queryset=Employee.objects.filter(user__groups__name='DCC'))
-
 
 class DocumentSubmitForm(forms.Form):
     file = forms.FileField()

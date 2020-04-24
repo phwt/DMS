@@ -183,7 +183,7 @@ def document_template(request, id):
 
     doc = InternalDoc.objects.get(pk=id)
 
-    document = docx.Document()
+    document = docx()
 
     obj_styles = document.styles
     obj_charstyle = obj_styles.add_style('LogoStyle', WD_STYLE_TYPE.CHARACTER)

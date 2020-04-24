@@ -6,32 +6,53 @@
         <div class="col-3">
             <div class="card bg-0">
                 <div class="card-body">
-                    <h5 class="card-title">{{ work_cnt }}</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <h5 class="card-title" id="doc_cnt">{{ doc_cnt }}</h5>
+                    <p class="card-text">Internal Document</p>
                 </div>
             </div>
         </div>
         <div class="col-3">
-            <div class="card bg-success">
+            <div class="card bg-0">
                 <div class="card-body">
-                    <h5 class="card-title">{{ work_cnt_cr }}</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-spinner text-info font-l" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-8">
+                            <h5 class="card-title" id="doc_cnt_in">{{ doc_cnt_in }}</h5>
+                            <p class="card-text">In-Progress</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-3">
-            <div class="card bg-warning">
+            <div class="card bg-0">
                 <div class="card-body">
-                    <h5 class="card-title">{{ work_cnt_e }}</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-arrow-circle-right text-success font-l" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-8">
+                            <h5 class="card-title" id="doc_cnt_re">{{ doc_cnt_re }}</h5>
+                            <p class="card-text">Released</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-3">
-            <div class="card bg-danger">
+            <div class="card bg-0">
                 <div class="card-body">
-                    <h5 class="card-title">{{ work_cnt_ca }}</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-ban text-warning font-l" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-8">
+                            <h5 class="card-title" id="doc_cnt_ob">{{ doc_cnt_ob }}</h5>
+                            <p class="card-text">Obsoleted</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,9 +65,9 @@
                     <p>Works</p>
                 </div>
                 <div class="col-6 text-center text-light">
-                    <h6 id="work_cnt_cr">{{ work_cnt_cr }} — Create</h6>
-                    <h6 id="work_cnt_e">{{ work_cnt_e }} — Edit</h6>
-                    <h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6>
+                    <h6 id="work_cnt_cr">{{ work_cnt_cr }}</h6>
+                    <h6 id="work_cnt_e">{{ work_cnt_e }}</h6>
+                    <h6 id="work_cnt_ca">{{ work_cnt_ca }}</h6>
                 </div>
             </div>
 
@@ -57,7 +78,6 @@
                     <th scope="col">Type</th>
                     <th scope="col">State</th>
                     <th scope="col">Create Date</th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -90,9 +110,9 @@
                     <p>Documents</p>
                 </div>
                 <div class="col-6 text-center text-light">
-                    <h6 id="internal_cnt_in">{{ doc_cnt_in }} — In-Progress</h6>
-                    <h6 id="internal_cnt_re">{{ doc_cnt_re }} — Released</h6>
-                    <h6 id="internal_cnt_ob">{{ doc_cnt_ob }} — Obsoleted</h6>
+                    <h6 id="internal_cnt_in">{{ doc_cnt_in }}</h6>
+                    <h6 id="internal_cnt_re">{{ doc_cnt_re }}</h6>
+                    <h6 id="internal_cnt_ob">{{ doc_cnt_ob }}</h6>
                 </div>
             </div>
             <table class="table table-borderless text-light" id="internal">
@@ -101,7 +121,6 @@
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
                     <th scope="col">State</th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -289,9 +308,9 @@
                 .then(function (response) {
                     items = response.data;
                     document.getElementById("work_cnt").innerText = items.cnt;
-                    document.getElementById("work_cnt_cr").innerText = items.cr + " — Create";
-                    document.getElementById("work_cnt_e").innerText = items.e + " — Edit";
-                    document.getElementById("work_cnt_ca").innerText = items.ca + " — Cancel"
+                    document.getElementById("work_cnt_cr").innerText = items.cr;
+                    document.getElementById("work_cnt_e").innerText = items.e;
+                    document.getElementById("work_cnt_ca").innerText = items.ca;
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -300,9 +319,9 @@
                 .then(function (response) {
                     items = response.data;
                     document.getElementById("internal_cnt").innerText = items.cnt;
-                    document.getElementById("internal_cnt_in").innerText = items.in + " — In-Progress";
-                    document.getElementById("internal_cnt_re").innerText = items.re + " — Released";
-                    document.getElementById("internal_cnt_ob").innerText = items.ob + " — Obsoleted"
+                    document.getElementById("internal_cnt_in").innerText = items.in;
+                    document.getElementById("internal_cnt_re").innerText = items.re;
+                    document.getElementById("internal_cnt_ob").innerText = items.ob;
                 })
                 .catch(function (error) {
                     console.log(error)

@@ -41,6 +41,9 @@ class InternalDoc(Document):
     creator = models.ForeignKey(Employee, on_delete=models.CASCADE)
     parent_doc = models.ForeignKey('self', on_delete=models.CASCADE, null=True)
 
+    def __str__(self):
+        return f'{self.name} ({self.type}-{self.creator.user.employee.department.abbreviation}-{self.pk}-{self.version})'
+
 
 class ExternalDoc(Document):
     source = models.TextField(null=False)

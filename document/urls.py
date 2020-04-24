@@ -10,5 +10,5 @@ urlpatterns = [
     path('api/internal/', views.get_dashboard_internal_list),
     path('api/work_cnt/', views.get_dashboard_work_cnt),
     path('api/internal_cnt/', views.get_dashboard_internal_cnt),
-
+    path('api/template/<int:id>', views.document_template, name='document_template'),
 ]

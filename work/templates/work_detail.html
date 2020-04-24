@@ -54,6 +54,7 @@
                             </ul>
                         </div>
                         <a href="{% url 'doc_detail' id=work.document_id %}" class="btn btn-primary">View Document</a>
+                        <a href="{% url 'document_template' id=work.document_id %}" class="btn btn-secondary">Download Template</a>
                     </div>
                 </div>
             </div>
@@ -73,8 +74,8 @@
                                     <li><b>Parent Document</b>: {{ work.new_document.parent_doc }}</li>
                                 </ul>
                             </div>
-                            <a href="{% url 'doc_detail' id=work.new_document_id %}" class="btn btn-primary">View
-                                Document</a>
+                            <a href="{% url 'doc_detail' id=work.new_document_id %}" class="btn btn-primary">View Document</a>
+                            <a href="{% url 'document_template' id=work.new_document_id %}" class="btn btn-secondary">Download Template</a>
                         </div>
                     </div>
                 </div>

@@ -10,7 +10,7 @@ from .models import Document, InternalDoc, ExternalDoc
 from .forms import ExternalDocForm, ExternalDocFilterForm, InternalDocFilterForm
 from django.shortcuts import redirect, render
 
-from docx import Document
+from docx import Document as docx
 from docx.shared import Pt
 from docx.enum.style import WD_STYLE_TYPE
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
@@ -183,7 +183,7 @@ def document_template(request, id):
 
     doc = InternalDoc.objects.get(pk=id)
 
-    document = Document()
+    document = docx.Document()
 
     obj_styles = document.styles
     obj_charstyle = obj_styles.add_style('LogoStyle', WD_STYLE_TYPE.CHARACTER)
@@ -251,7 +251,7 @@ def document_template(request, id):
     row1_cells[2].text = 'Version:'
     row1_cells[2].width = Inches(1.84)
     row1_cells[2].paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
-    row1_cells[3].text = doc.version
+    row1_cells[3].text = str(doc.version)
     row1_cells[3].paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     row1_cells[3].width = Inches(0.38)
 
@@ -261,12 +261,12 @@ def document_template(request, id):
             p.paragraph_format.space_after = 0
 
     row2_cells = table.rows[1].cells
-    row2_cells[1].text = doc
+    row2_cells[1].text = str(doc)
     row2_cells[1].width = Inches(2.25)
     row2_cells[2].text = 'Running No:'
     row2_cells[2].width = Inches(1.84)
     row2_cells[2].paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.RIGHT
-    row2_cells[3].text = doc.running_no
+    row2_cells[3].text = str(doc.running_no)
     row2_cells[3].paragraphs[0].alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
     row2_cells[3].width = Inches(0.38)
 

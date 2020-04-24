@@ -16,10 +16,54 @@
         {% else %}
             <p>Work isn't completed</p>
         {% endif %}
-        <a href="{% url 'doc_detail' id=work.document_id %}">
-            <button type="button" class="btn btn-secondary">View Document
-            </button>
-        </a>
+
+        <h4>Related Document</h4>
+        <hr>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        Internal Document
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ work.document }}</h5>
+                        <div class="card-text">
+                            <ul>
+                                <li><b>Version</b>: {{ work.document.version }}</li>
+                                <li><b>Running No.</b>: {{ work.document.running_no }}</li>
+                                <li><b>Type</b>: {{ work.document.get_type_display }}</li>
+                                <li><b>Parent Document</b>: {{ work.document.parent_doc }}</li>
+                            </ul>
+                        </div>
+                        <a href="{% url 'doc_detail' id=work.document_id %}" class="btn btn-primary">View Document</a>
+                    </div>
+                </div>
+            </div>
+            {% if work.type == 'E' %}
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Internal Document (Edited)
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ work.new_document }}</h5>
+                            <div class="card-text">
+                                <ul>
+                                    <li><b>Version</b>: {{ work.new_document.version }}</li>
+                                    <li><b>Running No.</b>: {{ work.new_document.running_no }}</li>
+                                    <li><b>Type</b>: {{ work.new_document.get_type_display }}</li>
+                                    <li><b>Parent Document</b>: {{ work.new_document.parent_doc }}</li>
+                                </ul>
+                            </div>
+                            <a href="{% url 'doc_detail' id=work.new_document_id %}" class="btn btn-primary">View
+                                Document</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
         <br><br> {# TODO: Switch to padding/magrin for spacing instead #}
 
         {% if action_form is not None %}

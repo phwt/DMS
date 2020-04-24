@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, F
@@ -26,13 +26,14 @@ def index(request):
     work_cnt_e = Work.objects.filter(type='E').count()
     work_cnt_ca = Work.objects.filter(type='CA').count()
 
+    work_cnt_cr_w = Work.objects.filter(type='CR', create_date__gte=datetime.today() - timedelta(days=7)).count()
+    work_cnt_ca_w = Work.objects.filter(type='CA', create_date__gte=datetime.today() - timedelta(days=7)).count()
+    work_cnt_cr_d = Work.objects.filter(type='CR', create_date=datetime.today()).count()
+    work_cnt_ca_d = Work.objects.filter(type='CA', create_date=datetime.today()).count()
+
     internal = InternalDoc.objects.all().order_by('-id')[:10]
-    internal_dashboard = InternalDoc.objects.filter(
-        state='IN'
-    ).order_by('-id')[:10]
-    internal_dashboard_re = InternalDoc.objects.filter(
-        state='RE'
-    ).order_by('-id')[:10]
+    internal_dashboard = InternalDoc.objects.filter(state='IN').order_by('-id')[:10]
+    internal_dashboard_re = InternalDoc.objects.filter(state='RE').order_by('-id')[:10]
     internal_cnt = InternalDoc.objects.all().count()
     internal_cnt_in = InternalDoc.objects.filter(state='IN').count()
     internal_cnt_re = InternalDoc.objects.filter(state='RE').count()
@@ -44,6 +45,10 @@ def index(request):
         'work_cnt_cr': work_cnt_cr,
         'work_cnt_e': work_cnt_e,
         'work_cnt_ca': work_cnt_ca,
+        'work_cnt_cr_w': work_cnt_cr_w,
+        'work_cnt_ca_w': work_cnt_ca_w,
+        'work_cnt_cr_d': work_cnt_cr_d,
+        'work_cnt_ca_d': work_cnt_ca_d,
 
         'documents': internal,
         'documents_in': internal_dashboard,
@@ -137,6 +142,7 @@ def get_dashboard_work_cnt(request):
     work_cnt_cr = Work.objects.filter(type='CR').count()
     work_cnt_e = Work.objects.filter(type='E').count()
     work_cnt_ca = Work.objects.filter(type='CA').count()
+
     work_cnt = {
         "cnt": work_cnt,
         "cr": work_cnt_cr,

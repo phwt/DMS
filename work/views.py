@@ -193,3 +193,4 @@ def work_detail(request, id):
         'action_form': action_form,
         'delegate_user': delegate_name
     })
+

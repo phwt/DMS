@@ -149,6 +149,7 @@ def get_dashboard_work_list(request):
     works = Work.objects.all().order_by('-id')[:10].annotate(
         document_name=F('document__name'),
         type_name=WithChoices(Work, 'type'),
+        state_name=WithChoices(Work, 'state'),
     ).values()
     work_list = list(works)
     return JsonResponse(work_list, safe=False)

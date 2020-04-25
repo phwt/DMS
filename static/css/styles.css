@@ -12,8 +12,48 @@ body {
 .dropdown:hover .dropdown-menu {
     display: block;
     margin-top: 0;
- }
+}
 
 .form-control-sm-select {
     height: calc(1.5em + .5rem + 2px) !important;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body {
+    background-color: #000000;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    color: gray;
+}
+
+tr:nth-child(even) {
+    background-color: #161616;
+}
+
+.shadow {
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.round {
+    border-radius: 5px;
+}
+
+.bg-19 {
+    background-color: #191919;
+}
+
+.bg-0 {
+    background-color: #000000;
+}
+
+.font-l {
+    font-size: 70px;
 }

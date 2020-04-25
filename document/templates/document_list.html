@@ -2,8 +2,8 @@
 {% block content %}
     <h2 class="pb-5">View {{ doc_type|title }} Documents</h2>
     <form method="GET" action="">
-        <table class="table table-responsive">
-            <thead>
+        <table class="table table-responsive table-borderless text-light">
+            <thead class="bg-0">
             {% if doc_type == 'internal' %}
                 <tr>
                     <th scope="col">Name</th>
@@ -63,7 +63,7 @@
                     <td>{{ filter_forms.department }}</td>
                     <td>{{ filter_forms.creator }}</td>
                     <td>
-                        <button type="submit" class="btn btn-primary btn-block">
+                        <button type="submit" class="btn btn-info btn-block">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </button>
                     </td>
@@ -76,10 +76,18 @@
                         <td>{{ document.version }}</td>
                         <td>{{ document.running_no }}</td>
                         <td>{{ document.get_type_display }}</td>
-                        {% if document.get_state_display == '' %}
-                            <td>-</td>
-                        {% else %}
-                            <td>{{ document.get_state_display }}</td>
+                        {% if document.get_state_display == 'Released' %}
+                            <td><span class="badge badge-pill badge-success">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'In-Progress' %}
+                            <td><span class="badge badge-pill badge-info">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'Obsoleted' %}
+                            <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'Recalled' %}
+                            <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
+                            </td>
                         {% endif %}
                         {#                        <td>'***'</td>#}
                         {#                        <td>'***'</td>#}
@@ -98,8 +106,8 @@
                         </td>
                         <td>
                             <a href="{% url 'doc_detail' id=document.id %}">
-                                <button type="button" class="btn btn-secondary btn-block btn-sm">
-                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                <button type="button" class="btn btn-block">
+                                    <i class="fa fa-chevron-right text-info" aria-hidden="true"></i>
                                 </button>
                             </a>
                         </td>
@@ -114,7 +122,7 @@
                     <td></td>
                     <td>{{ filter_forms.creator }}</td>
                     <td>
-                        <button type="submit" class="btn btn-primary btn-block">
+                        <button type="submit" class="btn btn-info btn-block">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </button>
                     </td>
@@ -131,8 +139,8 @@
                         </td>
                         <td>
                             <a href="{% url 'doc_detail' id=document.id %}">
-                                <button type="button" class="btn btn-secondary btn-block btn-sm">
-                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                                <button type="button" class="btn btn-block">
+                                    <i class="fa fa-chevron-right text-info" aria-hidden="true"></i>
                                 </button>
                             </a>
                         </td>

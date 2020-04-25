@@ -52,7 +52,7 @@ def pass_delegate_review(work, state, form_data):
     current_delegate.completed = True
     current_delegate.save()
 
-    if form_data.cleaned_data['result']:  # Review result is true (passed)
+    if form_data.cleaned_data['approve']:  # Review result is true (passed)
         work.latest_delegate = Employee.objects.get(pk=form_data.cleaned_data['delegate_user'])
         work.state = state
         work.save()
@@ -75,21 +75,30 @@ def pass_delegate_approve(work, form_data):
     current_delegate.completed = True
     current_delegate.save()
 
-    if form_data.cleaned_data['result']:  # Review result is true (passed)
+    if form_data.cleaned_data['approve']:  # Review result is true (passed)
         if work.type == 'CR':
             complete_work(work, 'RE')
         elif work.type == 'CA':
             complete_work(work, 'OB')
         elif work.type == 'E':
-            complete_work(work, 'RE')
-            work.document.version += 1
-            work.save()
+            work.state = 'C'
+            work.complete_date = datetime.now()
+            work.latest_delegate = None
+            work.document.state = 'OB'
             work.document.save()
+            work.new_document.state = 'RE'
+            work.new_document.save()
     else:
         if work.type == 'CR':
             complete_work(work, 'RC')
-        elif work.type in ('CA', 'E'):
+        elif work.type == 'CA':
             complete_work(work, 'RE')
+        elif work.type == 'E':
+            work.state = 'C'
+            work.complete_date = datetime.now()
+            work.latest_delegate = None
+            work.new_document.state = 'OB'  # Obsolete the unapproved edit
+            work.new_document.save()
 
 
 def get_employees_in_groups_tuple(group_name):

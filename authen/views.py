@@ -62,8 +62,9 @@ def profile(request):
     }
     return render(request, 'profile.html', context=context)
 
+
 def profile_other(request, id):
-    employee = Employee.objects.get(pk=id)
+    employee = Employee.objects.get(user_id=id)
     context = {
         'employee': employee,
         'user_id': 'have_id'

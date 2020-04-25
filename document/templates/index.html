@@ -1,82 +1,306 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2 class="pb-5">Dashboard</h2>
+    <button onclick="UpdateTableInternal()" class="btn text-muted"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh Document</button>
+    {#Document Part#}
     <div class="row">
-        <div class="col-6">
-            <h4 class="pb-3">Work List</h4>
-            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
-                 style=" background-image: linear-gradient(-90deg, red, yellow);">
-                <div class="col-6 text-center text-light">
-                    <h3 id="work_cnt">{{ work_cnt }}</h3>
-                    <p>Works</p>
-                </div>
-                <div class="col-6 text-center text-light">
-                    <h6 id="work_cnt_cr">{{ work_cnt_cr }} — Create</h6>
-                    <h6 id="work_cnt_e">{{ work_cnt_e }} — Edit</h6>
-                    <h6 id="work_cnt_ca">{{ work_cnt_ca }} — Cancel</h6>
+        {#Document Overview#}
+        <div class="col-3">
+            <div class="card bg-0">
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <div class="col-5 p-0">
+                            <h1 class="font-l" id="doc_cnt">{{ doc_cnt }}</h1>
+                        </div>
+                        <div class="col-7 p-0">
+                            <h5 class="card-title">Documents</h5>
+                            <p class="card-text">Internal Documents</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <table class="table" id="work">
-                <thead>
-                <tr>
-                    <th scope="col">Related Document</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Create Date</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for work in works %}
-                    <tr>
-                        <td>{{ work }}</td>
-                        <td>{{ work.get_type_display }}</td>
-                        <td>{{ work.create_date|date:"d-M-Y" }} {{  work.create_date|time:"H:i" }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-
         </div>
-        <div class="col-6">
-            <button onclick="UpdateTable()">'Reeeee'</button>
-            <h4 class="pb-3">Internal Document</h4>
-            <div class="row shadow-sm pt-5 pb-5 ml-lg-5 mr-lg-5 mb-lg-5 mt-lg-3 round"
-                 style="background-image: linear-gradient(to right, red,#ffa500,yellow,green,blue,indigo,violet);">
-                <div class="col-6 text-center text-light">
-                    <h3 id="internal_cnt">{{ doc_cnt }}</h3>
-                    <p>Documents</p>
-                </div>
-                <div class="col-6 text-center text-light">
-                    <h6 id="internal_cnt_in">{{ doc_cnt_in }} — In-Progress</h6>
-                    <h6 id="internal_cnt_re">{{ doc_cnt_re }} — Released</h6>
-                    <h6 id="internal_cnt_ob">{{ doc_cnt_ob }} — Obsoleted</h6>
+        <div class="col-3">
+            <div class="card bg-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-spinner text-info font-l" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-8">
+                            <h5 class="card-title" id="doc_cnt_in">{{ doc_cnt_in }}</h5>
+                            <p class="card-text">In-Progress</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <table class="table" id="internal">
-                <thead>
+        </div>
+        <div class="col-3">
+            <div class="card bg-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-arrow-circle-right text-success font-l" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-8">
+                            <h5 class="card-title" id="doc_cnt_re">{{ doc_cnt_re }}</h5>
+                            <p class="card-text">Released</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="card bg-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <i class="fa fa-ban text-danger font-l" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-8">
+                            <h5 class="card-title" id="doc_cnt_ob">{{ doc_cnt_ob }}</h5>
+                            <p class="card-text">Obsoleted</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#Document list last 10#}
+        <div class="col-6">
+            <div class="bg-0 pl-2 pt-2 mt-3">
+                <h4>Internal Document</h4>
+                <p class="m-0 text-muted">Last 10</p>
+            </div>
+            <table class="table table-borderless text-light" id="internal">
+                <thead class="bg-0">
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
                     <th scope="col">State</th>
-                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 {% for document in documents %} {# table internal doucument list in dashboard #}
                     <tr>
-                        <td>{{ document.name }}</td>
+                        <td><a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a></td>
                         <td>{{ document.get_type_display }}</td>
-                        {% if document.get_state_display == '' %}
-                            <td>-</td>
-                        {% else %}
-                            <td>{{ document.get_state_display }}</td>
+                        {% if document.get_state_display == 'Released' %}
+                            <td><span class="badge badge-pill badge-success">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'In-Progress' %}
+                            <td><span class="badge badge-pill badge-info">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'Obsoleted' %}
+                            <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
+                            </td>
+                        {% elif document.get_state_display == 'Recalled' %}
+                            <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
+                            </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
+        {#Document In-Progress last 10#}
+        <div class="col-3">
+            <div class="bg-0 pl-2 pt-2 mt-3">
+                <h4>Internal Document</h4>
+                <span class="badge badge-pill badge-info">In-Progress</span>
+                <p class="m-0 text-muted">Last 10</p>
+            </div>
+            <table class="table table-borderless text-light" id="progress">
+                <thead class="bg-0">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for document_in in documents_in %} {# inprogresssssssssssssssssssssssssssssssssssssssssssssssssss #}
+                    <tr>
+                        <td><a href="{% url 'doc_detail' id=document_in.id %}">{{ document_in.name }}</a></td>
+                        <td>{{ document_in.type }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {#Document Released last 10#}
+        <div class="col-3">
+            <div class="bg-0 pl-2 pt-2 mt-3">
+                <h4>Internal Document</h4>
+                <span class="badge badge-pill badge-success">Released</span>
+                <p class="m-0 text-muted">Last 10</p>
+            </div>
+            <table class="table table-borderless text-light" id="released">
+                <thead class="bg-0">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for document_re in documents_re %} {#  #}
+                    <tr>
+                        <td><a href="{% url 'doc_detail' id=document_re.id %}">{{ document_re.name }}</a></td>
+                        <td>{{ document_re.type }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {#Work Part#}
+    <button onclick="UpdateTableWork()" class="btn text-muted"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh Work</button>
+    <div class="row">
+        {#Work Overview#}
+        <div class="col-6 row">
+            <div class="col-6">
+                <div class="card bg-0 mb-4">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-5 p-0">
+                                <h1 class="font-l" id="work_cnt">{{ work_cnt }}</h1>
+                            </div>
+                            <div class="col-7 p-0">
+                                <h5 class="card-title">Works</h5>
+                                <p class="card-text">work work work</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-warning">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-5 p-0">
+                                <h1 class="font-l" id="work_cnt_e">{{ work_cnt_e }}</h1>
+                            </div>
+                            <div class="col-7 p-0">
+                                <h5 class="card-title">Works</h5>
+                                <p class="card-text">In edit</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-19">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-5">
+                                <u class="text-success"><h1 class="font-l" id="work_cnt_cr_d">{{ work_cnt_cr_d }}</h1></u>
+                            </div>
+                            <div class="col-7">
+                                <h5 class="card-title">Works</h5>
+                                <p class="card-text">Created this Day</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-19">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-5">
+                                <u class="text-success"><h1 class="font-l" id="work_cnt_cr_w">{{ work_cnt_cr_w }}</h1></u>
+                            </div>
+                            <div class="col-7">
+                                <h5 class="card-title">Works</h5>
+                                <p class="card-text">Created this Week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card bg-success mb-4">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-5 p-0">
+                                <h1 class="font-l" id="work_cnt_cr">{{ work_cnt_cr }}</h1>
+                            </div>
+                            <div class="col-7 p-0">
+                                <h5 class="card-title">Works</h5>
+                                <p class="card-text">In create</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-danger">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-5 p-0">
+                                <h1 class="font-l" id="work_cnt_ca">{{ work_cnt_ca }}</h1>
+                            </div>
+                            <div class="col-7 p-0">
+                                <h5 class="card-title">Works</h5>
+                                <p class="card-text">In Cancel</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-19">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-5">
+                                <u class="text-danger"><h1 class="font-l" id="work_cnt_ca_d">{{ work_cnt_ca_d }}</h1></u>
+                            </div>
+                            <div class="col-7">
+                                <h5 class="card-title">Works</h5>
+                                <p class="card-text">Cancelled this Day</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-19">
+                    <div class="card-body pb-0">
+                        <div class="row">
+                            <div class="col-5">
+                                <u class="text-danger"><h1 class="font-l" id="work_cnt_ca_w">{{ work_cnt_ca_w }}</h1></u>
+                            </div>
+                            <div class="col-7">
+                                <h5 class="card-title">Works</h5>
+                                <p class="card-text">Cancelled this Week</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {#Work List last 10#}
+        <div class="col-6">
+            <div class="bg-0 pl-2 pt-2">
+                <h4>Works</h4>
+                <p class="m-0 text-muted">Last 10</p>
+            </div>
+            <table class="table table-borderless text-light" id="work">
+                <thead class="bg-0">
+                <tr>
+                    <th scope="col">Related Document</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">State</th>
+                    <th scope="col">Create Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for work in works %}
+                    <tr>
+                        <td><a href="{% url 'work_detail' id=work.id %}">{{ work }}</a></td>
+
+                        {% if work.get_type_display == 'Create' %}
+                            <td><span class="badge badge-pill badge-success">{{ work.get_type_display }}</span></td>
+                        {% elif work.get_type_display == 'Edit' %}
+                            <td><span class="badge badge-pill badge-warning">{{ work.get_type_display }}</span></td>
+                        {% elif work.get_type_display == 'Cancel' %}
+                            <td><span class="badge badge-pill badge-danger">{{ work.get_type_display }}</span></td>
+                        {% endif %}
+
+                        <td>{{ work.get_state_display }}</td>
+                        <td>{{ work.create_date|date:"d-M-Y" }} {{ work.create_date|time:"H:i" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
     </div>
     <script>
         var items = []
@@ -90,7 +314,7 @@
                 `${date.getMinutes().toString().padStart(2, '0')}`;
         };
 
-        function UpdateTable() {
+        function UpdateTableWork() {
             axios.get('document/api/work/') {# work list #}
                 .then(function (response) {
                     items = response.data;
@@ -99,8 +323,18 @@
                     items.forEach((item) => {
                         let elem = document.createElement("tr");
                         elem.innerHTML = `
-                            <td>${item.document_name}</td>
-                            <td>${item.type_name}</td>
+                            <td><a href="./work/${item.id}">${item.document_name}</a></td>
+                        `;
+                        if (item.type_name == 'Create') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-success">${item.type_name}</span></td>`;
+                        } else if (item.type_name == 'Edit') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-warning">${item.type_name}</span></td>`;
+                        } else if (item.type_name == 'Cancel') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-danger">${item.type_name}</span></td>`;
+                        }
+
+                        elem.innerHTML += `
+                            <td>${item.state_name}</td>
                             <td>${formatDate(new Date(item.create_date))}</td>
                         `;
                         tbody.appendChild(elem);
@@ -109,7 +343,45 @@
                 .catch(function (error) {
                     console.log(error)
                 })
-            {# internal document list #}
+        }
+
+        function UpdateTableInternal() {
+            axios.get('document/api/internal/progress/')
+                .then(function (response) {
+                    items = response.data;
+                    let tbody = document.querySelector("#progress > tbody");
+                    tbody.innerHTML = "";
+                    items.forEach((item) => {
+                        let elem = document.createElement("tr");
+                        elem.innerHTML = `
+                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
+                            <td>${item.type}</td>
+                        `;
+                        tbody.appendChild(elem);
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+
+            axios.get('document/api/internal/released/')
+                .then(function (response) {
+                    items = response.data;
+                    let tbody = document.querySelector("#released > tbody");
+                    tbody.innerHTML = "";
+                    items.forEach((item) => {
+                        let elem = document.createElement("tr");
+                        elem.innerHTML = `
+                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
+                            <td>${item.type}</td>
+                        `;
+                        tbody.appendChild(elem);
+                    })
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
+
             axios.get('document/api/internal/')
                 .then(function (response) {
                     items = response.data;
@@ -118,10 +390,18 @@
                     items.forEach((item) => {
                         let elem = document.createElement("tr");
                         elem.innerHTML = `
-                            <td>${item.name}</td>
+                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
                             <td>${item.type_name}</td>
-                            <td>${item.state_name}</td>
                         `;
+                        if (item.state_name == 'Released') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-success">${item.state_name}</span></td>`;
+                        } else if (item.state_name == 'In-Progress') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-info">${item.state_name}</span></td>`;
+                        } else if (item.state_name == 'Obsoleted') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-danger">${item.state_name}</span></td>`;
+                        } else if (item.state_name == 'Recalled') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-warning">${item.state_name}</span></td>`;
+                        }
                         tbody.appendChild(elem);
                     })
                 })
@@ -135,9 +415,13 @@
                 .then(function (response) {
                     items = response.data;
                     document.getElementById("work_cnt").innerText = items.cnt;
-                    document.getElementById("work_cnt_cr").innerText = items.cr + " — Create";
-                    document.getElementById("work_cnt_e").innerText = items.e + " — Edit";
-                    document.getElementById("work_cnt_ca").innerText = items.ca + " — Cancel"
+                    document.getElementById("work_cnt_cr").innerText = items.cr;
+                    document.getElementById("work_cnt_e").innerText = items.e;
+                    document.getElementById("work_cnt_ca").innerText = items.ca;
+                    document.getElementById("work_cnt_cr_w").innerText = items.cr_w;
+                    document.getElementById("work_cnt_ca_w").innerText = items.ca_w;
+                    document.getElementById("work_cnt_cr_d").innerText = items.cr_d;
+                    document.getElementById("work_cnt_ca_d").innerText = items.ca_d;
                 })
                 .catch(function (error) {
                     console.log(error)
@@ -145,10 +429,10 @@
             axios.get('document/api/internal_cnt/')
                 .then(function (response) {
                     items = response.data;
-                    document.getElementById("internal_cnt").innerText = items.cnt;
-                    document.getElementById("internal_cnt_in").innerText = items.in + " — In-Progress";
-                    document.getElementById("internal_cnt_re").innerText = items.re + " — Released";
-                    document.getElementById("internal_cnt_ob").innerText = items.ob + " — Obsoleted"
+                    document.getElementById("doc_cnt").innerText = items.cnt;
+                    document.getElementById("doc_cnt_in").innerText = items.in;
+                    document.getElementById("doc_cnt_re").innerText = items.re;
+                    document.getElementById("doc_cnt_ob").innerText = items.ob;
                 })
                 .catch(function (error) {
                     console.log(error)

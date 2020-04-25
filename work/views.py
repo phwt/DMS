@@ -14,7 +14,7 @@ from work.models import Work, DelegateUser
 
 @login_required(login_url='login')
 def work_list(request):
-    work_list = Work.objects.all().order_by('-id')
+    work_list = Work.objects.all().order_by('-id').prefetch_related('latest_delegate__user')
     if request.method == 'GET':
         filter_form = WorkFilterForm(request.GET)
         if filter_form.is_valid():

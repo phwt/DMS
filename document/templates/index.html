@@ -91,10 +91,10 @@
                             <td><span class="badge badge-pill badge-info">{{ document.get_state_display }}</span>
                             </td>
                         {% elif document.get_state_display == 'Obsoleted' %}
-                            <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
+                            <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
                             </td>
                         {% elif document.get_state_display == 'Recalled' %}
-                            <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
+                            <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
                             </td>
                         {% endif %}
                     </tr>
@@ -398,9 +398,9 @@
                         } else if (item.state_name == 'In-Progress') {
                             elem.innerHTML += `<td><span class="badge badge-pill badge-info">${item.state_name}</span></td>`;
                         } else if (item.state_name == 'Obsoleted') {
-                            elem.innerHTML += `<td><span class="badge badge-pill badge-warning">${item.state_name}</span></td>`;
-                        } else if (item.state_name == 'Recalled') {
                             elem.innerHTML += `<td><span class="badge badge-pill badge-danger">${item.state_name}</span></td>`;
+                        } else if (item.state_name == 'Recalled') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-warning">${item.state_name}</span></td>`;
                         }
                         tbody.appendChild(elem);
                     })

@@ -13,7 +13,8 @@ class Work(models.Model):
         max_length=2,
         choices=TYPES,
         null=False,
-        default='CR'
+        default='CR',
+        db_index=True
     )
     STATES = [
         ('N', 'New'),
@@ -27,16 +28,17 @@ class Work(models.Model):
         max_length=3,
         choices=STATES,
         null=False,
-        default='N'
+        default='N',
+        db_index=True
     )
     detail = models.TextField(blank=True)
-    create_date = models.DateTimeField(auto_now_add=True)
-    complete_date = models.DateTimeField(null=True)
-    document = models.ForeignKey(InternalDoc, on_delete=models.CASCADE, null=False)
+    create_date = models.DateTimeField(auto_now_add=True, db_index=True)
+    complete_date = models.DateTimeField(null=True, db_index=True)
+    document = models.ForeignKey(InternalDoc, on_delete=models.CASCADE, null=False, db_index=True)
     new_document = models.ForeignKey(InternalDoc, on_delete=models.CASCADE, null=True, related_name="new_document")  # For EDIT flow
-    creator = models.ForeignKey(Employee, on_delete=models.CASCADE, null=False)
-    latest_delegate = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='latest_delegate', null=True)
-    employees = models.ManyToManyField('authen.Employee', through='DelegateUser', related_name='works')
+    creator = models.ForeignKey(Employee, on_delete=models.CASCADE, null=False, db_index=True)
+    latest_delegate = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='latest_delegate', null=True, db_index=True)
+    employees = models.ManyToManyField('authen.Employee', through='DelegateUser', related_name='works', db_index=True)
 
     def __str__(self):
         # return f'{self.get_type_display()} - {self.document.name}'
@@ -45,7 +47,7 @@ class Work(models.Model):
 
 class DelegateUser(models.Model):
     work = models.ForeignKey(Work, on_delete=models.CASCADE)
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    result = models.BooleanField(null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, db_index=True)
+    result = models.BooleanField(null=True, db_index=True)
     deadline = models.DateTimeField()
     completed = models.BooleanField(default=False)

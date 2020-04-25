@@ -81,7 +81,7 @@ def document_list(request, doc_type):
         if filter_forms.is_valid():
             documents = InternalDoc.objects.filter(
                 name__icontains=filter_forms.cleaned_data['name'],
-            ).prefetch_related('creator__department', 'creator')
+            ).prefetch_related('creator__department', 'creator__user', 'parent_doc')
 
             if filter_forms.cleaned_data['parent_doc'] is not None:
                 documents = documents.filter(parent_doc=filter_forms.cleaned_data['parent_doc'])
@@ -104,7 +104,7 @@ def document_list(request, doc_type):
             if filter_forms.cleaned_data['department'] is not None:
                 documents = documents.filter(creator__department=filter_forms.cleaned_data['department'])
         else:
-            documents = InternalDoc.objects.all().prefetch_related('creator__department', 'creator')
+            documents = InternalDoc.objects.all().prefetch_related('creator__department', 'creator__user', 'parent_doc')
     documents = documents.annotate(dept_name=F('creator__department__name'))
     context = {
         'documents': documents,

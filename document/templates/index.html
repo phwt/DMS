@@ -398,9 +398,9 @@
                         } else if (item.state_name == 'In-Progress') {
                             elem.innerHTML += `<td><span class="badge badge-pill badge-info">${item.state_name}</span></td>`;
                         } else if (item.state_name == 'Obsoleted') {
-                            elem.innerHTML += `<td><span class="badge badge-pill badge-warning">${item.state_name}</span></td>`;
-                        } else if (item.state_name == 'Recalled') {
                             elem.innerHTML += `<td><span class="badge badge-pill badge-danger">${item.state_name}</span></td>`;
+                        } else if (item.state_name == 'Recalled') {
+                            elem.innerHTML += `<td><span class="badge badge-pill badge-warning">${item.state_name}</span></td>`;
                         }
                         tbody.appendChild(elem);
                     })
@@ -429,10 +429,10 @@
             axios.get('document/api/internal_cnt/')
                 .then(function (response) {
                     items = response.data;
-                    document.getElementById("internal_cnt").innerText = items.cnt;
-                    document.getElementById("internal_cnt_in").innerText = items.in;
-                    document.getElementById("internal_cnt_re").innerText = items.re;
-                    document.getElementById("internal_cnt_ob").innerText = items.ob;
+                    document.getElementById("doc_cnt").innerText = items.cnt;
+                    document.getElementById("doc_cnt_in").innerText = items.in;
+                    document.getElementById("doc_cnt_re").innerText = items.re;
+                    document.getElementById("doc_cnt_ob").innerText = items.ob;
                 })
                 .catch(function (error) {
                     console.log(error)

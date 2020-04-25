@@ -91,10 +91,10 @@
                             <td><span class="badge badge-pill badge-info">{{ document.get_state_display }}</span>
                             </td>
                         {% elif document.get_state_display == 'Obsoleted' %}
-                            <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
+                            <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
                             </td>
                         {% elif document.get_state_display == 'Recalled' %}
-                            <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
+                            <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
                             </td>
                         {% endif %}
                     </tr>

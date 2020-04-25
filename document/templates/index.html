@@ -1,16 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
     <h2 class="pb-5">Dashboard</h2>
-    <button onclick="UpdateTableInternal()" class="btn text-muted"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh Document</button>
+    <button onclick="UpdateTableInternal()" class="btn text-muted"><i class="fa fa-refresh" aria-hidden="true"></i>
+        Refresh Document
+    </button>
     {#Document Part#}
     <div class="row">
         {#Document Overview#}
+
         <div class="col-3">
-            <div class="card bg-0">
-                <div class="card-body pb-0">
+            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #ffffff !important">
+                <div class="card-body">
                     <div class="row">
                         <div class="col-5 p-0">
-                            <h1 class="font-l" id="doc_cnt">{{ doc_cnt }}</h1>
+                            <h5 class="font-l" id="doc_cnt">{{ doc_cnt }}</h5>
                         </div>
                         <div class="col-7 p-0">
                             <h5 class="card-title">Documents</h5>
@@ -20,44 +23,47 @@
                 </div>
             </div>
         </div>
+
         <div class="col-3">
-            <div class="card bg-0">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <i class="fa fa-spinner text-info fa-4x" aria-hidden="true"></i>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <i class="fa fa-spinner text-info fa-4x " aria-hidden="true"></i>
                         </div>
-                        <div class="col-8">
-                            <h5 class="card-title" id="doc_cnt_in">{{ doc_cnt_in }}</h5>
+                        <div class="col ml-3">
+                            <h5 class="card-title" id="doc_cnt_ob">{{ doc_cnt_in }}</h5>
                             <p class="card-text">In-Progress</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="col-3">
-            <div class="card bg-0">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #28a745 !important">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <i class="fa fa-arrow-circle-right text-success fa-4x" aria-hidden="true"></i>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <i class="fa fa-arrow-circle-right text-success fa-4x " aria-hidden="true"></i>
                         </div>
-                        <div class="col-8">
-                            <h5 class="card-title" id="doc_cnt_re">{{ doc_cnt_re }}</h5>
+                        <div class="col ml-3">
+                            <h5 class="card-title" id="doc_cnt_ob">{{ doc_cnt_re }}</h5>
                             <p class="card-text">Released</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="col-3">
-            <div class="card bg-0">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #dc3545 !important">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-4">
-                            <i class="fa fa-ban text-danger fa-4x" aria-hidden="true"></i>
+                    <div class="row no-gutters align-items-center">
+                        <div class="col-auto">
+                            <i class="fa fa-ban text-danger fa-4x " aria-hidden="true"></i>
                         </div>
-                        <div class="col-8">
+                        <div class="col ml-3">
                             <h5 class="card-title" id="doc_cnt_ob">{{ doc_cnt_ob }}</h5>
                             <p class="card-text">Obsoleted</p>
                         </div>
@@ -65,6 +71,7 @@
                 </div>
             </div>
         </div>
+
         {#Document list last 10#}
         <div class="col-6">
             <div class="bg-0 pl-2 pt-2 mt-3">
@@ -82,7 +89,8 @@
                 <tbody>
                 {% for document in documents %} {# table internal doucument list in dashboard #}
                     <tr>
-                        <td><a href="{% url 'doc_detail' id=document.id %}">{{ document.name|truncatechars:35 }}</a></td>
+                        <td><a href="{% url 'doc_detail' id=document.id %}">{{ document.name|truncatechars:35 }}</a>
+                        </td>
                         <td>{{ document.get_type_display }}</td>
                         {% if document.get_state_display == 'Released' %}
                             <td><span class="badge badge-pill badge-success">{{ document.get_state_display }}</span>
@@ -119,7 +127,9 @@
                 <tbody>
                 {% for document_in in documents_in %} {# inprogresssssssssssssssssssssssssssssssssssssssssssssssssss #}
                     <tr>
-                        <td><a href="{% url 'doc_detail' id=document_in.id %}">{{ document_in.name|truncatechars:20 }}</a></td>
+                        <td>
+                            <a href="{% url 'doc_detail' id=document_in.id %}">{{ document_in.name|truncatechars:20 }}</a>
+                        </td>
                         <td>{{ document_in.type }}</td>
                     </tr>
                 {% endfor %}
@@ -143,7 +153,9 @@
                 <tbody>
                 {% for document_re in documents_re %} {#  #}
                     <tr>
-                        <td><a href="{% url 'doc_detail' id=document_re.id %}">{{ document_re.name|truncatechars:20 }}</a></td>
+                        <td>
+                            <a href="{% url 'doc_detail' id=document_re.id %}">{{ document_re.name|truncatechars:20 }}</a>
+                        </td>
                         <td>{{ document_re.type }}</td>
                     </tr>
                 {% endfor %}
@@ -152,7 +164,9 @@
         </div>
     </div>
     {#Work Part#}
-    <button onclick="UpdateTableWork()" class="btn text-muted"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh Work</button>
+    <button onclick="UpdateTableWork()" class="btn text-muted"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh
+        Work
+    </button>
     <div class="row">
         {#Work Overview#}
         <div class="col-6 row">
@@ -187,7 +201,8 @@
                     <div class="card-body pb-0">
                         <div class="row">
                             <div class="col-5">
-                                <u class="text-success"><h1 class="font-l" id="work_cnt_cr_d">{{ work_cnt_cr_d }}</h1></u>
+                                <u class="text-success"><h1 class="font-l" id="work_cnt_cr_d">{{ work_cnt_cr_d }}</h1>
+                                </u>
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title">Works</h5>
@@ -200,7 +215,8 @@
                     <div class="card-body pb-0">
                         <div class="row">
                             <div class="col-5">
-                                <u class="text-success"><h1 class="font-l" id="work_cnt_cr_w">{{ work_cnt_cr_w }}</h1></u>
+                                <u class="text-success"><h1 class="font-l" id="work_cnt_cr_w">{{ work_cnt_cr_w }}</h1>
+                                </u>
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title">Works</h5>
@@ -241,7 +257,8 @@
                     <div class="card-body pb-0">
                         <div class="row">
                             <div class="col-5">
-                                <u class="text-danger"><h1 class="font-l" id="work_cnt_ca_d">{{ work_cnt_ca_d }}</h1></u>
+                                <u class="text-danger"><h1 class="font-l" id="work_cnt_ca_d">{{ work_cnt_ca_d }}</h1>
+                                </u>
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title">Works</h5>
@@ -254,7 +271,8 @@
                     <div class="card-body pb-0">
                         <div class="row">
                             <div class="col-5">
-                                <u class="text-danger"><h1 class="font-l" id="work_cnt_ca_w">{{ work_cnt_ca_w }}</h1></u>
+                                <u class="text-danger"><h1 class="font-l" id="work_cnt_ca_w">{{ work_cnt_ca_w }}</h1>
+                                </u>
                             </div>
                             <div class="col-7">
                                 <h5 class="card-title">Works</h5>

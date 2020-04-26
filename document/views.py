@@ -1,6 +1,7 @@
 from datetime import datetime , date, timedelta
 import datetime as dt
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Count, F
 from django.http import JsonResponse, HttpResponse
 
@@ -106,8 +107,18 @@ def document_list(request, doc_type):
         else:
             documents = InternalDoc.objects.all().prefetch_related('creator__department', 'creator__user', 'parent_doc')
     documents = documents.annotate(dept_name=F('creator__department__name'))
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(documents, 10)
+    try:
+        paginated_documents = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_documents = paginator.page(1)
+    except EmptyPage:
+        paginated_documents = paginator.page(paginator.num_pages)
+
     context = {
-        'documents': documents,
+        'documents': paginated_documents,
         'doc_type': doc_type,
         'filter_forms': filter_forms
     }
@@ -300,6 +311,8 @@ def document_template(request, id):
     document.save(response)
 
     return response
+
+
 def get_dashboard_internal_progress(request):
     progress = InternalDoc.objects.filter(
         state='IN'

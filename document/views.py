@@ -22,7 +22,7 @@ from docx.shared import Inches
 @login_required(login_url='login')
 def index(request):
     if request.user.username == 'readonly':
-        return HttpResponseNotFound('<h1>Page not found</h1>')
+        return redirect('raw')
     works = Work.objects.all().order_by('-id')[:10]
     work_cnt = Work.objects.all().count()
     work_cnt_cr = Work.objects.filter(type='CR').count()

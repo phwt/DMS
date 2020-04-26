@@ -25,10 +25,18 @@ class DocumentCancelForm(forms.Form):
     detail = forms.CharField(widget=Textarea())
     delegate_user = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='DCC'))
 
+    def __init__(self, *args, **kwargs):
+        super(DocumentCancelForm, self).__init__(*args, **kwargs)
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')
+
 
 class DocumentEditForm(forms.Form):
     requested_document = forms.ModelChoiceField(queryset=InternalDoc.objects.filter(state='RE'))
     detail = forms.CharField(widget=Textarea())
+
+    def __init__(self, *args, **kwargs):
+        super(DocumentEditForm, self).__init__(*args, **kwargs)
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')
 
 
 class WorkFilterForm(forms.Form):

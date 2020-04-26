@@ -3,7 +3,7 @@ import datetime as dt
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Count, F
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseNotFound
 
 from DMS.utils import WithChoices
 from work.models import Work
@@ -21,6 +21,8 @@ from docx.shared import Inches
 
 @login_required(login_url='login')
 def index(request):
+    if request.user.username == 'readonly':
+        return HttpResponseNotFound('<h1>Page not found</h1>')
     works = Work.objects.all().order_by('-id')[:10]
     work_cnt = Work.objects.all().count()
     work_cnt_cr = Work.objects.filter(type='CR').count()

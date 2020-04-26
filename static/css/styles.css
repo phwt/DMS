@@ -91,7 +91,8 @@ tr:nth-child(even) {
 
 .card-inter:hover, .card-in:hover, .card-re:hover, .card-ob:hover {
     transition: 500ms;
-    transform:rotate(3deg);
+    transform: rotate(3deg);
+}
 
 .progress-link {
     display: inline-block;

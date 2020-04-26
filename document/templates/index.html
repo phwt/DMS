@@ -4,9 +4,10 @@
     <h2 class="pb-5">Dashboard</h2>
     {# Document Part #}
     <div class="row">
-        {# Document Overview #}
-        <div class="col-6 col-lg-3 mb-3 mb-lg-0">
-            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #ffffff !important">
+        {#Document Overview#}
+
+        <div class="col-3" >
+            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #ffffff !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}'">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5 p-0">
@@ -22,8 +23,8 @@
             </div>
         </div>
 
-        <div class="col-6 col-lg-3">
-            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important">
+        <div class="col-3">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=IN'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -38,8 +39,8 @@
             </div>
         </div>
 
-        <div class="col-6 col-lg-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #28a745 !important">
+        <div class="col-3">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #28a745 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=RE'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -54,8 +55,8 @@
             </div>
         </div>
 
-        <div class="col-6 col-lg-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #dc3545 !important">
+        <div class="col-3">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #dc3545 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=OB'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">

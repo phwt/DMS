@@ -62,3 +62,9 @@ tr:nth-child(even) {
     min-height: 55vh;
     overflow: visible;
 }
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 1%;
+}

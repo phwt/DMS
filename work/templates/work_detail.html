@@ -14,9 +14,9 @@
                 <p>State: {{ work.get_state_display }}</p>
                 <p>Delegate User: {{ delegate_user }}</p>
                 {% if work.state == 'C' %}
-                    <p>{{ work.complete_date }}</p>
+                    <p>Complete Date: {{ work.complete_date }}</p>
                 {% else %}
-                    <p>Work isn't completed</p>
+                    <p>Complete Date: <i>Not Completed</i></p>
                 {% endif %}
             </div>
 

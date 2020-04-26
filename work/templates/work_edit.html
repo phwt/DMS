@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Request Document Edit{% endblock %}
+{% block content %}
+    <h2 class="pb-5">Document Edit Request Form</h2>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{ form.requested_document.errors }}
+        <label for="{{ form.requested_document.id_for_label }}">{{ form.requested_document.label }}</label>
+        {{ form.requested_document }}
+
+        {{ form.detail.errors }}
+        <label class="mt-2" for="{{ form.detail.id_for_label }}">{{ form.detail.label }}</label>
+        {{ form.detail }}
+
+        <input type="submit" class="btn btn-success mt-3" value="Submit">
+    </form>
+{% endblock %}

@@ -24,13 +24,13 @@ def auth_login(request):
     return render(request, 'login.html', context=context)
 
 
-@login_required
+@login_required(login_url='login')
 def auth_logout(request):
     logout(request)
     return redirect('login')
 
 
-@login_required
+@login_required(login_url='login')
 def change_password(request):
     context = {}
     if request.method == 'POST':
@@ -54,15 +54,16 @@ def change_password(request):
     return render(request, 'changepassword.html', context=context)
 
 
+@login_required(login_url='login')
 def profile(request):
-    username = request.user.id
-    employee = Employee.objects.get(pk=username)
+    employee = Employee.objects.get(pk=request.user.employee.id)
     context = {
         'employee': employee
     }
     return render(request, 'profile.html', context=context)
 
 
+@login_required(login_url='login')
 def profile_other(request, id):
     employee = Employee.objects.get(user_id=id)
     context = {

@@ -53,3 +53,12 @@ tr:nth-child(even) {
 .bg-0 {
     background-color: #000000;
 }
+
+.center-cnt {
+    min-height: 75vh;
+}
+
+.table-mh {
+    min-height: 55vh;
+    overflow: visible;
+}

@@ -55,8 +55,7 @@ def change_password(request):
 
 
 def profile(request):
-    username = request.user.id
-    employee = Employee.objects.get(pk=username)
+    employee = Employee.objects.get(pk=request.user.employee.id)
     context = {
         'employee': employee
     }

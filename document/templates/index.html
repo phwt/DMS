@@ -257,12 +257,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
-                                <u class="text-danger"><h1 class="font-l mb-0" id="work_cnt_ca_d">{{ work_cnt_ca_d }}</h1>
+                                <u class="text-danger"><h1 class="font-l mb-0" id="work_cnt_com_d">{{ work_cnt_com_d }}</h1>
                                 </u>
                             </div>
                             <div class="col-7 p-0">
                                 <h5 class="card-title m-0">Works</h5>
-                                <p class="card-text m-0">Cancelled Today</p>
+                                <p class="card-text m-0">Completed Today</p>
                             </div>
                         </div>
                     </div>
@@ -271,12 +271,12 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
-                                <u class="text-danger"><h1 class="font-l mb-0" id="work_cnt_ca_w">{{ work_cnt_ca_w }}</h1>
+                                <u class="text-danger"><h1 class="font-l mb-0" id="work_cnt_com_w">{{ work_cnt_com_w }}</h1>
                                 </u>
                             </div>
                             <div class="col-7 p-0">
                                 <h5 class="card-title m-0">Works</h5>
-                                <p class="card-text m-0">Cancelled this week</p>
+                                <p class="card-text m-0">Completed this week</p>
                             </div>
                         </div>
                     </div>
@@ -440,9 +440,9 @@
                     document.getElementById("work_cnt_e").innerText = items.e;
                     document.getElementById("work_cnt_ca").innerText = items.ca;
                     document.getElementById("work_cnt_cr_w").innerText = items.cr_w;
-                    document.getElementById("work_cnt_ca_w").innerText = items.ca_w;
+                    document.getElementById("work_cnt_com_w").innerText = items.com_w;
                     document.getElementById("work_cnt_cr_d").innerText = items.cr_d;
-                    document.getElementById("work_cnt_ca_d").innerText = items.ca_d;
+                    document.getElementById("work_cnt_com_d").innerText = items.com_d;
                 })
                 .catch(function (error) {
                     console.log(error)

@@ -134,8 +134,8 @@
                             <td>
                                 <a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a>
                             </td>
-                            <td>{{ document.source }}</td>
-                            <td>{{ document.detail }}</td>
+                            <td>{{ document.source|truncatechars:30 }}</td>
+                            <td>{{ document.detail|truncatechars:30 }}</td>
                             <td>
                                 <a href="{% url 'profile-other' id=document.creator.id %}">{{ document.creator }}</a>
                             </td>

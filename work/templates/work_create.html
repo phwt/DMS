@@ -4,9 +4,35 @@
     <h2 class="pb-5">Document Creation Request Form</h2>
     <form action="" method="POST">
         {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <input type="submit" class="btn btn-success" value="Submit">
+
+        <div class="row">
+            <div class="col-6">
+                {{ form.name.errors }}
+                <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                {{ form.name }}
+            </div>
+            <div class="col-6">
+                {{ form.type.errors }}
+                <label for="{{ form.type.id_for_label }}">{{ form.type.label }}</label>
+                {{ form.type }}
+            </div>
+            <div class="col-6 mt-2">
+                {{ form.version.errors }}
+                <label for="{{ form.version.id_for_label }}">{{ form.version.label }}</label>
+                {{ form.version }}
+            </div>
+            <div class="col-6 mt-2">
+                {{ form.running_no.errors }}
+                <label for="{{ form.running_no.id_for_label }}">{{ form.running_no.label }}</label>
+                {{ form.running_no }}
+            </div>
+            <div class="col-12 mt-2">
+                {{ form.parent_doc.errors }}
+                <label for="{{ form.parent_doc.id_for_label }}">{{ form.parent_doc.label }}</label>
+                {{ form.parent_doc }}
+            </div>
+        </div>
+
+        <input type="submit" class="btn btn-success mt-3" value="Send Creation Request">
     </form>
 {% endblock %}

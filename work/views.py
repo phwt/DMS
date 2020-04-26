@@ -104,7 +104,7 @@ def work_edit(request):
             delegate_user.save()
             return redirect('work_detail', id=work.id)
 
-    return render(request, 'work_edit_cancel.html', {
+    return render(request, 'work_edit.html', {
         'form': form,
         'work_type': 'edit'
     })
@@ -133,7 +133,7 @@ def work_cancel(request):
             delegate_user.save()
             return redirect('work_detail', id=work.id)
 
-    return render(request, 'work_edit_cancel.html', {
+    return render(request, 'work_cancel.html', {
         'form': form,
         'work_type': 'cancel'
     })

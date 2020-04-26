@@ -2,22 +2,104 @@
 {% block title %}{{ work.get_type_display }} - {{ work.document.name }}{% endblock %}
 {% block content %}
     <div>
-        <h2>{{ work }}</h2>
-        <p class="text-muted"><small>{{ work.create_date }}</small></p>
-        <p class="text-muted"><small>by {{ work.creator }}</small></p>
-
+        <h2 class="pb-5">Work Detail</h2>
         <div class="row">
             <div class="col-6">
-                <h4 class="mt-3">Work Detail</h4>
-                <hr>
-                <p>Type: {{ work.get_type_display }}</p>
-                <p>State: {{ work.get_state_display }}</p>
-                <p>Delegate User: {{ delegate_user }}</p>
-                {% if work.state == 'C' %}
-                    <p>Complete Date: {{ work.complete_date }}</p>
-                {% else %}
-                    <p>Complete Date: <i>Not Completed</i></p>
-                {% endif %}
+                <h3>{{ work }}</h3>
+                <p class="text-muted"><small>{{ work.create_date }}</small></p>
+                <div class="mb-3">
+                    {% if work.get_state_display == 'Completed' %}
+                        <span class="badge badge-pill badge-success">New</span>
+                        <span class="progress-link bg-success"></span>
+                        <span class="badge badge-pill badge-success">DCC</span>
+                        <span class="progress-link bg-success"></span>
+                        <span class="badge badge-pill badge-success">MR</span>
+                        <span class="progress-link bg-success"></span>
+                        <span class="badge badge-pill badge-success">VP</span>
+                        <span class="progress-link bg-success"></span>
+                        <span class="badge badge-pill badge-success">SVP</span>
+                        <span class="progress-link bg-success"></span>
+                        <span class="badge badge-pill badge-success">Completed</span>
+                    {% elif work.get_state_display == 'DCC Review' %}
+                        <span class="badge badge-pill badge-light">New</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">DCC</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">MR</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">VP</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">SVP</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">Completed</span>
+                    {% elif work.get_state_display == 'MR Review' %}
+                        <span class="badge badge-pill badge-light">New</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">DCC</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">MR</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">VP</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">SVP</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">Completed</span>
+                    {% elif work.get_state_display == 'VP Review' %}
+                        <span class="badge badge-pill badge-light">New</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">DCC</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">MR</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">VP</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">SVP</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">Completed</span>
+                    {% elif work.get_state_display == 'SVP Review' %}
+                        <span class="badge badge-pill badge-light">New</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">DCC</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">MR</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">VP</span>
+                        <span class="progress-link bg-light"></span>
+                        <span class="badge badge-pill badge-light">SVP</span>
+                        <span class="progress-link bg-dark"></span>
+                        <span class="badge badge-pill badge-dark">Completed</span>
+                    {% endif %}
+                </div>
+                <div class="col-6 pl-0">
+                    <table class="table table-borderless text-light">
+                        <tbody>
+                        <tr>
+                            <th scope="row">Creator</th>
+                            <td>{{ work.creator }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Type</th>
+                            <td>{{ work.get_type_display }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">State</th>
+                            <td>{{ work.get_state_display }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Delegate User</th>
+                            <td>{{ delegate_user }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Complete Date</th>
+                            {% if work.state == 'C' %}
+                                <td>{{ work.complete_date }}</td>
+                            {% else %}
+                                <td><i>Not Completed</i></td>
+                            {% endif %}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="col-6">
@@ -36,16 +118,16 @@
             </div>
         </div>
 
-        <h4 class="mt-3">Related Document</h4>
+        <h5 class="mt-3">Related Document</h5>
         <hr>
         <div class="row">
             <div class="col-12 col-md-6 col-lg-4">
-                <div class="card bg-dark">
+                <div class="card bg-1c">
                     <div class="card-header">
                         Internal Document
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ work.document }}</h5>
+                        <h6 class="card-title">{{ work.document }}</h6>
                         <div class="card-text">
                             <ul>
                                 <li><b>Version</b>: {{ work.document.version }}</li>
@@ -54,19 +136,20 @@
                                 <li><b>Parent Document</b>: {{ work.document.parent_doc }}</li>
                             </ul>
                         </div>
-                        <a href="{% url 'doc_detail' id=work.document_id %}" class="btn btn-primary">View Document</a>
-                        <a href="{% url 'document_template' id=work.document_id %}" class="btn btn-secondary">Download Template</a>
+                        <a href="{% url 'doc_detail' id=work.document_id %}" class="btn btn-info">View Document</a>
+                        <a href="{% url 'document_template' id=work.document_id %}" class="btn btn-outline-secondary">Download
+                            Template</a>
                     </div>
                 </div>
             </div>
             {% if work.type == 'E' %}
                 <div class="col-12 col-md-6 col-lg-4 mt-3 m-md-0">
-                    <div class="card bg-dark">
+                    <div class="card bg-1c">
                         <div class="card-header">
                             Internal Document (Edited)
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title">{{ work.new_document }}</h5>
+                            <h6 class="card-title">{{ work.new_document }}</h6>
                             <div class="card-text">
                                 <ul>
                                     <li><b>Version</b>: {{ work.new_document.version }}</li>
@@ -75,8 +158,11 @@
                                     <li><b>Parent Document</b>: {{ work.new_document.parent_doc }}</li>
                                 </ul>
                             </div>
-                            <a href="{% url 'doc_detail' id=work.new_document_id %}" class="btn btn-primary">View Document</a>
-                            <a href="{% url 'document_template' id=work.new_document_id %}" class="btn btn-secondary">Download Template</a>
+                            <a href="{% url 'doc_detail' id=work.new_document_id %}" class="btn btn-info">View
+                                Document</a>
+                            <a href="{% url 'document_template' id=work.new_document_id %}"
+                               class="btn btn-outline-secondary">Download
+                                Template</a>
                         </div>
                     </div>
                 </div>

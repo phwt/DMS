@@ -18,9 +18,8 @@
 </head>
 <body>
 <div class="row mt-5">
-    <div class="col-2">
-    </div>
-    <div class="col-8">
+    <div class="col-0 col-lg-2"></div>
+    <div class="col-12 col-lg-8">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="{% url 'index' %}">
                 <img src="{% static '/img/dms_logo.png' %}" width="30" height="30"
@@ -79,7 +78,7 @@
                                         class="fa fa-briefcase" aria-hidden="true"></i>&nbsp;&nbsp;My Work</a>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item d-lg-inline d-none">
                             <a class="nav-link disabled">|</a>
                         </li>
                         {% if user.is_authenticated %}
@@ -105,15 +104,15 @@
             </div>
         </nav>
     </div>
-    <div class="col-2"></div>
+    <div class="col-0 col-lg-2"></div>
 </div>
 <div class="container-fluid row m-0 p-0 mt-5 mb-5">
-    <div class="col-2"></div>
-    <div class="col-8 shadow p-5 h-100 round bg-19 text-light">
+    <div class="col-0 col-lg-2"></div>
+    <div class="col-12 col-lg-8 shadow p-5 h-100 round bg-19 text-light">
         {% block content %}
         {% endblock %}
     </div>
-    <div class="col-2"></div>
+    <div class="col-0 col-lg-2"></div>
 </div>
 </body>
 <script>

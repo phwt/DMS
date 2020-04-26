@@ -2,151 +2,153 @@
 {% block content %}
     <h2 class="pb-5">View {{ doc_type|title }} Documents</h2>
     <form method="GET" action="">
-        <table class="table table-responsive table-borderless text-light">
-            <thead class="bg-0">
-            {% if doc_type == 'internal' %}
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Version</th>
-                    <th scope="col">Running No</th>
-{#                    <th scope="col">Release Date</th>#}
-                    <th scope="col">Type</th>
-                    <th scope="col">State</th>
-                    {#                    <th scope="col">State</th>#}
-                    {#                    <th scope="col">Next Review</th>#}
-                    <th scope="col">Parent Doc</th>
-                    <th scope="col">Department</th>
-                    <th scope="col">Creator</th>
-                    <th></th>
-                </tr>
-            {% endif %}
-
-            {% if doc_type == 'external' %}
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Source</th>
-                    <th scope="col">Detail</th>
-                    <th scope="col">Creator</th>
-                    <th></th>
-                </tr>
-            {% endif %}
-            </thead>
-
-            {% if doc_type == 'internal' %}
-                <tr>
-                    <td>{{ filter_forms.name }}</td>
-                    <td>{{ filter_forms.version }}</td>
-                    <td>{{ filter_forms.running_no }}</td>
-{#                    <td class="row no-gutters">#}
-{#                        <div class="col-6">#}
-{#                            <input#}
-{#                                    type="datetime-local"#}
-{#                                    class="form-control form-control-sm"#}
-{#                                    name="{{ filter_forms.released_start.name }}"#}
-{#                                    id="{{ filter_forms.released_start.id_for_label }}"#}
-{#                                    value="{{ filter_forms.released_start.value }}"#}
-{#                            />#}
-{#                        </div>#}
-{#                        <div class="col-6">#}
-{#                            <input#}
-{#                                    type="datetime-local"#}
-{#                                    class="form-control form-control-sm"#}
-{#                                    name="{{ filter_forms.released_end.name }}"#}
-{#                                    id="{{ filter_forms.released_end.id_for_label }}"#}
-{#                                    value="{{ filter_forms.released_end.value }}"#}
-{#                            />#}
-{#                        </div>#}
-{#                    </td>#}
-                    <td>{{ filter_forms.type }}</td>
-                    <td>{{ filter_forms.state }}</td>
-                    <td>{{ filter_forms.parent_doc }}</td>
-                    <td>{{ filter_forms.department }}</td>
-                    <td>{{ filter_forms.creator }}</td>
-                    <td>
-                        <button type="submit" class="btn btn-info btn-block">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                </tr>
-                {% for document in documents %}
+        <div class="table-responsive">
+            <table class="table table-borderless text-light">
+                <thead class="bg-0">
+                {% if doc_type == 'internal' %}
                     <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Version</th>
+                        <th scope="col">Running No</th>
+                        {#                    <th scope="col">Release Date</th>#}
+                        <th scope="col">Type</th>
+                        <th scope="col">State</th>
+                        {#                    <th scope="col">State</th>#}
+                        {#                    <th scope="col">Next Review</th>#}
+                        <th scope="col">Parent Doc</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Creator</th>
+                        <th></th>
+                    </tr>
+                {% endif %}
+
+                {% if doc_type == 'external' %}
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Source</th>
+                        <th scope="col">Detail</th>
+                        <th scope="col">Creator</th>
+                        <th></th>
+                    </tr>
+                {% endif %}
+                </thead>
+
+                {% if doc_type == 'internal' %}
+                    <tr>
+                        <td>{{ filter_forms.name }}</td>
+                        <td>{{ filter_forms.version }}</td>
+                        <td>{{ filter_forms.running_no }}</td>
+                        {#                    <td class="row no-gutters">#}
+                        {#                        <div class="col-6">#}
+                        {#                            <input#}
+                        {#                                    type="datetime-local"#}
+                        {#                                    class="form-control form-control-sm"#}
+                        {#                                    name="{{ filter_forms.released_start.name }}"#}
+                        {#                                    id="{{ filter_forms.released_start.id_for_label }}"#}
+                        {#                                    value="{{ filter_forms.released_start.value }}"#}
+                        {#                            />#}
+                        {#                        </div>#}
+                        {#                        <div class="col-6">#}
+                        {#                            <input#}
+                        {#                                    type="datetime-local"#}
+                        {#                                    class="form-control form-control-sm"#}
+                        {#                                    name="{{ filter_forms.released_end.name }}"#}
+                        {#                                    id="{{ filter_forms.released_end.id_for_label }}"#}
+                        {#                                    value="{{ filter_forms.released_end.value }}"#}
+                        {#                            />#}
+                        {#                        </div>#}
+                        {#                    </td>#}
+                        <td>{{ filter_forms.type }}</td>
+                        <td>{{ filter_forms.state }}</td>
+                        <td>{{ filter_forms.parent_doc }}</td>
+                        <td>{{ filter_forms.department }}</td>
+                        <td>{{ filter_forms.creator }}</td>
                         <td>
-                            <a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a>
+                            <button type="submit" class="btn btn-info btn-block">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
                         </td>
-                        <td>{{ document.version }}</td>
-                        <td>{{ document.running_no }}</td>
-                        <td>{{ document.get_type_display }}</td>
-                        {% if document.get_state_display == 'Released' %}
-                            <td><span class="badge badge-pill badge-success">{{ document.get_state_display }}</span>
-                            </td>
-                        {% elif document.get_state_display == 'In-Progress' %}
-                            <td><span class="badge badge-pill badge-info">{{ document.get_state_display }}</span>
-                            </td>
-                        {% elif document.get_state_display == 'Obsoleted' %}
-                            <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
-                            </td>
-                        {% elif document.get_state_display == 'Recalled' %}
-                            <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
-                            </td>
-                        {% endif %}
-                        {#                        <td>'***'</td>#}
-                        {#                        <td>'***'</td>#}
-                        {% if document.parent_doc.id == null %}
-                            <td>-</td>
-                        {% else %}
+                    </tr>
+                    {% for document in documents %}
+                        <tr>
                             <td>
-                                <a href="{% url 'doc_detail' id=document.parent_doc.id %}">
-                                    {{ document.parent_doc.name }}
+                                <a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a>
+                            </td>
+                            <td>{{ document.version }}</td>
+                            <td>{{ document.running_no }}</td>
+                            <td>{{ document.get_type_display }}</td>
+                            {% if document.get_state_display == 'Released' %}
+                                <td><span class="badge badge-pill badge-success">{{ document.get_state_display }}</span>
+                                </td>
+                            {% elif document.get_state_display == 'In-Progress' %}
+                                <td><span class="badge badge-pill badge-info">{{ document.get_state_display }}</span>
+                                </td>
+                            {% elif document.get_state_display == 'Obsoleted' %}
+                                <td><span class="badge badge-pill badge-warning">{{ document.get_state_display }}</span>
+                                </td>
+                            {% elif document.get_state_display == 'Recalled' %}
+                                <td><span class="badge badge-pill badge-danger">{{ document.get_state_display }}</span>
+                                </td>
+                            {% endif %}
+                            {#                        <td>'***'</td>#}
+                            {#                        <td>'***'</td>#}
+                            {% if document.parent_doc.id == null %}
+                                <td>-</td>
+                            {% else %}
+                                <td>
+                                    <a href="{% url 'doc_detail' id=document.parent_doc.id %}">
+                                        {{ document.parent_doc.name }}
+                                    </a>
+                                </td>
+                            {% endif %}
+                            <td>{{ document.dept_name }}</td>
+                            <td>
+                                <a href="{% url 'profile-other' id=document.creator.id %}">{{ document.creator }}</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'doc_detail' id=document.id %}">
+                                    <button type="button" class="btn btn-block">
+                                        <i class="fa fa-chevron-right text-info" aria-hidden="true"></i>
+                                    </button>
                                 </a>
                             </td>
-                        {% endif %}
-                        <td>{{ document.dept_name }}</td>
-                        <td>
-                            <a href="{% url 'profile-other' id=document.creator.id %}">{{ document.creator }}</a>
-                        </td>
-                        <td>
-                            <a href="{% url 'doc_detail' id=document.id %}">
-                                <button type="button" class="btn btn-block">
-                                    <i class="fa fa-chevron-right text-info" aria-hidden="true"></i>
-                                </button>
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% endif %}
 
-            {% if doc_type == 'external' %}
-                <tr>
-                    <td>{{ filter_forms.name }}</td>
-                    <td>{{ filter_forms.source }}</td>
-                    <td></td>
-                    <td>{{ filter_forms.creator }}</td>
-                    <td>
-                        <button type="submit" class="btn btn-info btn-block">
-                            <i class="fa fa-search" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                </tr>
-                {% for document in documents %}
+                {% if doc_type == 'external' %}
                     <tr>
+                        <td>{{ filter_forms.name }}</td>
+                        <td>{{ filter_forms.source }}</td>
+                        <td></td>
+                        <td>{{ filter_forms.creator }}</td>
                         <td>
-                            <a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a>
-                        </td>
-                        <td>{{ document.source }}</td>
-                        <td>{{ document.detail }}</td>
-                        <td>
-                            <a href="{% url 'profile-other' id=document.creator.id %}">{{ document.creator }}</a>
-                        </td>
-                        <td>
-                            <a href="{% url 'doc_detail' id=document.id %}">
-                                <button type="button" class="btn btn-block">
-                                    <i class="fa fa-chevron-right text-info" aria-hidden="true"></i>
-                                </button>
-                            </a>
+                            <button type="submit" class="btn btn-info btn-block">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
                         </td>
                     </tr>
-                {% endfor %}
-            {% endif %}
-        </table>
+                    {% for document in documents %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a>
+                            </td>
+                            <td>{{ document.source }}</td>
+                            <td>{{ document.detail }}</td>
+                            <td>
+                                <a href="{% url 'profile-other' id=document.creator.id %}">{{ document.creator }}</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'doc_detail' id=document.id %}">
+                                    <button type="button" class="btn btn-block">
+                                        <i class="fa fa-chevron-right text-info" aria-hidden="true"></i>
+                                    </button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table>
+        </div>
     </form>
 {% endblock %}

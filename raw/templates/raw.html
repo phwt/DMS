@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Query{% endblock %}
+{% block content %}
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }} is not allowed!
+        </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-3">
+            <b>Available tables</b>
+            <ul>
+                <li>authen_employee</li>
+                <li>authen_department</li>
+                <li>auth_group</li>
+                <li>auth_user_groups</li>
+                <li>auth_user</li>
+                <li>work_delegateuser</li>
+                <li>work_work</li>
+                <li>document_internaldoc</li>
+                <li>document_document</li>
+                <li>document_externaldoc</li>
+            </ul>
+        </div>
+        <div class="col-9">
+            <form action="" method="post">
+                {% csrf_token %}
+                <textarea name="query" id="query" class="form-control bg-dark text-white" cols="30"
+                          rows="10">{{ query }}</textarea>
+                <input type="submit" value="Execute" class="btn btn-secondary btn-block">
+            </form>
+        </div>
+    </div>
+
+    {% if cols %}
+        <h3>Query Result</h3>
+        <div class="table-responsive">
+            <table class="table table-sm text-white">
+                <thead>
+                {% for col in cols %}
+                    <th scope="col">{{ col }}</th>
+                {% endfor %}
+                </thead>
+                <tbody>
+                {% for row in rows %}
+                    <tr>
+                        {% for col in row %}
+                            <td>{{ col }}</td>
+                        {% endfor %}
+                    </tr>
+                    </tbody>
+                {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+
+{% endblock %}

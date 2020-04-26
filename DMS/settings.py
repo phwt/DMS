@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'document',
     'work',
     'authen',
+    'raw',
 ]
 
 MIDDLEWARE = [

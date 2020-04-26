@@ -8,7 +8,7 @@
                 Request to&nbsp;&nbsp;&nbsp;
                 <a href="{% url 'work_create' %}" class="btn btn-sm btn-success"><i class="fa fa-plus"></i>&nbsp;&nbsp;Create</a>
                 <a href="{% url 'work_edit' %}" class="btn btn-sm btn-info"><i class="fa fa-pencil"></i>&nbsp;&nbsp;Edit</a>
-                <a href="{% url 'work_create' %}" class="btn btn-sm btn-danger"><i class="fa fa-minus"></i>&nbsp;&nbsp;Cancel</a>
+                <a href="{% url 'work_cancel' %}" class="btn btn-sm btn-danger"><i class="fa fa-minus"></i>&nbsp;&nbsp;Cancel</a>
             {% elif doc_type == 'external' %}
                 <a href="{% url 'external_add' %}" class="btn btn-sm btn-info"><i class="fa fa-plus"></i>&nbsp;&nbsp;Add New</a>
             {% endif %}

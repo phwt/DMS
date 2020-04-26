@@ -7,7 +7,7 @@
         {#Document Overview#}
 
         <div class="col-3">
-            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #ffffff !important; cursor: pointer"
+            <div class="card shadow py-2 bg-0 card-inter"
                  onclick="location.href='{% url 'internal_doc' %}'">
                 <div class="card-body">
                     <div class="row">
@@ -25,12 +25,12 @@
         </div>
 
         <div class="col-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important; cursor: pointer"
+            <div class="card shadow  py-2 bg-0 card-in"
                  onclick="location.href='{% url 'internal_doc' %}?state=IN'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                            <i class="fa fa-file text-info fa-4x " aria-hidden="true"></i>
+                            <i class="fa fa-file text-info fa-3x " aria-hidden="true"></i>
                         </div>
                         <div class="col ml-3">
                             <h3 class="card-title mb-0" id="doc_cnt_in">{{ doc_cnt_in }}</h3>
@@ -42,7 +42,7 @@
         </div>
 
         <div class="col-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #28a745 !important; cursor: pointer"
+            <div class="card shadow  py-2 bg-0 card-re"
                  onclick="location.href='{% url 'internal_doc' %}?state=RE'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -59,7 +59,7 @@
         </div>
 
         <div class="col-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #dc3545 !important; cursor: pointer"
+            <div class="card shadow  py-2 bg-0 card-ob"
                  onclick="location.href='{% url 'internal_doc' %}?state=OB'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -197,7 +197,7 @@
         {# Work Overview #}
         <div class="col-12 col-lg-6 mb-3 mb-lg-0 row">
             <div class="col-6">
-                <div class="card bg-0 mb-4" style="cursor: pointer" onclick="location.href='{% url 'work_list' %}'">
+                <div class="card bg-0 mb-4 card-pointer" onclick="location.href='{% url 'work_list' %}'">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
@@ -210,7 +210,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card bg-warning" style="cursor: pointer"
+                <div class="card bg-warning card-pointer    "
                      onclick="location.href='{% url 'work_list' %}?type=E'">
                     <div class="card-body">
                         <div class="row">
@@ -224,6 +224,7 @@
                         </div>
                     </div>
                 </div>
+                &nbsp;
                 <div class="card bg-19">
                     <div class="card-body">
                         <div class="row">
@@ -256,7 +257,7 @@
                 </div>
             </div>
             <div class="col-6">
-                <div class="card bg-success mb-4" style="cursor: pointer"
+                <div class="card bg-success mb-4 card-pointer"
                      onclick="location.href='{% url 'work_list' %}?type=CR'">
                     <div class="card-body">
                         <div class="row">
@@ -270,7 +271,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card bg-danger" style="cursor: pointer"
+                <div class="card bg-danger card-pointer"
                      onclick="location.href='{% url 'work_list' %}?type=CA'">
                     <div class="card-body">
                         <div class="row">
@@ -284,6 +285,7 @@
                         </div>
                     </div>
                 </div>
+                &nbsp;
                 <div class="card bg-19">
                     <div class="card-body">
                         <div class="row">

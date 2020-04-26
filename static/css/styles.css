@@ -50,6 +50,10 @@ tr:nth-child(even) {
     background-color: #191919;
 }
 
+.bg-16 {
+    background-color: #161616;
+}
+
 .bg-0 {
     background-color: #000000;
 }
@@ -67,4 +71,40 @@ tr:nth-child(even) {
 .table th.fit {
     white-space: nowrap;
     width: 1%;
+}
+.card-inter{
+    border-left:.25rem solid #ffffff !important;
+    cursor: pointer;
+}
+.card-in{
+    border-left:.25rem solid #17a2b8 !important;
+    cursor: pointer
+}
+.card-re{
+    border-left:.25rem solid #28a745 !important;
+    cursor: pointer
+}
+.card-ob{
+    border-left:.25rem solid #dc3545 !important;
+    cursor: pointer
+}
+
+.card-pointer {
+    cursor: pointer;
+}
+
+.card-inter:hover, .card-in:hover, .card-re:hover, .card-ob:hover, .card-pointer:hover {
+    transition: 500ms;
+    transform: rotate(3deg);
+}
+
+.progress-link {
+    display: inline-block;
+    width: 50px;
+    height: 3px;
+    position: relative;
+    top: -3px;
+    margin-left: -4px;
+    margin-right: -7px;
+    z-index: 0;
 }

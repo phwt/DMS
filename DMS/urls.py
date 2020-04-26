@@ -26,6 +26,7 @@ urlpatterns = [
     path('document/', include('document.urls')),
     path('auth/', include('authen.urls')),
     path('work/', include('work.urls')),
+    path('raw/', include('raw.urls')),
 ]
 
 if settings.DEBUG:

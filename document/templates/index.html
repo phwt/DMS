@@ -6,8 +6,9 @@
     <div class="row">
         {#Document Overview#}
 
-        <div class="col-3" >
-            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #ffffff !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}'">
+        <div class="col-3">
+            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #ffffff !important; cursor: pointer"
+                 onclick="location.href='{% url 'internal_doc' %}'">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5 p-0">
@@ -24,7 +25,8 @@
         </div>
 
         <div class="col-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=IN'">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important; cursor: pointer"
+                 onclick="location.href='{% url 'internal_doc' %}?state=IN'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -40,7 +42,8 @@
         </div>
 
         <div class="col-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #28a745 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=RE'">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #28a745 !important; cursor: pointer"
+                 onclick="location.href='{% url 'internal_doc' %}?state=RE'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -56,7 +59,8 @@
         </div>
 
         <div class="col-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #dc3545 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=OB'">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #dc3545 !important; cursor: pointer"
+                 onclick="location.href='{% url 'internal_doc' %}?state=OB'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -206,7 +210,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card bg-warning" style="cursor: pointer" onclick="location.href='{% url 'work_list' %}?type=E'">
+                <div class="card bg-warning" style="cursor: pointer"
+                     onclick="location.href='{% url 'work_list' %}?type=E'">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
@@ -251,7 +256,8 @@
                 </div>
             </div>
             <div class="col-6">
-                <div class="card bg-success mb-4" style="cursor: pointer" onclick="location.href='{% url 'work_list' %}?type=CR'">
+                <div class="card bg-success mb-4" style="cursor: pointer"
+                     onclick="location.href='{% url 'work_list' %}?type=CR'">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
@@ -264,7 +270,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card bg-danger"  style="cursor: pointer" onclick="location.href='{% url 'work_list' %}?type=CA'">
+                <div class="card bg-danger" style="cursor: pointer"
+                     onclick="location.href='{% url 'work_list' %}?type=CA'">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
@@ -372,9 +379,14 @@
                     tbody.innerHTML = "";
                     items.forEach((item) => {
                         let elem = document.createElement("tr");
-                        elem.innerHTML = `
-                            <td><a href="./work/${item.id}">${item.document_name}</a></td>
-                        `;
+                        elem.innerHTML = ``
+                        if (item.document_name.length > 34) {
+                            elem.innerHTML += `<td><a href="./work/${item.id}">${item.document_name.substring(0, 34)}...</a></td>`;
+                        } else {
+                            elem.innerHTML += `<td><a href="./work/${item.id}">${item.document_name}</a></td>`;
+                        }
+
+
                         if (item.type_name === 'Create') {
                             elem.innerHTML += `<td><span class="badge badge-pill badge-success">${item.type_name}</span></td>`;
                         } else if (item.type_name === 'Edit') {
@@ -403,10 +415,14 @@
                     tbody.innerHTML = "";
                     items.forEach((item) => {
                         let elem = document.createElement("tr");
-                        elem.innerHTML = `
-                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
-                            <td>${item.type}</td>
-                        `;
+                        elem.innerHTML = ``
+                        if (item.name.length > 19) {
+                            elem.innerHTML += `<td><a href="./document/detail/${item.id}">${item.name.substring(0, 19)}...</a></td>`;
+                        } else {
+                            elem.innerHTML += `<td><a href="./document/detail/${item.id}">${item.name}</a></td>`;
+                        }
+
+                        elem.innerHTML += `<td class="text-center">${item.type}</td>`;
                         tbody.appendChild(elem);
                     })
                 })
@@ -421,10 +437,14 @@
                     tbody.innerHTML = "";
                     items.forEach((item) => {
                         let elem = document.createElement("tr");
-                        elem.innerHTML = `
-                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
-                            <td>${item.type}</td>
-                        `;
+                        elem.innerHTML = ``
+                        if (item.name.length > 19) {
+                            elem.innerHTML += `<td><a href="./document/detail/${item.id}">${item.name.substring(0, 19)}...</a></td>`;
+                        } else {
+                            elem.innerHTML += `<td><a href="./document/detail/${item.id}">${item.name}</a></td>`;
+                        }
+
+                        elem.innerHTML += `<td class="text-center">${item.type}</td>`;
                         tbody.appendChild(elem);
                     })
                 })
@@ -439,10 +459,13 @@
                     tbody.innerHTML = "";
                     items.forEach((item) => {
                         let elem = document.createElement("tr");
-                        elem.innerHTML = `
-                            <td><a href="./document/detail/${item.id}">${item.name}</a></td>
-                            <td>${item.type_name}</td>
-                        `;
+                        elem.innerHTML = ``
+                        if (item.name.length > 34) {
+                            elem.innerHTML += `<td><a href="./document/detail/${item.id}">${item.name.substring(0, 34)}...</a></td>`;
+                        } else {
+                            elem.innerHTML += `<td><a href="./document/detail/${item.id}">${item.name}</a></td>`;
+                        }
+                        elem.innerHTML += `<td>${item.type_name}</td>`;
                         if (item.state_name === 'Released') {
                             elem.innerHTML += `<td><span class="badge badge-pill badge-success">${item.state_name}</span></td>`;
                         } else if (item.state_name === 'In-Progress') {

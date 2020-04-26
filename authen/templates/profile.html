@@ -1,18 +1,24 @@
 {% extends 'base.html' %}
-{% block content%}
+{% block title %}Profile{% endblock %}
+{% block content %}
     <h2 class="pb-5">Profile</h2>
-        <span class="align-baseline">
-            {% if user_id == 'have_id' %}
-            <p>Name >> {{ employee.user.first_name }}</p>
-            <p>LastName >> {{ employee.user.last_name }}</p>
-            <p>Username >> {{ employee.user.username }}</p>
-            <p>Department >> {{ employee.department }}</p>
-            {% else %}
-            <p>Name >> {{ employee.user.first_name }}</p>
-            <p>LastName >> {{ employee.user.last_name }}</p>
-            <p>Username >> {{ employee.user.username }}</p>
-            <p>Department >> {{ employee.department }}</p>
-            <a class="btn btn-primary" href="{% url 'change-password' %}">Change Password</a>
-            {% endif %}
-        </span>
+
+    <div class="row">
+        <div class="col-6">
+            <h4>Detail</h4>
+            <hr>
+            <ul>
+                <li><b>Username</b>: {{ employee.user.username }}</li>
+                <li><b>Name</b>: {{ employee.user.first_name }} {{ employee.user.last_name }}</li>
+                <li><b>Department</b>: {{ employee.department }}</li>
+            </ul>
+        </div>
+        {% if user_id != 'have_id' %}
+            <div class="col-6">
+                <h4>Management</h4>
+                <hr>
+                <a class="btn btn-secondary btn-block" href="{% url 'change-password' %}">Change Password</a>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

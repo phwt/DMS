@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
 {% block content %}
     <h2 class="pb-5">Dashboard</h2>
     {# Document Part #}
     <div class="row">
-        {# Document Overview #}
-        <div class="col-6 col-lg-3 mb-3 mb-lg-0">
-            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #ffffff !important">
+        {#Document Overview#}
+
+        <div class="col-3" >
+            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #ffffff !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}'">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5 p-0">
@@ -21,8 +23,8 @@
             </div>
         </div>
 
-        <div class="col-6 col-lg-3">
-            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important">
+        <div class="col-3">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=IN'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -37,8 +39,8 @@
             </div>
         </div>
 
-        <div class="col-6 col-lg-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #28a745 !important">
+        <div class="col-3">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #28a745 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=RE'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -53,8 +55,8 @@
             </div>
         </div>
 
-        <div class="col-6 col-lg-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #dc3545 !important">
+        <div class="col-3">
+            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #dc3545 !important; cursor: pointer" onclick="location.href='{% url 'internal_doc' %}?state=OB'">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
@@ -191,7 +193,7 @@
         {# Work Overview #}
         <div class="col-12 col-lg-6 mb-3 mb-lg-0 row">
             <div class="col-6">
-                <div class="card bg-0 mb-4">
+                <div class="card bg-0 mb-4" style="cursor: pointer" onclick="location.href='{% url 'work_list' %}'">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
@@ -204,7 +206,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card bg-warning">
+                <div class="card bg-warning" style="cursor: pointer" onclick="location.href='{% url 'work_list' %}?type=E'">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
@@ -249,7 +251,7 @@
                 </div>
             </div>
             <div class="col-6">
-                <div class="card bg-success mb-4">
+                <div class="card bg-success mb-4" style="cursor: pointer" onclick="location.href='{% url 'work_list' %}?type=CR'">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
@@ -262,7 +264,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card bg-danger">
+                <div class="card bg-danger"  style="cursor: pointer" onclick="location.href='{% url 'work_list' %}?type=CA'">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">

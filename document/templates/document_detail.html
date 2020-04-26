@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %}{{ document.name }} - {{ doc_type|title }}{% endblock %}
 {% block content %}
     <div>
         <h2 class="pb-5">{{ document.name }}</h2>

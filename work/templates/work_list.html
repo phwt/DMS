@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %}Work List{% endblock %}
 {% block content %}
     <h2 class="pb-5">View All Works</h2>
     <form method="GET" action="">
@@ -33,7 +34,6 @@
                         <td>
                             <a href="{% url 'work_detail' id=work.id %}">{{ work }}</a>
                         </td>
-                        <td>{{ work.get_type_display }}</td>
                         {% if work.get_type_display == 'Create' %}
                             <td><span class="badge badge-pill badge-success">{{ work.get_type_display }}</span></td>
                         {% elif work.get_type_display == 'Edit' %}
@@ -41,6 +41,7 @@
                         {% elif work.get_type_display == 'Cancel' %}
                             <td><span class="badge badge-pill badge-danger">{{ work.get_type_display }}</span></td>
                         {% endif %}
+                        <td>{{ work.get_state_display }}</td>
                         <td>{{ work.create_date }}</td>
                         {% if work.complete_date == null %}
                             <td>-</td>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% block title %}{{ doc_type|title }} Document List{% endblock %}
 {% block content %}
     <h2 class="pb-5">View {{ doc_type|title }} Documents</h2>
     <form method="GET" action="">
@@ -8,8 +9,8 @@
                 {% if doc_type == 'internal' %}
                     <tr>
                         <th scope="col">Name</th>
-                        <th scope="col">Version</th>
-                        <th scope="col">Running No</th>
+                        <th scope="col" class="fit">Version</th>
+                        <th scope="col" class="fit">Running No</th>
                         {#                    <th scope="col">Release Date</th>#}
                         <th scope="col">Type</th>
                         <th scope="col">State</th>
@@ -36,8 +37,8 @@
                 {% if doc_type == 'internal' %}
                     <tr>
                         <td>{{ filter_forms.name }}</td>
-                        <td>{{ filter_forms.version }}</td>
-                        <td>{{ filter_forms.running_no }}</td>
+                        <td class="fit">{{ filter_forms.version }}</td>
+                        <td class="fit">{{ filter_forms.running_no }}</td>
                         {#                    <td class="row no-gutters">#}
                         {#                        <div class="col-6">#}
                         {#                            <input#}
@@ -74,8 +75,8 @@
                             <td>
                                 <a href="{% url 'doc_detail' id=document.id %}">{{ document.name }}</a>
                             </td>
-                            <td>{{ document.version }}</td>
-                            <td>{{ document.running_no }}</td>
+                            <td class="fit text-center">{{ document.version }}</td>
+                            <td class="fit text-center">{{ document.running_no }}</td>
                             <td>{{ document.get_type_display }}</td>
                             {% if document.get_state_display == 'Released' %}
                                 <td><span class="badge badge-pill badge-success">{{ document.get_state_display }}</span>

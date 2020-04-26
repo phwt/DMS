@@ -72,6 +72,26 @@ tr:nth-child(even) {
     white-space: nowrap;
     width: 1%;
 }
+.card-inter{
+    border-left:.25rem solid #ffffff !important;
+    cursor: pointer;
+}
+.card-in{
+    border-left:.25rem solid #17a2b8 !important;
+    cursor: pointer
+}
+.card-re{
+    border-left:.25rem solid #28a745 !important;
+    cursor: pointer
+}
+.card-ob{
+    border-left:.25rem solid #dc3545 !important;
+    cursor: pointer
+}
+
+.card-inter:hover, .card-in:hover, .card-re:hover, .card-ob:hover {
+    transition: 500ms;
+    transform:rotate(3deg);
 
 .progress-link {
     display: inline-block;

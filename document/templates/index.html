@@ -9,7 +9,8 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-5 p-0">
-                            <h5 style="font-size: 50px; margin-left: 1.75rem" class="mb-0" id="doc_cnt">{{ doc_cnt }}</h5>
+                            <h5 style="font-size: 50px; margin-left: 1.75rem" class="mb-0"
+                                id="doc_cnt">{{ doc_cnt }}</h5>
                         </div>
                         <div class="col-7 p-0">
                             <h3 class="card-title mb-0">Internal</h3>
@@ -21,14 +22,14 @@
         </div>
 
         <div class="col-6 col-lg-3">
-            <div class="card shadow  py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important">
+            <div class="card shadow py-2 bg-0" style="border-left:.25rem solid #17a2b8 !important">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col-auto">
                             <i class="fa fa-file text-info fa-4x " aria-hidden="true"></i>
                         </div>
                         <div class="col ml-3">
-                            <h3 class="card-title mb-0" id="doc_cnt_ob">{{ doc_cnt_in }}</h3>
+                            <h3 class="card-title mb-0" id="doc_cnt_in">{{ doc_cnt_in }}</h3>
                             <p class="card-text">In-Progress</p>
                         </div>
                     </div>
@@ -44,7 +45,7 @@
                             <i class="fa fa-arrow-circle-right text-success fa-4x " aria-hidden="true"></i>
                         </div>
                         <div class="col ml-3">
-                            <h3 class="card-title mb-0" id="doc_cnt_ob">{{ doc_cnt_re }}</h3>
+                            <h3 class="card-title mb-0" id="doc_cnt_re">{{ doc_cnt_re }}</h3>
                             <p class="card-text">Released</p>
                         </div>
                     </div>
@@ -73,7 +74,8 @@
             <div class="bg-0 pl-3 pr-1 pt-2 mt-3">
                 <div class="row">
                     <div class="col-6">
-                        <h4>Internal Document</h4>
+                        <h4 class="m-0">Internal</h4>
+                        <h4 class="m-0">Document</h4>
                     </div>
                     <div class="col-6 text-right">
                         <button onclick="updateInternalTable()" class="btn text-muted">
@@ -117,9 +119,18 @@
         </div>
         {# Document In-Progress last 10 #}
         <div class="col-6 col-lg-3">
-            <div class="bg-0 pl-3 pt-2 mt-3">
-                <h4>Internal Document</h4>
-                <span class="badge badge-pill badge-info">In-Progress</span>
+            <div class="bg-0 pl-3 pr-1 pt-2 mt-3">
+                <div class="row">
+                    <div class="col-9 pr-0">
+                        <h4>Internal Document</h4>
+                        <span class="badge badge-pill badge-info">In-Progress</span>
+                    </div>
+                    <div class="col-3 pl-0 text-right">
+                        <button onclick="updateInternalTable()" class="btn text-muted">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
             <table class="table table-borderless text-light" id="progress">
                 <thead class="bg-0">
@@ -142,9 +153,18 @@
         </div>
         {# Document Released last 10 #}
         <div class="col-6 col-lg-3">
-            <div class="bg-0 pl-3 pt-2 mt-3">
-                <h4>Internal Document</h4>
-                <span class="badge badge-pill badge-success">Released</span>
+            <div class="bg-0 pl-3 pr-1 pt-2 mt-3">
+                <div class="row">
+                    <div class="col-9 pr-0">
+                        <h4>Internal Document</h4>
+                        <span class="badge badge-pill badge-success">Released</span>
+                    </div>
+                    <div class="col-3 pl-0 text-right">
+                        <button onclick="updateInternalTable()" class="btn text-muted">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
             <table class="table table-borderless text-light" id="released">
                 <thead class="bg-0">
@@ -201,7 +221,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
-                                <u class="text-success"><h1 class="font-l mb-0" id="work_cnt_cr_d">{{ work_cnt_cr_d }}</h1>
+                                <u class="text-success"><h1 class="font-l mb-0"
+                                                            id="work_cnt_cr_d">{{ work_cnt_cr_d }}</h1>
                                 </u>
                             </div>
                             <div class="col-7 p-0">
@@ -215,7 +236,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
-                                <u class="text-success"><h1 class="font-l mb-0" id="work_cnt_cr_w">{{ work_cnt_cr_w }}</h1>
+                                <u class="text-success"><h1 class="font-l mb-0"
+                                                            id="work_cnt_cr_w">{{ work_cnt_cr_w }}</h1>
                                 </u>
                             </div>
                             <div class="col-7 p-0">
@@ -257,7 +279,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
-                                <u class="text-success"><h1 class="font-l mb-0" id="work_cnt_com_d">{{ work_cnt_com_d }}</h1>
+                                <u class="text-success"><h1 class="font-l mb-0"
+                                                            id="work_cnt_com_d">{{ work_cnt_com_d }}</h1>
                                 </u>
                             </div>
                             <div class="col-7 p-0">
@@ -271,7 +294,8 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-5 p-0 text-center">
-                                <u class="text-success"><h1 class="font-l mb-0" id="work_cnt_com_w">{{ work_cnt_com_w }}</h1>
+                                <u class="text-success"><h1 class="font-l mb-0"
+                                                            id="work_cnt_com_w">{{ work_cnt_com_w }}</h1>
                                 </u>
                             </div>
                             <div class="col-7 p-0">
@@ -288,7 +312,10 @@
             <div class="bg-0 pl-3 pt-2">
                 <div class="row">
                     <div class="col-6"><h4>Works</h4></div>
-                    <div class="col-6 text-right"><button onclick="updateWorkTable()" class="btn text-muted"><i class="fa fa-refresh" aria-hidden="true"></i></button></div>
+                    <div class="col-6 text-right">
+                        <button onclick="updateWorkTable()" class="btn text-muted"><i class="fa fa-refresh"
+                                                                                      aria-hidden="true"></i></button>
+                    </div>
                 </div>
                 <p class="m-0 text-muted">Latest 10 Works</p>
             </div>
@@ -298,7 +325,7 @@
                     <th scope="col">Related Document</th>
                     <th scope="col">Type</th>
                     <th scope="col">State</th>
-{#                    <th scope="col">Create Date</th>#}
+                    {#                    <th scope="col">Create Date</th>#}
                 </tr>
                 </thead>
                 <tbody>
@@ -315,7 +342,7 @@
                         {% endif %}
 
                         <td>{{ work.get_state_display }}</td>
-{#                        <td>{{ work.create_date|date:"d-M-Y" }} {{ work.create_date|time:"H:i" }}</td>#}
+                        {#                        <td>{{ work.create_date|date:"d-M-Y" }} {{ work.create_date|time:"H:i" }}</td>#}
                     </tr>
                 {% endfor %}
                 </tbody>

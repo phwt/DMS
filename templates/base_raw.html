@@ -1,0 +1,37 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/bootstrap-select.min.css' %}">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+    <title>DMS | {% block title %}{% endblock %}</title>
+</head>
+<body>
+<div class="row mt-5">
+    <div class="col-0 col-lg-2"></div>
+    <div class="col-12 col-lg-8">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static '/img/dms_logo.png' %}" width="30" height="30"
+                     class="d-inline-block align-top" alt="">
+                DMS
+            </a>
+        </nav>
+    </div>
+    <div class="col-0 col-lg-2"></div>
+</div>
+<div class="container-fluid row m-0 p-0 mt-5 mb-5">
+    <div class="col-0 col-lg-2"></div>
+    <div class="col-12 col-lg-8 shadow p-5 h-100 round bg-19 text-light center-cnt">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div class="col-0 col-lg-2"></div>
+</div>
+</body>
+</html>

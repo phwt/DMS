@@ -27,11 +27,11 @@ def index(request):
     work_cnt_e = Work.objects.filter(type='E').count()
     work_cnt_ca = Work.objects.filter(type='CA').count()
 
-    work_cnt_cr_w = Work.objects.filter(type='CR', create_date__gte=datetime.now() - timedelta(days=7)).count()
-    work_cnt_ca_w = Work.objects.filter(type='CA', create_date__gte=datetime.now() - timedelta(days=7)).count()
-    work_cnt_cr_d = Work.objects.filter(type='CR', create_date__range=(datetime.combine(datetime.now(), dt.time.min),
+    work_cnt_cr_w = Work.objects.filter(create_date__gte=datetime.now() - timedelta(days=7)).count()
+    work_cnt_com_w = Work.objects.exclude(complete_date__isnull=True).filter(create_date__gte=datetime.now() - timedelta(days=7)).count()
+    work_cnt_cr_d = Work.objects.filter(create_date__range=(datetime.combine(datetime.now(), dt.time.min),
                                                                        datetime.combine(datetime.now(), dt.time.max))).count()
-    work_cnt_ca_d = Work.objects.filter(type='CA', create_date__range=(datetime.combine(datetime.now(), dt.time.min),
+    work_cnt_com_d = Work.objects.exclude(complete_date__isnull=True).filter(create_date__range=(datetime.combine(datetime.now(), dt.time.min),
                                                                        datetime.combine(datetime.now(), dt.time.max))).count()
 
     internal = InternalDoc.objects.all().order_by('-id')[:10]
@@ -49,9 +49,9 @@ def index(request):
         'work_cnt_e': work_cnt_e,
         'work_cnt_ca': work_cnt_ca,
         'work_cnt_cr_w': work_cnt_cr_w,
-        'work_cnt_ca_w': work_cnt_ca_w,
+        'work_cnt_com_w': work_cnt_com_w,
         'work_cnt_cr_d': work_cnt_cr_d,
-        'work_cnt_ca_d': work_cnt_ca_d,
+        'work_cnt_com_d': work_cnt_com_d,
 
         'documents': internal,
         'documents_in': internal_dashboard,
@@ -156,12 +156,12 @@ def get_dashboard_work_cnt(request):
     work_cnt_cr = Work.objects.filter(type='CR').count()
     work_cnt_e = Work.objects.filter(type='E').count()
     work_cnt_ca = Work.objects.filter(type='CA').count()
-    work_cnt_cr_w = Work.objects.filter(type='CR', create_date__gte=datetime.today() - timedelta(days=7)).count()
-    work_cnt_ca_w = Work.objects.filter(type='CA', create_date__gte=datetime.today() - timedelta(days=7)).count()
-    work_cnt_cr_d = Work.objects.filter(type='CR', create_date__range=(datetime.combine(datetime.today(), dt.time.min),
-                                                                       datetime.combine(datetime.today(), dt.time.max))).count()
-    work_cnt_ca_d = Work.objects.filter(type='CA', create_date__range=(datetime.combine(datetime.today(), dt.time.min),
-                                                                       datetime.combine(datetime.today(), dt.time.max))).count()
+    work_cnt_cr_w = Work.objects.filter(create_date__gte=datetime.now() - timedelta(days=7)).count()
+    work_cnt_com_w = Work.objects.exclude(complete_date__isnull=True).filter(create_date__gte=datetime.now() - timedelta(days=7)).count()
+    work_cnt_cr_d = Work.objects.filter(create_date__range=(datetime.combine(datetime.now(), dt.time.min),
+                                                                       datetime.combine(datetime.now(), dt.time.max))).count()
+    work_cnt_com_d = Work.objects.exclude(complete_date__isnull=True).filter(create_date__range=(datetime.combine(datetime.now(), dt.time.min),
+                                                                        datetime.combine(datetime.now(), dt.time.max))).count()
 
     work_cnt = {
         "cnt": work_cnt,
@@ -169,9 +169,9 @@ def get_dashboard_work_cnt(request):
         "e": work_cnt_e,
         "ca": work_cnt_ca,
         'cr_w': work_cnt_cr_w,
-        'ca_w': work_cnt_ca_w,
+        'com_w': work_cnt_com_w,
         'cr_d': work_cnt_cr_d,
-        'ca_d': work_cnt_ca_d
+        'com_d': work_cnt_com_d
     }
     return JsonResponse(work_cnt, safe=False)
 

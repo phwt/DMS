@@ -1,6 +1,7 @@
 from datetime import datetime , date, timedelta
 import datetime as dt
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Count, F
 from django.http import JsonResponse, HttpResponse
 
@@ -106,8 +107,18 @@ def document_list(request, doc_type):
         else:
             documents = InternalDoc.objects.all().prefetch_related('creator__department', 'creator__user', 'parent_doc')
     documents = documents.annotate(dept_name=F('creator__department__name'))
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(documents, 10)
+    try:
+        paginated_documents = paginator.page(page)
+    except PageNotAnInteger:
+        paginated_documents = paginator.page(1)
+    except EmptyPage:
+        paginated_documents = paginator.page(paginator.num_pages)
+
     context = {
-        'documents': documents,
+        'documents': paginated_documents,
         'doc_type': doc_type,
         'filter_forms': filter_forms
     }
@@ -139,6 +150,7 @@ def parse_html_time(time_string):
     return datetime.strptime(time_string, '%Y-%m-%dT%H:%M')
 
 
+@login_required
 def get_dashboard_work_cnt(request):
     work_cnt = Work.objects.all().count()
     work_cnt_cr = Work.objects.filter(type='CR').count()
@@ -164,6 +176,7 @@ def get_dashboard_work_cnt(request):
     return JsonResponse(work_cnt, safe=False)
 
 
+@login_required
 def get_dashboard_internal_cnt(request):
     internal_cnt = InternalDoc.objects.all().count()
     internal_cnt_in = InternalDoc.objects.filter(state='IN').count()
@@ -178,6 +191,7 @@ def get_dashboard_internal_cnt(request):
     return JsonResponse(internal_cnt, safe=False)
 
 
+@login_required
 def get_dashboard_work_list(request):
     works = Work.objects.all().order_by('-id')[:10].annotate(
         document_name=F('document__name'),
@@ -188,6 +202,7 @@ def get_dashboard_work_list(request):
     return JsonResponse(work_list, safe=False)
 
 
+@login_required
 def get_dashboard_internal_list(request):
     internal = InternalDoc.objects.all().order_by('-id')[:10].annotate(
         type_name=WithChoices(InternalDoc, 'type'),
@@ -197,6 +212,25 @@ def get_dashboard_internal_list(request):
     return JsonResponse(internal_list, safe=False)
 
 
+@login_required
+def get_dashboard_internal_progress(request):
+    progress = InternalDoc.objects.filter(
+        state='IN'
+    ).order_by('-id')[:10].values()
+    progress_list = list(progress)
+    return JsonResponse(progress_list, safe=False)
+
+
+@login_required
+def get_dashboard_internal_released(request):
+    progress = InternalDoc.objects.filter(
+        state='RE'
+    ).order_by('-id')[:10].values()
+    progress_list = list(progress)
+    return JsonResponse(progress_list, safe=False)
+
+
+@login_required(login_url='login')
 def document_template(request, id):
 
     doc = InternalDoc.objects.get(pk=id)
@@ -300,17 +334,3 @@ def document_template(request, id):
     document.save(response)
 
     return response
-def get_dashboard_internal_progress(request):
-    progress = InternalDoc.objects.filter(
-        state='IN'
-    ).order_by('-id')[:10].values()
-    progress_list = list(progress)
-    return JsonResponse(progress_list, safe=False)
-
-
-def get_dashboard_internal_released(request):
-    progress = InternalDoc.objects.filter(
-        state='RE'
-    ).order_by('-id')[:10].values()
-    progress_list = list(progress)
-    return JsonResponse(progress_list, safe=False)

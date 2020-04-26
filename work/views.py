@@ -14,35 +14,35 @@ from work.models import Work, DelegateUser
 
 @login_required(login_url='login')
 def work_list(request):
-    work_list = Work.objects.all().order_by('-id').prefetch_related('latest_delegate__user')
+    works = Work.objects.all().order_by('-id').prefetch_related('latest_delegate__user')
     if request.method == 'GET':
         filter_form = WorkFilterForm(request.GET)
         if filter_form.is_valid():
             if filter_form.cleaned_data['document'] is not None:
-                work_list = work_list.filter(document=filter_form.cleaned_data['document'])
+                works = works.filter(document=filter_form.cleaned_data['document'])
 
             if filter_form.cleaned_data['type'] is not '':
-                work_list = work_list.filter(type=filter_form.cleaned_data['type'])
+                works = works.filter(type=filter_form.cleaned_data['type'])
 
             if filter_form.cleaned_data['state'] is not '':
-                work_list = work_list.filter(state=filter_form.cleaned_data['state'])
+                works = works.filter(state=filter_form.cleaned_data['state'])
 
             if filter_form.cleaned_data['employee'] is not None:
-                work_list = work_list.filter(latest_delegate=filter_form.cleaned_data['employee'])
+                works = works.filter(latest_delegate=filter_form.cleaned_data['employee'])
     else:
         filter_form = WorkFilterForm()
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(work_list, 10)
+    paginator = Paginator(works, 10)
     try:
-        works = paginator.page(page)
+        paginated_works = paginator.page(page)
     except PageNotAnInteger:
-        works = paginator.page(1)
+        paginated_works = paginator.page(1)
     except EmptyPage:
-        works = paginator.page(paginator.num_pages)
+        paginated_works = paginator.page(paginator.num_pages)
 
     context = {
-        'works': works,
+        'works': paginated_works,
         'filter_forms': filter_form
     }
     return render(request, 'work_list.html', context=context)

@@ -50,6 +50,10 @@ tr:nth-child(even) {
     background-color: #191919;
 }
 
+.bg-1c {
+    background-color: #1c1c1c;
+}
+
 .bg-0 {
     background-color: #000000;
 }
@@ -88,4 +92,14 @@ tr:nth-child(even) {
 .card-inter:hover, .card-in:hover, .card-re:hover, .card-ob:hover {
     transition: 500ms;
     transform:rotate(3deg);
+
+.progress-link {
+    display: inline-block;
+    width: 50px;
+    height: 3px;
+    position: relative;
+    top: -3px;
+    margin-left: -4px;
+    margin-right: -7px;
+    z-index: 0;
 }

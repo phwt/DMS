@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm, TextInput, DateTimeField, CharField, NumberInput, Select, Textarea, ChoiceField, \
     ModelChoiceField
 from django import forms
@@ -18,6 +19,15 @@ class DocumentCreateForm(ModelForm):
         super(DocumentCreateForm, self).__init__(*args, **kwargs)
         self.fields['parent_doc'].required = False
         apply_class_to_fields(self.fields, 'form-control form-control-sm')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        version = cleaned_data.get('version')
+        running = cleaned_data.get('running_no')
+        if version <= 0:
+            self.add_error('version', 'Version cannot be negative or zero!')
+        if running <= 0:
+            self.add_error('running_no', 'Running No. cannot be negative or zero!')
 
 
 class DocumentCancelForm(forms.Form):
@@ -58,6 +68,13 @@ class WorkFilterForm(forms.Form):
 
     document.widget.attrs.update(select_option)
     employee.widget.attrs.update(select_option)
+
+
+def validate_positive(value):
+    if value <= 0:
+        raise ValidationError(
+            _('Number cannot be negative or zero!')
+        )
 
 
 class DocumentSubmitForm(forms.Form):

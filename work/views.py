@@ -52,21 +52,23 @@ def work_list(request):
 def work_create(request):
     if request.method == 'POST':
         create_form = DocumentCreateForm(request.POST)
-        document = create_form.save(commit=False)
-        document.creator = request.user.employee
-        document.save()
-        work = Work(
-            type='CR',
-            state='N',
-            creator=request.user.employee,
-            document=document,
-            latest_delegate=request.user.employee
-        )
-        work.save()
-        delegate = DelegateUser(work=work, employee=request.user.employee, deadline=date_plus_today(5))
-        delegate.save()
-        return redirect('work_detail', id=work.id)
-    create_form = DocumentCreateForm()
+        if create_form.is_valid():
+            document = create_form.save(commit=False)
+            document.creator = request.user.employee
+            document.save()
+            work = Work(
+                type='CR',
+                state='N',
+                creator=request.user.employee,
+                document=document,
+                latest_delegate=request.user.employee
+            )
+            work.save()
+            delegate = DelegateUser(work=work, employee=request.user.employee, deadline=date_plus_today(5))
+            delegate.save()
+            return redirect('work_detail', id=work.id)
+    else:
+        create_form = DocumentCreateForm()
     return render(request, 'work_create.html', {'form': create_form})
 
 

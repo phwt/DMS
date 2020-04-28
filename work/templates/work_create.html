@@ -7,29 +7,29 @@
 
         <div class="row">
             <div class="col-6">
-                {{ form.name.errors }}
                 <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
                 {{ form.name }}
+                {{ form.name.errors.as_text }}
             </div>
             <div class="col-6">
-                {{ form.type.errors }}
                 <label for="{{ form.type.id_for_label }}">{{ form.type.label }}</label>
                 {{ form.type }}
+                {{ form.type.errors.as_text }}
             </div>
             <div class="col-6 mt-2">
-                {{ form.version.errors }}
                 <label for="{{ form.version.id_for_label }}">{{ form.version.label }}</label>
                 {{ form.version }}
+                {{ form.version.errors.as_text }}
             </div>
             <div class="col-6 mt-2">
-                {{ form.running_no.errors }}
                 <label for="{{ form.running_no.id_for_label }}">{{ form.running_no.label }}</label>
                 {{ form.running_no }}
+                {{ form.running_no.errors.as_text }}
             </div>
             <div class="col-12 mt-2">
-                {{ form.parent_doc.errors }}
                 <label for="{{ form.parent_doc.id_for_label }}">{{ form.parent_doc.label }}</label>
                 {{ form.parent_doc }}
+                {{ form.parent_doc.errors.as_text }}
             </div>
         </div>
 

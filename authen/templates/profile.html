@@ -5,20 +5,31 @@
 
     <div class="row">
         <div class="col-6">
-            <h4>Detail</h4>
-            <hr>
-            <ul>
-                <li><b>Username</b>: {{ employee.user.username }}</li>
-                <li><b>Name</b>: {{ employee.user.first_name }} {{ employee.user.last_name }}</li>
-                <li><b>Department</b>: {{ employee.department }}</li>
-            </ul>
-        </div>
-        {% if user_id != 'have_id' %}
-            <div class="col-6">
-                <h4>Management</h4>
-                <hr>
-                <a class="btn btn-secondary btn-block" href="{% url 'change-password' %}">Change Password</a>
+            <div class="pl-0">
+                <table class="table table-borderless text-light">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Username</th>
+                        <td>{{ employee.user.username }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Name</th>
+                        <td>{{ employee.user.first_name }} {{ employee.user.last_name }}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Department</th>
+                        <td>{{ employee.department }}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-        {% endif %}
+            {% if user_id != 'have_id' %}
+            <div class="col-6 mt-3">
+                <a href="{% url 'change-password' %}" class="btn btn-info"><i class="fa fa-key"></i>&nbsp;&nbsp;Change Password</a>
+            </div>
+            {% endif %}
+        </div>
+
+
     </div>
 {% endblock %}

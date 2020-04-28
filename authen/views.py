@@ -16,6 +16,8 @@ def auth_login(request):
 
         if user:
             login(request, user)
+            if request.POST.get('next'):
+                return redirect(request.POST.get('next'))
             return redirect('index')
         else:
             context['username'] = username

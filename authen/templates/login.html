@@ -15,6 +15,9 @@
             <input type="password" class="form-control" id="password"
                 name="password" value="{{password}}">
         </div>
+        {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}"/>
+        {% endif %}
         <button type="submit" class="btn btn-primary d-none d-lg-inline-block">Login</button>
         <button type="submit" class="btn btn-primary btn-block d-lg-none d-inline-block">Login</button>
     </form>

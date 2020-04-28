@@ -83,7 +83,11 @@
                         <tbody>
                         <tr>
                             <th scope="row">Creator</th>
-                            <td>{{ work.creator }}</td>
+                            <td>
+                                <a href="{% url 'profile-other' id=work.creator.id %}">
+                                    {{ work.creator }}
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">Type</th>
@@ -95,7 +99,11 @@
                         </tr>
                         <tr>
                             <th scope="row">Delegate User</th>
-                            <td>{{ delegate_user }}</td>
+                            <td>
+                                <a href="{% url 'profile-other' id=delegate_user.id %}">
+                                    {{ delegate_user }}
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row">Complete Date</th>

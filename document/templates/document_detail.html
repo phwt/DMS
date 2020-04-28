@@ -4,7 +4,7 @@
     <div>
         <h2 class="pb-5">Document Detail</h2>
         <h3>{{ document.name }}</h3>
-{#        <p class="text-muted"><small>{{ document.create_date }}</small></p>#}
+        {#        <p class="text-muted"><small>{{ document.create_date }}</small></p>#}
 
         <div class="col-6 pl-0">
             {% if doc_type == 'internal' %}
@@ -28,11 +28,23 @@
                 </tr>
                 <tr>
                     <th scope="row">Creator</th>
-                    <td>{{ document.creator }}</td>
+                    <td>
+                        <a href="{% url 'profile-other' id=document.creator.id %}">
+                            {{ document.creator }}
+                        </a>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Parent Doc</th>
-                    <td>{{ document.parent_doc }}</td>
+                    {% if document.parent_doc == None %}
+                        <td>{{ document.parent_doc }}</td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'doc_detail' id=document.parent_doc.id %}">
+                                {{ document.parent_doc }}
+                            </a>
+                        </td>
+                    {% endif %}
                 </tr>
                 </tbody>
             {% elif doc_type == 'external' %}

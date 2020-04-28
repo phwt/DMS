@@ -67,7 +67,7 @@ def profile(request):
 
 @login_required(login_url='login')
 def profile_other(request, id):
-    employee = Employee.objects.get(user_id=id)
+    employee = Employee.objects.get(pk=id)
     context = {
         'employee': employee,
         'user_id': 'have_id'

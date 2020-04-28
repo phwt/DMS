@@ -64,11 +64,23 @@ class DocumentSubmitForm(forms.Form):
     file = forms.FileField()
     delegate_user = forms.ChoiceField()
 
+    def __init__(self, *args, **kwargs):
+        super(DocumentSubmitForm, self).__init__(*args, **kwargs)
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')
+
 
 class DocumentReviewForm(forms.Form):
     approve = forms.BooleanField(required=False)
     delegate_user = forms.ChoiceField()
 
+    def __init__(self, *args, **kwargs):
+        super(DocumentReviewForm, self).__init__(*args, **kwargs)
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')
+
 
 class DocumentApproveForm(forms.Form):
     approve = forms.BooleanField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(DocumentApproveForm, self).__init__(*args, **kwargs)
+        apply_class_to_fields(self.fields, 'form-control form-control-sm')

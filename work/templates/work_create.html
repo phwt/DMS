@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 {% block title %}Request Document Creation{% endblock %}
 {% block content %}
-    <h2 class="pb-5">Document Creation Request Form</h2>
+    <div class="row">
+        <div class="col-8"><h2 class="pb-5">Document Creation Request Form</h2></div>
+        <div class="col-4 text-right">
+            <button class="btn btn-info btn-rand">Fill Random</button>
+        </div>
+    </div>
     <form action="" method="POST">
         {% csrf_token %}
 
@@ -35,4 +40,28 @@
 
         <input type="submit" class="btn btn-info mt-3" value="Submit">
     </form>
+    <script>
+
+        doc_name = [
+            "Langley Titanium Watchet",
+            "Denier Silver Puce",
+            "Fresnel Nickel Jessamy",
+            "Darcy Platinum Terracotta",
+            "Gauss Steel Amaranthine",
+            "Mnemon Platinum Ochre",
+            "Hand Platinum Albicant",
+            "Peck Nickel Olivaceous",
+            "Quad Platinum Whey",
+            "Span Tin Porphyrous",
+        ];
+
+        doc_type = ["M", "P", "W", "F"];
+
+        $(".btn-rand").click(() => {
+            $("#id_name").val(doc_name[parseInt(Math.random() * doc_name.length - 1)]);
+            $("#id_type").val(doc_type[parseInt(Math.random() * doc_type.length - 1)]);
+            $("#id_version").val(parseInt(Math.random() * 5) + 1);
+            $("#id_running_no").val(parseInt(Math.random() * 5) + 1);
+        });
+    </script>
 {% endblock %}

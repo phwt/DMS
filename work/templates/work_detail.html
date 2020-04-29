@@ -100,9 +100,13 @@
                         <tr>
                             <th scope="row">Delegate User</th>
                             <td>
-                                <a href="{% url 'profile-other' id=delegate_user.id %}">
-                                    {{ delegate_user }}
-                                </a>
+                                {% if delegate_user != '-' %}
+                                    <a href="{% url 'profile-other' id=delegate_user.id %}">
+                                {% endif %}
+                                {{ delegate_user }}
+                                {% if delegate_user != '-' %}
+                                    </a>
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>

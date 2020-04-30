@@ -266,7 +266,7 @@ def document_template(request, id):
     obj_font.name = 'Arial'
 
     p = document.add_paragraph()
-    p.add_run('\n\nDepartment Name\n\n\n', style='DNameStyle')
+    p.add_run(f'\n\n{doc.creator.department.name}\n\n\n', style='DNameStyle')
     p.add_run(f'\n\n{doc}\n\n\n', style='DNameStyle')
     # p.add_run('Document Name\n\n\n', style='DNameStyle')
     p.add_run(f'\n\nCreator: {doc.creator.user.first_name} {doc.creator.user.last_name}\n', style='DNameStyle')

@@ -1,7 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import F, Q
-from django.db.models.functions import Coalesce
 from django.shortcuts import render, redirect
 
 from DMS.utils import date_plus_today, pass_delegate, get_employees_in_groups_tuple, pass_delegate_review, \

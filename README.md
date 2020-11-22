@@ -2,6 +2,8 @@
 
 ในแต่ละองค์กรนั้นมีหลายหน่วยงาน และในแต่ละหน่วยงานก็ต้องจัดเก็บเอกสารในหน่วยงานของตน ทำให้ในองค์กรมีเอกสารจำนวนมาก ทำให้การจัดการเอกสารจำนวนมาก รวมถึงการทำให้เอกสารมีมาตรฐานเดียวกันทำได้ยาก ซึ่งระบบนี้จะทำให้เอกสารถูกจัดเก็บแบบรวมศูนย์ ที่จะช่วยให้กระบวนการสร้างเอกสารเป็นระบบ ทำให้เอกสารมีมาตรฐานเดียวกัน, สามารถเรียกใช้ได้ง่าย และสะดวกต่อผู้ใช้มากขึ้น
 
+![Dashboard](/capture/01_Dashboard.png)
+
 ## Features
 -	Metadata: เก็บข้อมูลของเอกสาร เช่น รหัสเอกสาร, ประเภทเอกสาร, ชื่อเอกสาร, หน่วยงานที่เกี่ยวข้อง, ฯลฯ ทำให้การจัดเก็บเป็นระบบ สืบค้นเอกสารได้ง่ายขึ้น
 -	Retrieval: การจัดเก็บที่เป็นระบบ ทำให้เรียกใช้เอกสารได้ง่ายและมีประสิทธิภาพ
@@ -29,3 +31,25 @@
 - Backend
   - Django
     - `python-docx`
+    
+## Screenshots
+
+หน้ารายการงาน (Work List Page)
+
+![Work List Page](/capture/02_Work_List.png)
+
+หน้ารายละเอียดงาน (Work Detail Page)
+
+![Work Detail Page](/capture/03_Work_Detail.png)
+
+หน้ารายการเอกสาร (Document List Page)
+
+![Document List Page](/capture/04_Document_List.png)
+
+หน้ารายละเอียดเอกสาร (Document Detail Page)
+
+![Document Detail Page](/capture/05_Document_Detail.png)
+
+หน้าสร้างคำร้องเกี่ยวกับเอกสาร (Document Request Page)
+
+![Document Request Page](/capture/06_Document_Request.png)
